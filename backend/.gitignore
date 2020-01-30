@@ -25,3 +25,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# I wonder why this is not in the default gitignore
+/vendor/bundle
