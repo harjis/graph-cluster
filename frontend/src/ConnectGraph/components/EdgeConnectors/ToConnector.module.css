@@ -1,0 +1,11 @@
+.connector {
+  fill: #fff;
+}
+
+.connectedConnector {
+  fill: #55cde1;
+}
+
+.canConnect {
+  cursor: pointer;
+}
