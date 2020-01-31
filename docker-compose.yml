@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    # volumes are needed so that postgres keeps seed data in between restarts
+    volumes:
+      - ./backend/tmp/db:/var/lib/postgresql/data
+  gateway:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./gateway
+    ports:
+      - 80:80
+  backend:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    environment:
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=my_pgpassword
+      - PGDATABASE_DEVELOPMENT=docker-rails_development
+      - PGDATABASE_TEST=docker-rails_test
+      - PGDATABASE_PRODUCTION=docker-rails_production
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /frontend/node_modules
+      - ./frontend:/frontend
