@@ -1,0 +1,6 @@
+PGHOST: postgres
+PGUSER: postgres
+PGPASSWORD: my_pgpassword
+PGDATABASE_DEVELOPMENT: docker-rails_development
+PGDATABASE_TEST: docker-rails_test
+PGDATABASE_PRODUCTION: docker-rails_production
