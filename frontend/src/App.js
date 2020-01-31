@@ -1,9 +1,10 @@
 // @flow
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import Home from 'Home/Home';
 import GraphsMenu from 'ConnectGraph/components/GraphsMenu/GraphsMenu';
+import TenantMenu from 'Generic/components/TenantMenu/TenantMenu';
 import ConnectGraphContainer from 'ConnectGraph/ConnectGraphContainer';
 
 export default function App() {
@@ -13,6 +14,10 @@ export default function App() {
         <ul>
           <li>
             <Link to="/">Home</Link>
+          </li>
+          <li>
+            Tenants
+            <TenantMenu />
           </li>
           <li>
             Graphs

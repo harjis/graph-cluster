@@ -1,6 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-
+#
 tenant = Tenant.create(name: 'Tenant 1')
 Current.tenant=tenant
 graph = Graph.new(name: 'Tenant 1: Graph 1', tenant: tenant)
@@ -29,10 +29,12 @@ edge2.save
 
 tenant2 = Tenant.create(name: 'Tenant 2')
 Current.tenant=tenant2
-graph21 = Graph.new(name: 'Tenant 1: Graph 2', tenant: tenant2)
+graph21 = Graph.new(name: 'Tenant 2: Graph 999', tenant: tenant2)
 node21 = InputNode.new(name: 'InputNode 2', x: 10, y: 10, tenant: tenant2)
 node22 = OutputNode.new(name: 'OutputNode 2', x: 400, y: 200, tenant: tenant2)
 graph21.nodes = [node21, node22]
 graph21.save
 edge21 = Edge.new(from_node: node21, to_node: node22, tenant: tenant2)
 edge21.save
+
+User.create(tenant: tenant)

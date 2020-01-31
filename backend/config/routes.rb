@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   scope :api do
+    get 'tenants/', to: 'tenants#index'
+    get 'tenants/current', to: 'tenants#get_current'
+    put 'tenants/current', to: 'tenants#set_current'
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     get 'graphs/:id/reset', to: 'graphs#reset'
     get 'graphs/:id/undo', to: 'graphs#undo'
