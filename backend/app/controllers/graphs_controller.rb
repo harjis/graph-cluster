@@ -36,15 +36,6 @@ class GraphsController < ApplicationController
     render json: true
   end
 
-  def calculate_node_count
-    job = CalculateNodesJob.set(wait: 1.minute).perform_later(params[:id])
-    render json: job
-  end
-
-  def get_node_count
-    render json: NodeCount.all
-  end
-
   private
 
   def graph_params
