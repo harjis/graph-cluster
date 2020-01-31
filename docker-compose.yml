@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./gateway
     ports:
-      - 80:80
+      - 3002:3002
   backend:
     depends_on:
       - postgres
