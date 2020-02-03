@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import FetchData from 'Generic/components/FetchData';
 import { fetchGraphs } from 'ConnectGraph/api/graphs';
 
-const GraphsMenu = () => (
-  <FetchData fetchOnlyOnMount query={fetchGraphs}>
+const Graphs = () => (
+  <FetchData query={fetchGraphs}>
     {({ data: graphs, error, isLoading }) => {
       if (isLoading) {
         return 'Loading...';
@@ -30,4 +30,4 @@ const GraphsMenu = () => (
   </FetchData>
 );
 
-export default GraphsMenu;
+export default Graphs;
