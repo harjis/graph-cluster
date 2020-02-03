@@ -18,3 +18,7 @@ export function setTenant(tenantId: number): Promise<boolean> {
     body: JSON.stringify({ tenant_id: tenantId })
   }).then(response => response.json());
 }
+
+export function fetchCurrentTenant() {
+  return fetch(`${url}/tenants/get_current`, options).then(response => response.json());
+}
