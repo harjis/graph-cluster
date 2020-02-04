@@ -1,23 +1,26 @@
 // @flow
-import * as React from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import * as React from "react";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Graphs from "./Graphs/Graphs";
-import Tenants from 'Tenants/Tenants';
-import ConnectGraphContainer from 'ConnectGraph/ConnectGraphContainer';
+import Tenants from "Tenants/Tenants";
+import ConnectGraphContainer from "ConnectGraph/ConnectGraphContainer";
 import type { ReduxState } from "./reducers";
 import type { Tenant } from "./types/tenant";
-import { fetchCurrentTenant } from "./actions/currentTenantActions";
+import { startFetchCurrentTenant } from "./actions/currentTenantActions";
 
 type Props = {|
-  currentTenant: ?Tenant
+  currentTenant: ?Tenant,
+  dispatch: Function
 |};
 
 function App(props: Props) {
+  const { dispatch } = props;
   React.useEffect(() => {
-    props.dispatch(fetchCurrentTenant());
-  }, []);
+    console.log('fetch');
+    dispatch(startFetchCurrentTenant());
+  }, [dispatch]);
   return (
     <Router>
       <div>
@@ -26,7 +29,8 @@ function App(props: Props) {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/tenants">Tenants</Link>
+            <Link to="/tenants">Tenants</Link>:{" "}
+            {props.currentTenant && props.currentTenant.name}
           </li>
         </ul>
       </div>
@@ -39,9 +43,8 @@ function App(props: Props) {
 }
 
 function mapStateToProps(state: ReduxState) {
-  const currentTenant = state.currentTenantReducer;
-  console.log(currentTenant);
-  return { currentTenant: null };
+  const currentTenantState = state.currentTenantReducer;
+  return { currentTenant: currentTenantState.currentTenant };
 }
 
 export default connect(mapStateToProps)(App);

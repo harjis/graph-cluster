@@ -8,7 +8,7 @@ export function fetchTenants(): Promise<Tenant[]> {
   return fetch(`${url}/tenants`, options).then(response => response.json());
 }
 
-export function setTenant(tenantId: number): Promise<boolean> {
+export function setTenant(tenantId: number): Promise<Tenant> {
   return fetch(`${url}/tenants/current`, {
     ...options,
     method: 'PUT',
@@ -20,5 +20,5 @@ export function setTenant(tenantId: number): Promise<boolean> {
 }
 
 export function fetchCurrentTenant() {
-  return fetch(`${url}/tenants/get_current`, options).then(response => response.json());
+  return fetch(`${url}/tenants/current`, options).then(response => response.json());
 }

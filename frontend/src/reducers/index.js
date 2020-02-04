@@ -12,6 +12,7 @@ const currentTenantReducer = (
   action: Action
 ): CurrentTenantState => {
   switch (action.type) {
+    case "CURRENT_TENANT/SET_SUCCESS":
     case "CURRENT_TENANT/FETCH_SUCCESS":
       return {
         ...state,

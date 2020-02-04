@@ -26,11 +26,11 @@ export default class FetchData<T> extends React.Component<Props<T>, State<T>> {
     isLoading: true,
   };
 
-  componentWillMount(): void {
+  UNSAFE_componentWillMount(): void {
     this.fetchData(this.props.query);
   }
 
-  componentWillReceiveProps(nextProps: Props<T>): void {
+  UNSAFE_componentWillReceiveProps(nextProps: Props<T>): void {
     !this.props.fetchOnlyOnMount && this.fetchData(nextProps.query);
   }
 

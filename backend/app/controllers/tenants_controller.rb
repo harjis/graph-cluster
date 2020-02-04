@@ -9,6 +9,10 @@ class TenantsController < ApplicationController
 
   def set_current
     tenant = Tenant.find(params[:tenant_id])
-    render json: User.first.update(tenant: tenant)
+    if User.first.update(tenant: tenant)
+      render json: tenant
+    else
+      render json: { message: 'Update failed' }
+    end
   end
 end
