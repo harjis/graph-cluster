@@ -28,3 +28,5 @@
 
 # I wonder why this is not in the default gitignore
 /vendor/bundle
+
+/config/local_enc.yml
