@@ -34,10 +34,10 @@ spec:
                   key: PGPASSWORD
             -
               name: PGDATABASE_DEVELOPMENT
-              value: docker_rails_development
+              value: graph-cluster_development
             -
               name: PGDATABASE_TEST
-              value: docker_rails_test
+              value: graph-cluster_test
             -
               name: PGDATABASE_PRODUCTION
-              value: docker_rails_production
+              value: graph-cluster_production

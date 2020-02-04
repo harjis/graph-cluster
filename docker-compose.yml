@@ -25,9 +25,9 @@ services:
       - PGHOST=postgres
       - PGUSER=postgres
       - PGPASSWORD=my_pgpassword
-      - PGDATABASE_DEVELOPMENT=docker-rails_development
-      - PGDATABASE_TEST=docker-rails_test
-      - PGDATABASE_PRODUCTION=docker-rails_production
+      - PGDATABASE_DEVELOPMENT=graph-cluster_development
+      - PGDATABASE_TEST=graph-cluster_test
+      - PGDATABASE_PRODUCTION=graph-cluster_production
   frontend:
     build:
       dockerfile: Dockerfile.dev
