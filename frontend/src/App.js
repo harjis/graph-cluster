@@ -18,7 +18,6 @@ type Props = {|
 function App(props: Props) {
   const { dispatch } = props;
   React.useEffect(() => {
-    console.log('fetch');
     dispatch(startFetchCurrentTenant());
   }, [dispatch]);
   return (
