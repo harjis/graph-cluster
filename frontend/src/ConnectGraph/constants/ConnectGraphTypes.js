@@ -1,35 +1,27 @@
 // @flow
 
 export type Graph = {|
-  created_at: string,
   id: number,
-  name: string,
-  updated_at: string
+  name: string
 |};
 
 export type Errors = { [key: $Keys<Node>]: string[] };
 export type NodeType = 'InputNode' | 'OutputNode' | 'NodeRefNode';
 export type Node = {|
-  content: Object,
-  created_at: string,
   errors: Errors,
   graph_id: number,
   id: number,
   name: string,
   to_edge_ids: number[],
   type: NodeType,
-  update_at: string,
   x: number,
   y: number
 |};
 
 export type Edge = {|
-  created_at: string,
   from_node_id: number,
   id: number,
-  name: ?string,
-  to_node_id: number,
-  updated_at: string
+  to_node_id: number
 |};
 
 export type SavingAction = {| type: 'SAVING', isSaving: boolean |};

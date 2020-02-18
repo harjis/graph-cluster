@@ -1,19 +1,21 @@
 // @flow
-import { combineReducers } from "redux";
-import type { Tenant } from "../types/tenant";
-import type { Action } from "../actions/currentTenantActions";
+import { combineReducers } from 'redux';
+import type { Tenant } from '../types/tenant';
+import type { Action } from '../actions/currentTenantActions';
 
 type CurrentTenantState = {|
   currentTenant: ?Tenant
 |};
-const initialState: CurrentTenantState = {};
+const initialState: CurrentTenantState = {
+  currentTenant: null
+};
 const currentTenantReducer = (
   state: CurrentTenantState = initialState,
   action: Action
 ): CurrentTenantState => {
   switch (action.type) {
-    case "CURRENT_TENANT/SET_SUCCESS":
-    case "CURRENT_TENANT/FETCH_SUCCESS":
+    case 'CURRENT_TENANT/SET':
+    case 'CURRENT_TENANT/FETCH_SUCCESS':
       return {
         ...state,
         currentTenant: action.tenant

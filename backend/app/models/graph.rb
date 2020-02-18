@@ -30,6 +30,13 @@ class Graph < ApplicationRecord
     end
   end
 
+  def as_json(options = {})
+    {
+      id: self.id,
+      name: self.name,
+    }
+  end
+
   private
 
   def all_audits_desc

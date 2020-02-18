@@ -8,20 +8,16 @@ class Node < ApplicationRecord
 
   def as_json(options = {})
     {
-      content: self.content,
-      created_at: self.created_at,
       errors: self.errors,
       graph_id: self.graph_id,
       to_edge_ids: self.to_edge_ids,
       id: self.id,
       name: self.name,
       type: self.type,
-      updated_at: self.updated_at,
       x: self.x,
       y: self.y
     }
   end
-
 
   def to_edge_ids
     self.to_edges.pluck(:id)

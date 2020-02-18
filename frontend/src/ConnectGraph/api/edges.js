@@ -18,7 +18,9 @@ export function createEdge(
   }).then(response => response.json());
 }
 export function fetchEdges(graphId: number): Promise<Edge[]> {
-  return fetch(`${url}/graphs/${graphId}/edges`, options).then(response => response.json());
+  return fetch(`${url}/graphs/${graphId}/edges`, options).then(response =>
+    response.json()
+  );
 }
 
 export function destroyEdge(graphId: number, edgeId: number): Promise<true> {

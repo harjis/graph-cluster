@@ -14,7 +14,9 @@ export function createNode(graph_id: number, type: NodeType): Promise<Node> {
 }
 
 export function fetchNodes(graph_id: number): Promise<Node[]> {
-  return fetch(`${url}/graphs/${graph_id}/nodes`, options).then(response => response.json());
+  return fetch(`${url}/graphs/${graph_id}/nodes`, options).then(response =>
+    response.json()
+  );
 }
 
 export function updateNode(node: $Shape<Node>): Promise<boolean> {
