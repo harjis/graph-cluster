@@ -32,7 +32,7 @@ case PhoenixGraph.Graphs.create_graph(%{name: "Graph 1"}) do
                }
              ) do
           {:ok, to_node} ->
-            PhoenixGraph.Graphs.create_edge(from_node, to_node)
+            PhoenixGraph.Graphs.create_edge(%{"from_node_id" => from_node.id, "to_node_id" => to_node.id})
           {:error, %Ecto.Changeset{}} ->
             IO.puts "To node Error"
         end

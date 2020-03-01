@@ -20,7 +20,7 @@ services:
       - postgres
     build:
       dockerfile: Dockerfile.dev
-      context: ./backend
+      context: ./backend_elixir
     environment:
       - PGHOST=postgres
       - PGUSER=postgres
