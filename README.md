@@ -1,5 +1,12 @@
 # Local setup
 
+## Docker-compose
+There are different backends to choose from. Rename the docker-compose file that you want to use
+
+`cp docker-compose-ruby.yml docker-compose.yml`
+
+## Kubernetes
+
 ## Create a kubernetes secret for PGPASSWORD
 
 Notice that pgpassword and PGPASSWORD need to match with backend-deployment.yaml 
