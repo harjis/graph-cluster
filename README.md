@@ -3,9 +3,12 @@
 ## Docker-compose
 There are different backends to choose from. Rename the docker-compose file that you want to use
 
-`cp docker-compose-ruby.yml docker-compose.yml`
+`cp docker-compose-elixir.yml docker-compose.yml`
 
 ## Kubernetes
+There are different backends to choose from. Copy the deployment file you want to use
+
+`cp k8s-backends/backend-phoenix-deployment.yaml k8s/backend-deployment.yaml`
 
 ## Create a kubernetes secret for PGPASSWORD
 

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: db-migrate
+          image: d0rka/graph-cluster-backend-phoenix
+          command: ['mix']
+          args: ['ecto.migrate']
+          env:
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGUSER
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+            - name: PGDATABASE_DEVELOPMENT
+              value: graph-cluster_development
+            - name: PGDATABASE_TEST
+              value: graph-cluster_test
+            - name: PGDATABASE_PRODUCTION
+              value: graph-cluster_production
+
