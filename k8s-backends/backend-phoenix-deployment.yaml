@@ -15,7 +15,7 @@ spec:
       containers:
         -
           name: backend
-          image: d0rka/graph-cluster-backend
+          image: d0rka/graph-cluster-backend-phoenix
           ports:
             -
               containerPort: 3000
