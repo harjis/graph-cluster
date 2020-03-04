@@ -27,11 +27,11 @@ spec:
               name: PGUSER
               value: postgres
             -
-              name: PGPASSWORD
+              name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgpassword
-                  key: PGPASSWORD
+                  key: POSTGRES_PASSWORD
             -
               name: PGDATABASE_DEVELOPMENT
               value: graph-cluster_development

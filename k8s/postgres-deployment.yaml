@@ -31,8 +31,8 @@ spec:
               subPath: postgres
           env:
             -
-              name: PGPASSWORD
+              name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgpassword
-                  key: PGPASSWORD
+                  key: POSTGRES_PASSWORD

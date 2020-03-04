@@ -24,7 +24,7 @@ services:
     environment:
       - PGHOST=postgres
       - PGUSER=postgres
-      - PGPASSWORD=my_pgpassword
+      - POSTGRES_PASSWORD=my_pgpassword
       - PGDATABASE_DEVELOPMENT=graph-cluster_development
       - PGDATABASE_TEST=graph-cluster_test
       - PGDATABASE_PRODUCTION=graph-cluster_production

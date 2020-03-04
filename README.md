@@ -10,12 +10,12 @@ There are different backends to choose from. Copy the deployment file you want t
 
 `cp k8s-backends/backend-phoenix-deployment.yaml k8s/backend-deployment.yaml`
 
-## Create a kubernetes secret for PGPASSWORD
+## Create a kubernetes secret for POSTGRES_PASSWORD
 
-Notice that pgpassword and PGPASSWORD need to match with backend-deployment.yaml 
+Notice that pgpassword and POSTGRES_PASSWORD need to match with backend-deployment.yaml 
 and postgres-deployment.yaml files
 
-`kubectl create secret generic pgpassword --from-literal PGPASSWORD=my_pgpassword`
+`kubectl create secret generic pgpassword --from-literal POSTGRES_PASSWORD=my_pgpassword`
 
 
 # GC setup
@@ -38,7 +38,7 @@ and postgres-deployment.yaml files
 `gcloud config set project docker-rails-266706`
 `gcloud config set compute/zone europe-north1-a`
 `gcloud container clusters get-credentials standard-cluster-1`
-`kubectl create secret generic pgpassword --from-literal PGPASSWORD=my_pgpassword`
+`kubectl create secret generic pgpassword --from-literal POSTGRES_PASSWORD=my_pgpassword`
 
 
 ### Install Helm

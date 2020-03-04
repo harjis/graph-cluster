@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :phoenix_graph, PhoenixGraph.Repo,
   username: System.get_env("PGUSER"),
-  password: System.get_env("PGPASSWORD"),
+  password: System.get_env("POSTGRES_PASSWORD"),
   database: System.get_env("PGDATABASE_DEVELOPMENT"),
   hostname: System.get_env("PGHOST"),
   show_sensitive_data_on_connection_error: true,
