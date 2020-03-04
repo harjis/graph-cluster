@@ -23,6 +23,8 @@ defmodule PhoenixGraphWeb.Router do
    scope "/api", PhoenixGraphWeb do
      pipe_through :api
 
+     get "/tenants", TenantController, :index
+     get "/tenants/current", TenantController, :current
      resources "/graphs", GraphController do
        resources "/nodes", NodeController
        resources "/edges", EdgeController
