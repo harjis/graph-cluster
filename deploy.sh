@@ -11,8 +11,8 @@ kubectl apply -f k8s
 kubectl set image deployments/backend-deployment backend=d0rka/graph-cluster-backend-phoenix:$SHA
 kubectl set image deployments/frontend-deployment frontend=d0rka/graph-cluster-frontend:$SHA
 
-kubectl apply -f k8s-migrator/db-create.yaml
-kubectl apply -f k8s-migrator/db-migrate.yaml
+kubectl apply -f k8s-phoenix-migrator/db-create.yaml
+kubectl apply -f k8s-phoenix-migrator/db-migrate.yaml
 
 kubectl wait --for=condition=complete --timeout=600s job/db-migrate
 
