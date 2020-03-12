@@ -12,9 +12,9 @@ before_install:
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
-  - gcloud config set project graph-cluster
+  - gcloud config set project graph-cluster-elixir
   - gcloud config set compute/zone europe-north1-a
-  - gcloud container clusters get-credentials graph-cluster
+  - gcloud container clusters get-credentials graph-cluster-elixir
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 deploy:
