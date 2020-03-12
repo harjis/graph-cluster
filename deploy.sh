@@ -1,4 +1,4 @@
-docker build -t d0rka/graph-cluster-backend-phoenix:latest -t d0rka/graph-cluster-backend-phoenix:$SHA -f ./backend/Dockerfile ./backend_elixir
+docker build -t d0rka/graph-cluster-backend-phoenix:latest -t d0rka/graph-cluster-backend-phoenix:$SHA -f ./backend_elixir/Dockerfile ./backend_elixir
 docker build -t d0rka/graph-cluster-frontend:latest -t d0rka/graph-cluster-frontend:$SHA -f ./frontend/Dockerfile ./frontend
 
 docker push d0rka/graph-cluster-backend-phoenix:latest
