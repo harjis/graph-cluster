@@ -36,17 +36,23 @@ and postgres-deployment.yaml files
 ### Create a secret in GC. Login to GC and open terminal
 
 `gcloud config set project docker-rails-266706`
+
 `gcloud config set compute/zone europe-north1-a`
+
 `gcloud container clusters get-credentials standard-cluster-1`
+
 `kubectl create secret generic pgpassword --from-literal POSTGRES_PASSWORD=my_pgpassword`
 
 
 ### Install Helm
 
 `curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
+
 `chmod 700 get_helm.sh`
+
 `./get_helm.sh`
 
 ### Add some chart and Ingress controller
 `helm repo add stable https://kubernetes-charts.storage.googleapis.com/`
+
 `helm install my-nginx stable/nginx-ingress --set rbac.create=true`
