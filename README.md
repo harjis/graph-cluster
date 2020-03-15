@@ -27,17 +27,17 @@ and postgres-deployment.yaml files
 ### Inside the shell:
 
 `gem install travis`
-`travis login` or `travis login --pro` for private projects
+`travis login --org` or `travis login --com` for private projects
 
 ### Copy the unencrypted file to the directory you open docker in
 
-`travis encrypt-file service-account.json -r harjis/docker-rails`
+`travis encrypt-file service-account.json -r harjis/graph-cluster`
 
 ### Create a secret in GC. Login to GC and open terminal
 
-`gcloud config set project docker-rails-266706`
+`gcloud config set project graph-elixir`
 
-`gcloud config set compute/zone europe-north1-a`
+`gcloud config set compute/zone europe-north1-b`
 
 `gcloud container clusters get-credentials standard-cluster-1`
 
@@ -56,3 +56,19 @@ and postgres-deployment.yaml files
 `helm repo add stable https://kubernetes-charts.storage.googleapis.com/`
 
 `helm install my-nginx stable/nginx-ingress --set rbac.create=true`
+
+### Setup HTTPS
+
+`kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml`
+
+`kubectl create namespace cert-manager`
+
+`helm repo add jetstack https://charts.jetstack.io`
+
+`helm repo update`
+
+`helm install \
+cert-manager \
+--namespace cert-manager \
+--version v0.11.0 \
+jetstack/cert-manager`
