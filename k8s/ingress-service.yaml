@@ -22,12 +22,12 @@ spec:
           -
             path: /?(.*)
             backend:
-              serviceName: client-cluster-ip-service
+              serviceName: frontend-cluster-ip-service
               servicePort: 3001
           -
             path: /api/?(.*)
             backend:
-              serviceName: server-cluster-ip-service
+              serviceName: backend-cluster-ip-service
               servicePort: 3000
     -
       host: www.harjukallio.club
@@ -36,10 +36,10 @@ spec:
           -
             path: /?(.*)
             backend:
-              serviceName: client-cluster-ip-service
+              serviceName: frontend-cluster-ip-service
               servicePort: 3001
           -
             path: /api/?(.*)
             backend:
-              serviceName: server-cluster-ip-service
+              serviceName: backend-cluster-ip-service
               servicePort: 3000
