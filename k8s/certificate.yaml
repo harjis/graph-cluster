@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: harjukallio-club-tls
+spec:
+  secretName: harjukallio-club
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: harjukallio.club
+  dnsNames:
+    - harjukallio.club
+    - www.harjukallio.club
+  acme:
+    config:
+      -
+        http01:
+          ingressClass: nginx
+        domains:
+          - harjukallio.club
+          - www.harjukallio.club
