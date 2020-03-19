@@ -18,7 +18,5 @@ build:
       docker:
         dockerfile: Dockerfile.dev
       sync:
-        manual:
-          -
-            src: 'lib/*'
-            dest: .
+        infer:
+          - '*.ex'
