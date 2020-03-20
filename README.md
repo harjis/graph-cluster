@@ -28,12 +28,13 @@ and postgres-deployment.yaml files
 
 ### Inside the shell:
 
-`gem install travis`
+`gem install travis --version '1.8.10'`
+
 `travis login --org` or `travis login --com` for private projects
 
 ### Copy the unencrypted file to the directory you open docker in
 
-`travis encrypt-file service-account.json -r harjis/graph-cluster`
+`travis encrypt-file service-account.json -r harjis/graph-cluster --com`
 
 ### Create a secret in GC. Login to GC and open terminal
 
