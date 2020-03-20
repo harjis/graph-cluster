@@ -8,6 +8,8 @@ There are different backends to choose from. Rename the docker-compose file that
 ## Kubernetes
 There are different backends to choose from. Copy the deployment file you want to use
 
+`minikube addons enable ingress`
+
 `cp k8s-backends/backend-phoenix-deployment.yaml k8s/backend-deployment.yaml`
 
 ## Create a kubernetes secret for POSTGRES_PASSWORD
