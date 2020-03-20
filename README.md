@@ -19,6 +19,13 @@ and postgres-deployment.yaml files
 
 `kubectl create secret generic pgpassword --from-literal POSTGRES_PASSWORD=my_pgpassword`
 
+## Local setup for GC Cloud SQL
+
+Install gcloud locally and set project and compute zone accordingly.
+Install cloud_sql_proxy and set it to $PATH.
+Create tmp dir: `mkdir -p /tmp/cloudsql`
+Start the proxy: `cloud_sql_proxy -dir=/tmp/cloudsql`
+Or not...
 
 # GC setup
 
