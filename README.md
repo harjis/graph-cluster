@@ -21,11 +21,17 @@ and postgres-deployment.yaml files
 
 ## Local setup for GC Cloud SQL
 
-Install gcloud locally and set project and compute zone accordingly.
-Install cloud_sql_proxy and set it to $PATH.
-Create tmp dir: `mkdir -p /tmp/cloudsql`
-Start the proxy: `cloud_sql_proxy -dir=/tmp/cloudsql`
-Or not...
+Create service account with Cloud SQL Admin role
+Pull cloudsql-docker
+`docker pull gcr.io/cloudsql-docker/gce-proxy:1.16`
+
+Run it
+`docker run -v /Users/harjukallio/Downloads/graph-elixir-sql.json:/config \
+   -p 127.0.0.1:5432:5432 \
+   gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy \
+   -instances=graph-elixir-271706:europe-north1:graph-database=tcp:0.0.0.0:5432 -credential_file=/config`
+Connect to it
+`psql "host=127.0.0.1 sslmode=disable user=postgres"`
 
 # GC setup
 
