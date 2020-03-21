@@ -37,7 +37,7 @@ Connect to it
 
 ## Encrypt service account file
 
-`docker run -it -v $(pwd):/app ruby:2.3 sh`
+`docker run -it -v $(pwd):/app ruby:2.3 bash`
 
 ### Inside the shell:
 
