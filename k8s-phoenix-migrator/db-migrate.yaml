@@ -27,4 +27,3 @@ spec:
               value: graph-cluster_test
             - name: PGDATABASE_PRODUCTION
               value: graph-cluster_production
-

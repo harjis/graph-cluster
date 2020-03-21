@@ -41,6 +41,3 @@ spec:
             -
               name: PGDATABASE_PRODUCTION
               value: graph-cluster_production
-            -
-              name: PG_URL
-              value: graph-elixir-271706:europe-north1:graph-database
