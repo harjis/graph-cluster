@@ -5,13 +5,16 @@ metadata:
 spec:
   template:
     spec:
-      ttlSecondsAfterFinished: 10
       restartPolicy: Never
       containers:
         - name: db-migrate
           image: d0rka/graph-cluster-backend-phoenix
-          command: ['mix']
-          args: ['ecto.migrate']
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              sleep 2s
+              trap "touch /tmp/pod/terminated" EXIT
+              mix ecto.migrate
           env:
             - name: PGHOST
               value: 127.0.0.1
@@ -28,18 +31,28 @@ spec:
               value: graph-cluster_test
             - name: PGDATABASE_PRODUCTION
               value: graph-cluster_production
+          volumeMounts:
+            - mountPath: /tmp/pod
+              name: tmp-pod
         -
           name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.14
-          command: ["/cloud_sql_proxy",
-                    "-instances=graph-elixir-271706:europe-north1:graph-database=tcp:5432",
-                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              /cloud_sql_proxy -instances=graph-elixir-271706:europe-north1:graph-database=tcp:5432 -credential_file=/secrets/cloudsql/credentials.json \
+              & CHILD_PID=$!(while true; do if [[ -f "/tmp/pod/terminated" ]]; \
+              then kill $CHILD_PID; echo "Killed $CHILD_PID because the main container terminated."; fi; sleep 1; done) \
+              & wait $CHILD_PID if [[ -f "/tmp/pod/terminated" ]]; then exit 0; echo "Job completed. Exiting..."; fi
           securityContext:
             runAsUser: 2  # non-root user
             allowPrivilegeEscalation: false
           volumeMounts:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: tmp-pod
+              mountPath: /tmp/pod
               readOnly: true
       volumes:
         - name: cloudsql-instance-credentials
