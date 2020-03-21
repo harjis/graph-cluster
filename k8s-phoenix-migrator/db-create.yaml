@@ -10,11 +10,11 @@ spec:
         - name: db-create
           image: d0rka/graph-cluster-backend-phoenix
           command: ["/bin/sh", "-c"]
-            args:
-              - |
-                sleep 2s
-                trap "touch /tmp/pod/terminated" EXIT
-                mix ecto.create
+          args:
+            - |
+              sleep 2s
+              trap "touch /tmp/pod/terminated" EXIT
+              mix ecto.create
           env:
             - name: PGHOST
               value: 127.0.0.1
