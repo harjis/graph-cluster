@@ -5,6 +5,7 @@ metadata:
 spec:
   template:
     spec:
+      ttlSecondsAfterFinished: 10
       restartPolicy: Never
       containers:
         - name: db-migrate
