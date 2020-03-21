@@ -13,7 +13,7 @@ spec:
           args: ['ecto.migrate']
           env:
             - name: PGHOST
-              value: postgres-cluster-ip-service
+              value: 127.0.0.1
             - name: PGUSER
               value: postgres
             - name: POSTGRES_PASSWORD
