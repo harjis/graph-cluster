@@ -42,9 +42,9 @@ spec:
               - |
                 /cloud_sql_proxy -instances=graph-elixir-271706:europe-north1:graph-database=tcp:5432 -credential_file=/secrets/cloudsql/credentials.json &
                 CHILD_PID=$!
-                (while true; do if [[ -f "/tmp/pod/main-terminated" ]]; then kill $CHILD_PID; fi; sleep 1; done) &
+                (while true; do if [[ -f "/tmp/pod/main-terminated" ]]; then kill $CHILD_PID; echo "Killed $CHILD_PID as the main container terminated."; fi; sleep 1; done) &
                 wait $CHILD_PID
-                if [[ -f "/tmp/pod/main-terminated" ]]; then exit 0; fi
+                if [[ -f "/tmp/pod/main-terminated" ]]; then exit 0; echo "Job completed. Exiting..."; fi
           securityContext:
             runAsUser: 2  # non-root user
             allowPrivilegeEscalation: false
