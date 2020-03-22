@@ -13,7 +13,7 @@ spec:
           args:
             - |
               sleep 2s
-              trap "touch /tmp/pod/terminated" EXIT
+              trap "touch /tmp/pod/main-terminated" EXIT
               mix ecto.migrate
           env:
             - name: PGHOST
