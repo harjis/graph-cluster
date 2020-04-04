@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -22,7 +22,7 @@ spec:
           env:
             -
               name: PGHOST
-              value: 127.0.0.1
+              value: postgres-cluster-ip-service
             -
               name: PGUSER
               value: postgres
