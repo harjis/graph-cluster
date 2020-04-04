@@ -8,12 +8,12 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-create
-          image: d0rka/graph-cluster-backend
+          image: d0rka/graph-cluster-backend-rails
           command: ['bundle', 'exec', 'rake']
           args: ['db:create']
           env:
             - name: PGHOST
-              value: 127.0.0.1
+              value: postgres-cluster-ip-service
             - name: PGUSER
               value: postgres
             - name: POSTGRES_PASSWORD
