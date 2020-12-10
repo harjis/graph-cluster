@@ -1,16 +1,7 @@
 # Local setup
 
-## Docker-compose
-There are different backends to choose from. Symlink the docker-compose file that you want to use
-
-`ln -s docker-compose-elixir.yml docker-compose.yml`
-
 ## Kubernetes
-There are different backends to choose from. Symlink the deployment file you want to use
-
 `minikube addons enable ingress`
-
-`ln -s k8s-backends/backend-phoenix-deployment.yaml k8s-local/backend-deployment.yaml`
 
 ## Create a kubernetes secret for POSTGRES_PASSWORD
 
