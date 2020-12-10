@@ -20,7 +20,7 @@ spec:
       containers:
         -
           name: postgres
-          image: debezium/postgres:12
+          image: postgres
           ports:
             -
               containerPort: 5432
