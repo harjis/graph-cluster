@@ -6,10 +6,10 @@ import styles from './NodeActionBar.module.css';
 
 type Props = {
   isSaving: boolean;
-  onAddInputNode: () => any;
-  onAddOutputNode: () => any;
-  onUndo: () => any;
-  onResetDb: () => any;
+  onAddInputNode: () => void;
+  onAddOutputNode: () => void;
+  onUndo: () => void;
+  onResetDb: () => void;
   validationErrors: Errors;
 };
 const NodeActionBar = (props: Props) => (

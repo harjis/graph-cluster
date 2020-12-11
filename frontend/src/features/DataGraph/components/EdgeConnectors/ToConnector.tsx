@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { connectGraphNodeWidth } from '../../constants/constants';
+import {
+  connectGraphNodeWidth,
+  CONNECTOR_TYPE,
+} from '../../constants/constants';
 
 import styles from './ToConnector.module.css';
 
@@ -10,23 +13,33 @@ import styles from './ToConnector.module.css';
 type Props = {
   canConnect: boolean;
   hasToEdges?: boolean;
-  onClick: (event: React.MouseEvent<Element>) => any;
+  onClick: (event: React.MouseEvent) => void;
 };
+const toPolygonBackgroundDataProps = {
+  [CONNECTOR_TYPE]: 'to-polygon-background',
+};
+const toPolygonOverlayDataProps = {
+  [CONNECTOR_TYPE]: 'to-polygon-overlay',
+};
+const toConnectorDataProps = {
+  [CONNECTOR_TYPE]: 'to-g',
+};
+
 const ToConnector = (props: Props) => (
   <g
+    {...toConnectorDataProps}
     className={props.canConnect ? styles.canConnect : undefined}
-    data-connector-type="to-g"
     transform={`translate(${connectGraphNodeWidth / 2}, 0)`}
     onClick={props.onClick}
   >
     <polygon
-      data-connector-type="to-polygon-background"
+      {...toPolygonBackgroundDataProps}
       className={styles.connector}
       points="-8,0 8,0 0,12"
     />
     {props.hasToEdges && (
       <polygon
-        data-connector-type="to-polygon-overlay"
+        {...toPolygonOverlayDataProps}
         className={styles.connectedConnector}
         points="-6,0 6,0 0,9"
       />

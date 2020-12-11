@@ -7,7 +7,7 @@ import styles from './Edge.module.css';
 type Coordinate = { x: number; y: number };
 type Props = {
   from: Coordinate;
-  onClick?: () => any;
+  onClick?: () => void;
   styles?: string;
   to: Coordinate;
 };

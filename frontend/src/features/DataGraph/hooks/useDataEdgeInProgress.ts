@@ -1,81 +1,85 @@
 import React from 'react';
 
-type CTM = {
-  a: number;
-  b: number;
-  c: number;
-  d: number;
-  e: number;
-  f: number;
-};
-type OnDragHandler = (event: MouseEvent) => void;
+import { Coordinates, getRelativeCoordinates } from '../../../utils/svg_utils';
+import { CONNECTOR_TYPE } from '../constants/constants';
+
+export type { Coordinates };
+
 type State = {
-  ctm: CTM | null | undefined;
-  fromNodeId: number | null | undefined;
-  clientX: number;
-  clientY: number;
+  fromNodeId: number | null;
+  toCoordinates: Coordinates | null;
 };
 const initialState = {
   fromNodeId: null,
-  ctm: null,
-  clientX: 0,
-  clientY: 0,
+  toCoordinates: null,
 };
 
-export function useDataEdgeInProgress() {
+type ReturnType = {
+  ref: React.RefObject<SVGSVGElement>;
+  edgeInProgressState: State;
+  onStartEdgeInProgress: (fromNodeId: number, event: React.MouseEvent) => void;
+  onStopEdgeInProgress: () => void;
+};
+export function useDataEdgeInProgress(): ReturnType {
   const [edgeInProgressState, setState] = React.useState<State>(initialState);
+  const ref = React.useRef<SVGSVGElement>(null);
 
-  const someFun = (event: MouseEvent) => {
-    if (
-      event.target instanceof Element &&
-      !event.target.getAttribute('data-connector-type')
-    ) {
-      onStopEdgeInProgress();
-      return;
-    }
+  const onStopEdgeInProgress = (): void => {
+    setState(() => initialState);
   };
-  const onMove = React.useRef<OnDragHandler>((event: MouseEvent) => {
-    setState((state) => {
-      const { clientX, clientY } = event;
-      const div = getCanvasContainer();
-      return { ...state, clientX, clientY: clientY + div.scrollTop };
-    });
-  });
 
   const onStartEdgeInProgress = (
     fromNodeId: number,
-    event: React.MouseEvent,
-    svg: React.RefObject<SVGSVGElement>
-  ) => {
-    if (!svg.current) return;
-    const ctm = svg.current.getScreenCTM();
-    const { clientX, clientY } = event;
-    const div = getCanvasContainer();
-    setState((state) => ({
-      ...state,
-      ctm,
-      fromNodeId,
-      clientX,
-      clientY: clientY + div.scrollTop,
-    }));
-    window.addEventListener('mousemove', onMove.current);
-    window.addEventListener('mouseup', someFun);
+    event: React.MouseEvent
+  ): void => {
+    setState((state) => {
+      const toCoordinates = getRelativeCoordinates(ref.current, event);
+      if (!toCoordinates) return state;
+      return {
+        ...state,
+        fromNodeId,
+        toCoordinates,
+      };
+    });
   };
 
-  const onStopEdgeInProgress = () => {
-    window.removeEventListener('mousemove', onMove.current);
-    window.removeEventListener('mouseup', someFun);
-    setState(() => initialState);
-  };
-  return { edgeInProgressState, onStartEdgeInProgress, onStopEdgeInProgress };
-}
+  React.useEffect(() => {
+    const isEdgeInProgressStarted = (): boolean =>
+      edgeInProgressState.fromNodeId !== null;
+    const mouseUpHandler = (event: MouseEvent): void => {
+      if (
+        isEdgeInProgressStarted() &&
+        event.target instanceof Element &&
+        !event.target.getAttribute(CONNECTOR_TYPE)
+      ) {
+        onStopEdgeInProgress();
+      }
+    };
+    const onMove = (event: MouseEvent): void => {
+      if (!isEdgeInProgressStarted()) return;
+      setState((state) => {
+        const toCoordinates = getRelativeCoordinates(ref.current, event);
+        if (!toCoordinates) return state;
+        return {
+          ...state,
+          toCoordinates,
+        };
+      });
+    };
 
-function getCanvasContainer(): HTMLDivElement {
-  const div = document.querySelector<HTMLDivElement>('[data-canvas-container]');
-  if (!div)
-    throw new Error(
-      'You need to provide data-canvas-container around svg which also has overflow-y: auto,' +
-        ' so that Edge in progress works correctly with scrolling'
-    );
-  return div;
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', mouseUpHandler);
+
+    return (): void => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', mouseUpHandler);
+    };
+  }, [edgeInProgressState.fromNodeId]);
+
+  return {
+    ref,
+    edgeInProgressState,
+    onStartEdgeInProgress,
+    onStopEdgeInProgress,
+  };
 }

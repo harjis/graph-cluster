@@ -8,3 +8,5 @@ export const fromConnectorHoverRadius = 9;
 
 export const connectGraphNodeHeight = DEFAULT_NODE_HEIGHT;
 export const connectGraphNodeWidth = DEFAULT_NODE_WIDTH;
+
+export const CONNECTOR_TYPE = 'data-connector-type';

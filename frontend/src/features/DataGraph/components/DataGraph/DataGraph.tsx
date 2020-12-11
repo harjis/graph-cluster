@@ -1,41 +1,43 @@
 import React from 'react';
-import { SizeMe } from 'react-sizeme';
 
 import DataEdge from '../DataEdge/DataEdge';
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
-import { CTM } from '../../../../utils/svg_utils';
 import { Edge, Errors, Node } from '../../constants/types';
 import { getComponentByType } from '../../utils/nodeComponentUtil';
-import { getMousePosition } from '../../../../utils/svg_utils';
 import { getNode } from '../../utils/nodeUtils';
-import { useDataEdgeInProgress } from '../../hooks/useDataEdgeInProgress';
+import {
+  useDataEdgeInProgress,
+  Coordinates,
+} from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataGraph.module.css';
+import useResizeObserver from '../../../../hooks/useResizeObserver';
 
 type Props = {
   edges: Edge[];
   nodes: Node[];
   isSaving: boolean;
-  onAddEdge: (fromNodeId: number, toNodeId: number) => any;
-  onAddInputNode: () => any;
-  onAddOutputNode: () => any;
-  onDeleteEdge: (edge: Edge) => any;
-  onStartDrag: (nodeId: number, event: React.MouseEvent<Element>) => any;
-  onStopDrag: (event: React.MouseEvent<Element>) => any;
-  onUndo: () => any;
-  onResetDb: () => any;
+  onAddEdge: (fromNodeId: number, toNodeId: number) => void;
+  onAddInputNode: () => void;
+  onAddOutputNode: () => void;
+  onDeleteEdge: (edge: Edge) => void;
+  onStartDrag: (nodeId: number, event: React.MouseEvent) => void;
+  onStopDrag: (event: React.MouseEvent) => void;
+  onUndo: () => void;
+  onResetDb: () => void;
   validationErrors: Errors;
 };
 const DataGraph = (props: Props) => {
   const {
+    ref,
     edgeInProgressState,
     onStartEdgeInProgress,
     onStopEdgeInProgress,
   } = useDataEdgeInProgress();
-  const canvasRef = React.useRef<SVGSVGElement>(null);
+  const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   return (
     <div className={styles.container}>
       <React.Fragment>
@@ -48,76 +50,72 @@ const DataGraph = (props: Props) => {
           validationErrors={props.validationErrors}
         />
         {/*.container + .innerContainer is a bit of a hack. Try to make it better*/}
-        <div data-canvas-container className={styles.innerContainer}>
-          <SizeMe monitorHeight>
-            {({ size }) => (
-              <Canvas
-                ref={canvasRef}
-                height={getMaxHeight(props.nodes, size.height || 0)}
-                width={size.width || 0}
-              >
-                {({ canvasId }) => (
-                  <React.Fragment>
-                    <defs>
-                      <DotPattern patternId={canvasId} />
-                    </defs>
-                    <Background
-                      patternId={canvasId}
-                      height={getMaxHeight(props.nodes, size.height || 0)}
-                      width={size.width || 0}
-                    />
-                    {props.edges.map((edge) => (
-                      <DataEdge
-                        key={edge.id}
-                        onClick={() => props.onDeleteEdge(edge)}
-                        fromNode={getNode(props.nodes, edge.from_node_id)}
-                        toNode={getNode(props.nodes, edge.to_node_id)}
-                      />
-                    ))}
-                    {props.nodes.map((node) => {
-                      const NodeComponent = getComponentByType(node.type);
-                      return (
-                        <NodeComponent
-                          canConnect={!!edgeInProgressState.fromNodeId}
-                          hasToEdges={node.to_edge_ids.length > 0}
-                          id={node.id}
-                          key={node.id}
-                          name={node.name}
-                          onClickFromConnector={(event) =>
-                            onStartEdgeInProgress(node.id, event, canvasRef)
-                          }
-                          onClickToConnector={() => {
-                            if (edgeInProgressState.fromNodeId) {
-                              props.onAddEdge(
-                                edgeInProgressState.fromNodeId,
-                                node.id
-                              );
-                            }
-                            onStopEdgeInProgress();
-                          }}
-                          onMouseDown={(event) =>
-                            props.onStartDrag(node.id, event)
-                          }
-                          onMouseUp={props.onStopDrag}
-                          x={node.x}
-                          y={node.y}
-                        >
-                          {null}
-                        </NodeComponent>
-                      );
-                    })}
-                    {getEdgeInProgress(
-                      props.nodes,
-                      edgeInProgressState.fromNodeId,
-                      edgeInProgressState.clientX,
-                      edgeInProgressState.clientY,
-                      edgeInProgressState.ctm
-                    )}
-                  </React.Fragment>
+        <div
+          ref={containerRef}
+          data-canvas-container
+          className={styles.innerContainer}
+        >
+          <Canvas
+            ref={ref}
+            height={getMaxHeight(props.nodes, dimensions.height)}
+            width={dimensions.width}
+          >
+            {({ canvasId }) => (
+              <React.Fragment>
+                <defs>
+                  <DotPattern patternId={canvasId} />
+                </defs>
+                <Background
+                  patternId={canvasId}
+                  height={getMaxHeight(props.nodes, dimensions.height)}
+                  width={dimensions.width}
+                />
+                {props.edges.map((edge) => (
+                  <DataEdge
+                    key={edge.id}
+                    onClick={() => props.onDeleteEdge(edge)}
+                    fromNode={getNode(props.nodes, edge.from_node_id)}
+                    toNode={getNode(props.nodes, edge.to_node_id)}
+                  />
+                ))}
+                {props.nodes.map((node) => {
+                  const NodeComponent = getComponentByType(node.type);
+                  return (
+                    <NodeComponent
+                      canConnect={!!edgeInProgressState.fromNodeId}
+                      hasToEdges={node.to_edge_ids.length > 0}
+                      id={node.id}
+                      key={node.id}
+                      name={node.name}
+                      onClickFromConnector={(event) =>
+                        onStartEdgeInProgress(node.id, event)
+                      }
+                      onClickToConnector={() => {
+                        if (edgeInProgressState.fromNodeId) {
+                          props.onAddEdge(
+                            edgeInProgressState.fromNodeId,
+                            node.id
+                          );
+                        }
+                        onStopEdgeInProgress();
+                      }}
+                      onMouseDown={(event) => props.onStartDrag(node.id, event)}
+                      onMouseUp={props.onStopDrag}
+                      x={node.x}
+                      y={node.y}
+                    >
+                      {null}
+                    </NodeComponent>
+                  );
+                })}
+                {getEdgeInProgress(
+                  props.nodes,
+                  edgeInProgressState.fromNodeId,
+                  edgeInProgressState.toCoordinates
                 )}
-              </Canvas>
+              </React.Fragment>
             )}
-          </SizeMe>
+          </Canvas>
         </div>
       </React.Fragment>
     </div>
@@ -126,13 +124,10 @@ const DataGraph = (props: Props) => {
 
 function getEdgeInProgress(
   nodes: Node[],
-  fromNodeId: number | null | undefined,
-  clientX: number,
-  clientY: number,
-  ctm: CTM | null | undefined
+  fromNodeId: number | null,
+  toCoordinates: Coordinates | null
 ) {
-  if (fromNodeId === null || fromNodeId === undefined || !ctm) return null;
-  const toCoordinates = getMousePosition(clientX, clientY, ctm);
+  if (fromNodeId === null || toCoordinates === null) return null;
   return (
     <DataEdgeInProgress
       fromNode={getNode(nodes, fromNodeId)}

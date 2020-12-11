@@ -6,8 +6,8 @@ type Props = {
   children: React.ReactNode | null | undefined;
   height: number;
   id: number;
-  onMouseDown?: (event: React.MouseEvent) => any;
-  onMouseUp?: (event: React.MouseEvent) => any;
+  onMouseDown?: (event: React.MouseEvent) => void;
+  onMouseUp?: (event: React.MouseEvent) => void;
   styles?: string;
   width: number;
   x: number;

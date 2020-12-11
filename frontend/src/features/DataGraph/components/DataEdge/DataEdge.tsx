@@ -11,7 +11,7 @@ import styles from './DataEdge.module.css';
 
 type Props = {
   fromNode: Node;
-  onClick?: () => any;
+  onClick?: () => void;
   toNode: Node;
 };
 const DataEdge = (props: Props) => {

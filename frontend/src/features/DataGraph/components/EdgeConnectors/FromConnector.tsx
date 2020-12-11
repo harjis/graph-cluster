@@ -5,18 +5,25 @@ import {
   fromConnectorHoverRadius,
   connectGraphNodeHeight,
   connectGraphNodeWidth,
+  CONNECTOR_TYPE,
 } from '../../constants/constants';
 
 import styles from './FromConnector.module.css';
 
 type Props = {
-  onClick: (event: React.MouseEvent<Element>) => any;
+  onClick: (event: React.MouseEvent) => void;
+};
+const fromConnectorDataProps = {
+  [CONNECTOR_TYPE]: 'from-g',
+};
+const fromConnectorCircleDataProps = {
+  [CONNECTOR_TYPE]: 'from-circle',
 };
 const FromConnector = (props: Props) => {
   const [isMouseOver, setMouseOver] = React.useState(false);
   return (
     <g
-      data-connector-type="from-g"
+      {...fromConnectorDataProps}
       transform={`translate(${
         connectGraphNodeWidth / 2
       }, ${connectGraphNodeHeight})`}
@@ -25,7 +32,7 @@ const FromConnector = (props: Props) => {
       onMouseLeave={() => setMouseOver(false)}
     >
       <circle
-        data-connector-type="from-circle"
+        {...fromConnectorCircleDataProps}
         className={styles.connector}
         r={isMouseOver ? fromConnectorHoverRadius : fromConnectorRadius}
       />
