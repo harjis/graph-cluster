@@ -15,7 +15,7 @@ import { getMousePosition } from '../../../../utils/svg_utils';
 import { getNode } from '../../utils/nodeUtils';
 import { useDataEdgeInProgress } from '../../stores/useDataEdgeInProgress';
 
-import styles from './ConnectGraph.module.css';
+import styles from './DataGraph.module.css';
 
 type Props = {
   edges: Edge[];
