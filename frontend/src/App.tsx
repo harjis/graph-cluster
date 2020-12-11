@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Graphs from './Graphs/Graphs';
-import Tenants from './Tenants/Tenants';
-import ConnectGraphContainer from './ConnectGraph/ConnectGraphContainer';
+import Graphs from './features/Graphs/Graphs';
+import Tenants from './features/Tenants/Tenants';
+import ConnectGraphContainer from './features/ConnectGraph/ConnectGraphContainer';
 import { ReduxState } from './reducers';
 import { Tenant } from './types/tenant';
 import { startFetchCurrentTenant } from './actions/currentTenantActions';
