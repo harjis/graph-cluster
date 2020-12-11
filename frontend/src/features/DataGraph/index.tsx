@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DataGraph from './components/DataGraph/DataGraph';
-import useDataGraph from './stores/useDataGraph';
+import useDataGraph from './hooks/useDataGraph';
 
 // TODO fix any
 const DataGraphRouterContainer = (props: any) => {

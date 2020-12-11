@@ -11,7 +11,7 @@ import { Edge, Errors, Node } from '../../constants/types';
 import { getComponentByType } from '../../utils/nodeComponentUtil';
 import { getMousePosition } from '../../../../utils/svg_utils';
 import { getNode } from '../../utils/nodeUtils';
-import { useDataEdgeInProgress } from '../../stores/useDataEdgeInProgress';
+import { useDataEdgeInProgress } from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataGraph.module.css';
 
