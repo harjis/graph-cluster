@@ -7,7 +7,7 @@ type Props = {
   nodeHeight: number;
   nodeWidth: number;
 };
-const CenteredText = (props: Props) => (
+export const CenteredText = (props: Props) => (
   <g
     className={styles.text}
     transform={`translate(${props.nodeWidth / 2}, ${props.nodeHeight / 2})`}
@@ -21,5 +21,3 @@ const CenteredText = (props: Props) => (
     </text>
   </g>
 );
-
-export default CenteredText;

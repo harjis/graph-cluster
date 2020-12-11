@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Background from '../components/Background/Background';
-import Canvas from '../components/Canvas/Canvas';
-import DotPattern from '../components/DotPattern/DotPattern';
+import { Background } from '../components/Background/Background';
+import { Canvas } from '../components/Canvas/Canvas';
+import { DotPattern } from '../components/DotPattern/DotPattern';
 
 export default {
   title: 'Graph/Canvas',

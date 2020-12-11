@@ -12,9 +12,7 @@ type Props = {
   width: number;
 };
 
-// I have no idea what the _ is but I copied it from react_16_3/forwardRef.js ^_^
-// eslint-disable-next-line react/display-name
-const Canvas = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
+export const Canvas = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
   const [canvasId] = React.useState(shortid.generate());
   return (
     <svg
@@ -27,5 +25,3 @@ const Canvas = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
     </svg>
   );
 });
-
-export default Canvas;

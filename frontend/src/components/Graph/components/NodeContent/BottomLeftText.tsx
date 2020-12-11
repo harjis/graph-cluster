@@ -8,7 +8,7 @@ type Props = {
   nodeHeight: number;
   nodeWidth: number;
 };
-const BottomLeftText = (props: Props) => (
+export const BottomLeftText = (props: Props) => (
   <g
     className={props.styles || styles.text}
     transform={`translate(4, ${props.nodeHeight - 4})`}
@@ -16,5 +16,3 @@ const BottomLeftText = (props: Props) => (
     <text>{props.children}</text>
   </g>
 );
-
-export default BottomLeftText;

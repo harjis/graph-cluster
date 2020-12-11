@@ -1,15 +1,13 @@
 import React from 'react';
 import { SizeMe } from 'react-sizeme';
 
-import Background from '../../../../components/Graph/components/Background/Background';
-import Canvas from '../../../../components/Graph/components/Canvas/Canvas';
 import DataEdge from '../DataEdge/DataEdge';
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
-import DotPattern from '../../../../components/Graph/components/DotPattern/DotPattern';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
+import { Background, Canvas, DotPattern } from '../../../../components/Graph';
+import { connectGraphNodeHeight } from '../../constants/constants';
 import { CTM } from '../../../../utils/svg_utils';
 import { Edge, Errors, Node } from '../../constants/types';
-import { connectGraphNodeHeight } from '../../constants/constants';
 import { getComponentByType } from '../../utils/nodeComponentUtil';
 import { getMousePosition } from '../../../../utils/svg_utils';
 import { getNode } from '../../utils/nodeUtils';

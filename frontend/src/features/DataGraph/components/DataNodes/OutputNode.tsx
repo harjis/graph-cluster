@@ -1,8 +1,7 @@
 import React from 'react';
 
-import CenteredText from '../../../../components/Graph/components/NodeContent/CenteredText';
+import { CenteredText, Node } from '../../../../components/Graph';
 import ToConnector from '../EdgeConnectors/ToConnector';
-import Node from '../../../../components/Graph/components/Node/Node';
 import {
   connectGraphNodeHeight,
   connectGraphNodeWidth,
@@ -17,9 +16,9 @@ type Props = {
   hasToEdges: boolean;
   id: number;
   name: string;
-  onClickToConnector: (event: React.MouseEvent<Element>) => any;
-  onMouseDown: (event: React.MouseEvent<Element>) => any;
-  onMouseUp: (event: React.MouseEvent<Element>) => any;
+  onClickToConnector: (event: React.MouseEvent) => void;
+  onMouseDown: (event: React.MouseEvent) => void;
+  onMouseUp: (event: React.MouseEvent) => void;
   styles?: string;
   x: number;
   y: number;

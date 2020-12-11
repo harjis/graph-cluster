@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Canvas from '../components/Canvas/Canvas';
-import Edge from '../components/Edge/Edge';
+import { Canvas } from '../components/Canvas/Canvas';
+import { Edge } from '../components/Edge/Edge';
 
 import styles from './CustomStyles.module.css';
 

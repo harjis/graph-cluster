@@ -1,9 +1,11 @@
 import React from 'react';
 
-import BottomLeftText from '../../../../components/Graph/components/NodeContent/BottomLeftText';
-import CenteredText from '../../../../components/Graph/components/NodeContent/CenteredText';
+import {
+  BottomLeftText,
+  CenteredText,
+  Node,
+} from '../../../../components/Graph';
 import FromConnector from '../EdgeConnectors/FromConnector';
-import Node from '../../../../components/Graph/components/Node/Node';
 import {
   connectGraphNodeHeight,
   connectGraphNodeWidth,
@@ -16,9 +18,9 @@ type Props = {
   children: React.ReactNode | null | undefined;
   id: number;
   name: string;
-  onClickFromConnector: (event: React.MouseEvent<Element>) => any;
-  onMouseDown: (event: React.MouseEvent<Element>) => any;
-  onMouseUp: (event: React.MouseEvent<Element>) => any;
+  onClickFromConnector: (event: React.MouseEvent) => void;
+  onMouseDown: (event: React.MouseEvent) => void;
+  onMouseUp: (event: React.MouseEvent) => void;
   styles?: string;
   x: number;
   y: number;

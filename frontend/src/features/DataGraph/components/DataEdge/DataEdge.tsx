@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Edge from '../../../../components/Graph/components/Edge/Edge';
+import { Edge } from '../../../../components/Graph';
 import { Node } from '../../constants/types';
 import {
   getNodeBottomMiddlePosition,

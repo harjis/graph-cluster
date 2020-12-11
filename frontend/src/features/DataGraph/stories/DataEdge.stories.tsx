@@ -1,10 +1,10 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
-import Canvas from '../../../components/Graph/components/Canvas/Canvas';
 import DataEdge from '../components/DataEdge/DataEdge';
 import InputNode from '../components/DataNodes/InputNode';
 import OutputNode from '../components/DataNodes/OutputNode';
+import { Canvas } from '../../../components/Graph';
 import { createNode, inputHandlers, outputHandlers } from './story_utils';
 
 const fromNode = createNode(0, 10, 10);

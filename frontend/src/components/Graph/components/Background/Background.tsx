@@ -5,7 +5,7 @@ type Props = {
   patternId: string;
   width: number;
 };
-const Background = (props: Props) => (
+export const Background = (props: Props) => (
   <rect
     x="0"
     y="0"
@@ -14,5 +14,3 @@ const Background = (props: Props) => (
     fill={`url(#${props.patternId})`}
   />
 );
-
-export default Background;

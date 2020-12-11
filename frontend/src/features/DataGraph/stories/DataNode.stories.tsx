@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Canvas from '../../../components/Graph/components/Canvas/Canvas';
+import { Canvas } from '../../../components/Graph';
 import InputNode from '../components/DataNodes/InputNode';
 import NodeRef from '../components/DataNodes/NodeRefNode';
 import OutputNode from '../components/DataNodes/OutputNode';

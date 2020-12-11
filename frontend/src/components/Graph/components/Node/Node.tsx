@@ -6,8 +6,8 @@ type Props = {
   children: React.ReactNode | null | undefined;
   height: number;
   id: number;
-  onMouseDown?: (event: React.MouseEvent<Element>) => any;
-  onMouseUp?: (event: React.MouseEvent<Element>) => any;
+  onMouseDown?: (event: React.MouseEvent) => any;
+  onMouseUp?: (event: React.MouseEvent) => any;
   styles?: string;
   width: number;
   x: number;
@@ -16,7 +16,7 @@ type Props = {
 
 // Notice: Event handlers should not be attached to g. If you have components with handlers inside Node
 // it would make these handlers fire as well.
-const Node = (props: Props) => (
+export const Node = (props: Props) => (
   <g transform={`translate(${props.x}, ${props.y})`}>
     <rect
       onMouseDown={props.onMouseDown}
@@ -28,5 +28,3 @@ const Node = (props: Props) => (
     {props.children}
   </g>
 );
-
-export default Node;

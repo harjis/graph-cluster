@@ -1,12 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Background from '../components/Background/Background';
-import BottomLeftText from '../components/NodeContent/BottomLeftText';
-import Canvas from '../components/Canvas/Canvas';
-import CenteredText from '../components/NodeContent/CenteredText';
-import DotPattern from '../components/DotPattern/DotPattern';
-import Node from '../components/Node/Node';
+import { Background } from '../components/Background/Background';
+import { BottomLeftText } from '../components/NodeContent/BottomLeftText';
+import { Canvas } from '../components/Canvas/Canvas';
+import { CenteredText } from '../components/NodeContent/CenteredText';
+import { DotPattern } from '../components/DotPattern/DotPattern';
+import { Node } from '../components/Node/Node';
 import {
   DEFAULT_NODE_HEIGHT,
   DEFAULT_NODE_WIDTH,
