@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchGraphs } from '../ConnectGraph/api/graphs';
+import { fetchGraphs } from '../DataGraph/api/graphs';
 import { useFetch } from '../../hooks/useFetch';
-import { Graph } from '../ConnectGraph/constants/ConnectGraphTypes';
+import { Graph } from '../DataGraph/constants/types';
 import { LoadingState } from '../../types';
 
 const Graphs = () => {

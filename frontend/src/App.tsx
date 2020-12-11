@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Graphs from './features/Graphs/Graphs';
 import Tenants from './features/Tenants/Tenants';
-import ConnectGraphContainer from './features/ConnectGraph/ConnectGraphContainer';
+import DataGraphContainer from './features/DataGraph';
 import { ReduxState } from './reducers';
 import { Tenant } from './types/tenant';
 import { startFetchCurrentTenant } from './actions/currentTenantActions';
@@ -35,7 +35,7 @@ function App(props: Props) {
       <hr />
       <Route exact path="/" component={Graphs} />
       <Route exact path="/tenants" component={Tenants} />
-      <Route path="/graphs/:id" component={ConnectGraphContainer} />
+      <Route path="/graphs/:id" component={DataGraphContainer} />
     </Router>
   );
 }
