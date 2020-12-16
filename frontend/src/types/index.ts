@@ -3,3 +3,7 @@ export enum LoadingState {
   LOADING,
   LOADED,
 }
+
+export type Errors = {
+  [key: string]: string[];
+};

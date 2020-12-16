@@ -1,5 +1,6 @@
-import { NodeAction, Offset, Errors } from '../constants/types';
+import { NodeAction, Offset } from '../constants/types';
 import { Node } from '../../../api/nodes';
+import { Errors } from '../../../types';
 
 export function addNode(node: Node): NodeAction {
   return { type: 'NODES/ADD', node };

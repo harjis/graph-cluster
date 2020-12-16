@@ -1,9 +1,6 @@
 import { Edge } from '../../../api/edges';
 import { Node } from '../../../api/nodes';
-
-export type Errors = {
-  [key: string]: string[];
-};
+import { Errors } from '../../../types';
 
 export type SavingAction = { type: 'SAVING'; isSaving: boolean };
 export type Offset = { x: number; y: number };

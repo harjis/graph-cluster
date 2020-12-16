@@ -1,11 +1,6 @@
-import {
-  AddEdge,
-  DeleteEdge,
-  Errors,
-  NodeAction,
-  Offset,
-} from '../constants/types';
+import { AddEdge, DeleteEdge, NodeAction, Offset } from '../constants/types';
 import { Node } from '../../../api/nodes';
+import { Errors } from '../../../types';
 
 export type State = {
   draggedNodeId: number | null | undefined;

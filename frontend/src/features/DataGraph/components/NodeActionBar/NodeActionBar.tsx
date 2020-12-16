@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Errors } from '../../constants/types';
+import { Errors } from '../../../../types';
 
 import styles from './NodeActionBar.module.css';
 

@@ -1,5 +1,5 @@
-import { Errors } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
+import { Errors } from '../types';
 
 export type NodeType = 'InputNode' | 'OutputNode' | 'NodeRefNode';
 export type Node = {
