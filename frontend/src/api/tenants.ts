@@ -1,7 +1,9 @@
-import { Tenant } from '../types/tenant';
-import { url } from './common';
+import { url, options } from './common';
 
-export const options = {};
+export type Tenant = {
+  id: number;
+  name: string;
+};
 
 export function fetchTenants(): Promise<Tenant[]> {
   return fetch(`${url}/tenants`, options).then((response) => response.json());

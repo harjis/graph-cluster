@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { GraphList } from './features/Graphs';
-import Tenants from './features/Tenants/Tenants';
 import DataGraphContainer from './features/DataGraph';
+import Tenants from './features/Tenants/Tenants';
+import { GraphList } from './features/Graphs';
 import { ReduxState } from './reducers';
-import { Tenant } from './types/tenant';
 import { startFetchCurrentTenant } from './actions/currentTenantActions';
+import { Tenant } from './api/tenants';
 
 type Props = {
   currentTenant: Tenant | null | undefined;

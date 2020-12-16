@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { Tenant } from '../types/tenant';
 import { Action } from '../actions/currentTenantActions';
+import { Tenant } from '../api/tenants';
 
 type CurrentTenantState = {
   currentTenant: Tenant | null | undefined;

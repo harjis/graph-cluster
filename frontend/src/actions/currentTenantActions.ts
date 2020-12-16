@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
-import { Tenant } from '../types/tenant';
-import { fetchCurrentTenant, setTenant } from '../api/tenants';
+import { fetchCurrentTenant, setTenant, Tenant } from '../api/tenants';
 
 type FetchSuccess = {
   type: 'CURRENT_TENANT/FETCH_SUCCESS';
