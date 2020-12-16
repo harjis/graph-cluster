@@ -2,7 +2,7 @@ import {
   DEFAULT_NODE_HEIGHT,
   DEFAULT_NODE_WIDTH,
 } from '../../../components/Graph/constants/GraphConstants';
-import { Node } from '../constants/types';
+import { Node } from '../../../api/nodes';
 
 type Coordinates = {
   x: number;

@@ -1,18 +1,8 @@
 import { Edge } from '../../../api/edges';
+import { Node } from '../../../api/nodes';
 
 export type Errors = {
   [key: string]: string[];
-};
-export type NodeType = 'InputNode' | 'OutputNode' | 'NodeRefNode';
-export type Node = {
-  errors: Errors;
-  graph_id: number;
-  id: number;
-  name: string;
-  to_edge_ids: number[];
-  type: NodeType;
-  x: number;
-  y: number;
 };
 
 export type SavingAction = { type: 'SAVING'; isSaving: boolean };

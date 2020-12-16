@@ -1,7 +1,7 @@
 import InputNode from '../components/DataNodes/InputNode';
 import NodeRefNode from '../components/DataNodes/NodeRefNode';
 import OutputNode from '../components/DataNodes/OutputNode';
-import { NodeType } from '../constants/types';
+import { NodeType } from '../../../api/nodes';
 
 type NodeComponent = typeof InputNode | typeof OutputNode | typeof NodeRefNode;
 const componentMap = new Map<NodeType, NodeComponent>([

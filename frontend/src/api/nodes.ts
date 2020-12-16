@@ -1,5 +1,17 @@
-import { Node, NodeType } from '../features/DataGraph/constants/types';
+import { Errors } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
+
+export type NodeType = 'InputNode' | 'OutputNode' | 'NodeRefNode';
+export type Node = {
+  errors: Errors;
+  graph_id: number;
+  id: number;
+  name: string;
+  to_edge_ids: number[];
+  type: NodeType;
+  x: number;
+  y: number;
+};
 
 export function createNode(graph_id: number, type: NodeType): Promise<Node> {
   return fetch(`${url}/graphs/${graph_id}/nodes`, {

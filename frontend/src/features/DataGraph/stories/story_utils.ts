@@ -1,5 +1,5 @@
-import { Node } from '../constants/types';
 import { getRandomInt } from '../../../utils/math_util';
+import { Node } from '../../../api/nodes';
 
 const handlers = {
   onMouseDown: () => {},

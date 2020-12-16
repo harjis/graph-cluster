@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Edge } from '../../../../components/Graph';
-import { Node } from '../../constants/types';
 import { getNodeBottomMiddlePosition } from '../../utils/nodeUtils';
 
 import styles from './DataEdgeInProgress.module.css';
+import { Node } from '../../../../api/nodes';
 
 type Props = {
   fromNode: Node;

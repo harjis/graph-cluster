@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Edge } from '../../../../components/Graph';
-import { Node } from '../../constants/types';
 import {
   getNodeBottomMiddlePosition,
   getNodeTopMiddlePosition,
 } from '../../utils/nodeUtils';
+import { Node } from '../../../../api/nodes';
 
 import styles from './DataEdge.module.css';
 
