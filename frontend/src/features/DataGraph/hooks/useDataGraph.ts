@@ -19,9 +19,9 @@ import {
   fetchEdgesStart,
   fetchEdgesSucceed,
 } from '../actions/edgeActions';
-import { resetDb, undoGraph } from '../api/graphs';
-import { createNode, fetchNodes, updateNode } from '../api/nodes';
-import { createEdge, destroyEdge, fetchEdges } from '../api/edges';
+import { resetDb, undoGraph } from '../../../api/graphs';
+import { createNode, fetchNodes, updateNode } from '../../../api/nodes';
+import { createEdge, destroyEdge, fetchEdges } from '../../../api/edges';
 import { Edge } from '../constants/types';
 import { setSaving } from '../actions/savingActions';
 

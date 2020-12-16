@@ -1,6 +1,6 @@
 import { Tenant } from '../types/tenant';
+import { url } from './common';
 
-export const url = `${window.location.origin}/api`;
 export const options = {};
 
 export function fetchTenants(): Promise<Tenant[]> {

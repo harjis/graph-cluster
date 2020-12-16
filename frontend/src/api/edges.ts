@@ -1,4 +1,4 @@
-import { Edge } from '../constants/types';
+import { Edge } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
 
 export function createEdge(

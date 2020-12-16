@@ -1,4 +1,4 @@
-import { Graph } from '../constants/types';
+import { Graph } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
 
 export function fetchGraphs(): Promise<Graph[]> {

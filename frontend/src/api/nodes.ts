@@ -1,4 +1,4 @@
-import { Node, NodeType } from '../constants/types';
+import { Node, NodeType } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
 
 export function createNode(graph_id: number, type: NodeType): Promise<Node> {
