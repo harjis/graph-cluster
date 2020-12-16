@@ -12,9 +12,9 @@ import {
   useDataEdgeInProgress,
   Coordinates,
 } from '../../hooks/useDataEdgeInProgress';
+import useResizeObserver from '../../../../hooks/useResizeObserver';
 
 import styles from './DataGraph.module.css';
-import useResizeObserver from '../../../../hooks/useResizeObserver';
 
 type Props = {
   edges: Edge[];

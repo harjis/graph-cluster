@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchGraphs } from '../DataGraph/api/graphs';
-import { useFetch } from '../../hooks/useFetch';
-import { Graph } from '../DataGraph/constants/types';
-import { LoadingState } from '../../types';
+import { fetchGraphs } from '../../DataGraph/api/graphs';
+import { useFetch } from '../../../hooks/useFetch';
+import { Graph } from '../../DataGraph/constants/types';
+import { LoadingState } from '../../../types';
 
-const Graphs = () => {
+export const GraphList = () => {
   const { data: graphs, error, loadingState } = useFetch<Graph[]>(
     fetchGraphs,
     []
@@ -32,5 +32,3 @@ const Graphs = () => {
     </ul>
   );
 };
-
-export default Graphs;

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Graphs from './features/Graphs/Graphs';
+import { GraphList } from './features/Graphs';
 import Tenants from './features/Tenants/Tenants';
 import DataGraphContainer from './features/DataGraph';
 import { ReduxState } from './reducers';
@@ -33,7 +33,7 @@ function App(props: Props) {
         </ul>
       </div>
       <hr />
-      <Route exact path="/" component={Graphs} />
+      <Route exact path="/" component={GraphList} />
       <Route exact path="/tenants" component={Tenants} />
       <Route path="/graphs/:id" component={DataGraphContainer} />
     </Router>
