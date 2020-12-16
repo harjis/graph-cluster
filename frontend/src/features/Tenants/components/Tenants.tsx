@@ -11,8 +11,10 @@ export const Tenants = () => {
   if (
     loadableTenants.state === 'hasError' ||
     loadableTenants.state === 'loading'
-  )
+  ) {
     return null;
+  }
+
   return (
     <div>
       <ul>
