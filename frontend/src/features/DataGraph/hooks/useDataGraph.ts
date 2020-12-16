@@ -21,8 +21,7 @@ import {
 } from '../actions/edgeActions';
 import { resetDb, undoGraph } from '../../../api/graphs';
 import { createNode, fetchNodes, updateNode } from '../../../api/nodes';
-import { createEdge, destroyEdge, fetchEdges } from '../../../api/edges';
-import { Edge } from '../constants/types';
+import { createEdge, destroyEdge, Edge, fetchEdges } from '../../../api/edges';
 import { setSaving } from '../actions/savingActions';
 
 type OnDragHandler = (event: MouseEvent) => void;

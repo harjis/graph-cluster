@@ -1,5 +1,10 @@
-import { Edge } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
+
+export type Edge = {
+  from_node_id: number;
+  id: number;
+  to_node_id: number;
+};
 
 export function createEdge(
   graphId: number,

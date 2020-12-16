@@ -1,5 +1,9 @@
-import { Graph } from '../features/DataGraph/constants/types';
 import { options, url } from './common';
+
+export type Graph = {
+  id: number;
+  name: string;
+};
 
 export function fetchGraphs(): Promise<Graph[]> {
   return fetch(`${url}/graphs`, options).then((response) => response.json());

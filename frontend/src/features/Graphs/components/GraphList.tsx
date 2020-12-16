@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchGraphs } from '../../../api/graphs';
+import { fetchGraphs, Graph } from '../../../api/graphs';
 import { useFetch } from '../../../hooks/useFetch';
-import { Graph } from '../../DataGraph/constants/types';
 import { LoadingState } from '../../../types';
 
 export const GraphList = () => {

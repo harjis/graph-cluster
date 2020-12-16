@@ -1,7 +1,4 @@
-export type Graph = {
-  id: number;
-  name: string;
-};
+import { Edge } from '../../../api/edges';
 
 export type Errors = {
   [key: string]: string[];
@@ -16,12 +13,6 @@ export type Node = {
   type: NodeType;
   x: number;
   y: number;
-};
-
-export type Edge = {
-  from_node_id: number;
-  id: number;
-  to_node_id: number;
 };
 
 export type SavingAction = { type: 'SAVING'; isSaving: boolean };

@@ -5,7 +5,7 @@ import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
-import { Edge, Errors, Node } from '../../constants/types';
+import { Errors, Node } from '../../constants/types';
 import { getComponentByType } from '../../utils/nodeComponentUtil';
 import { getNode } from '../../utils/nodeUtils';
 import {
@@ -13,6 +13,7 @@ import {
   Coordinates,
 } from '../../hooks/useDataEdgeInProgress';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
+import { Edge } from '../../../../api/edges';
 
 import styles from './DataGraph.module.css';
 

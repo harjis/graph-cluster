@@ -1,4 +1,5 @@
-import { Edge, EdgeAction } from '../constants/types';
+import { EdgeAction } from '../constants/types';
+import { Edge } from '../../../api/edges';
 
 export type State = {
   error: string | null | undefined;
