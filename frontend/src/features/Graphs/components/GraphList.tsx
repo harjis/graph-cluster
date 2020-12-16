@@ -1,26 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchGraphs, Graph } from '../../../api/graphs';
-import { useFetch } from '../../../hooks/useFetch';
-import { LoadingState } from '../../../types';
+import { useRecoilState } from 'recoil';
+import { graphsState } from '../../../atoms/graphs';
+import { Loading } from '../../../components/Loading';
 
-export const GraphList = () => {
-  const { data: graphs, error, loadingState } = useFetch<Graph[]>(
-    fetchGraphs,
-    []
-  );
-
-  if (loadingState === LoadingState.LOADING) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>{error}</div>;
-  }
-  if (!graphs) {
-    return <div>Something went wrong :(</div>;
-  }
-
+const Graphs = () => {
+  const [graphs] = useRecoilState(graphsState);
   return (
     <ul>
       {graphs.map((graph) => (
@@ -29,5 +15,13 @@ export const GraphList = () => {
         </li>
       ))}
     </ul>
+  );
+};
+
+export const GraphList = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Graphs />
+    </Suspense>
   );
 };
