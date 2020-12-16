@@ -1,34 +1,36 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import DataGraphContainer from './features/DataGraph';
-import Tenants from './features/Tenants/Tenants';
+import { currentTenantState } from './atoms/tenants';
 import { GraphList } from './features/Graphs';
-import { ReduxState } from './reducers';
-import { startFetchCurrentTenant } from './actions/currentTenantActions';
-import { Tenant } from './api/tenants';
+import { Loading } from './components/Loading';
+import { Tenants } from './features/Tenants';
 
-type Props = {
-  currentTenant: Tenant | null | undefined;
-  dispatch: Function;
+const App = () => {
+  return (
+    <RecoilRoot>
+      <Router>
+        <Suspense fallback={<Loading />}>
+          <AppWithCurrentTenant />
+        </Suspense>
+      </Router>
+    </RecoilRoot>
+  );
 };
 
-function App(props: Props) {
-  const { dispatch } = props;
-  React.useEffect(() => {
-    dispatch(startFetchCurrentTenant());
-  }, [dispatch]);
+const AppWithCurrentTenant = () => {
+  const currentTenant = useRecoilValue(currentTenantState);
   return (
-    <Router>
+    <>
       <div>
         <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/tenants">Tenants</Link>:{' '}
-            {props.currentTenant && props.currentTenant.name}
+            <Link to="/tenants">Tenants</Link>: {currentTenant.name}
           </li>
         </ul>
       </div>
@@ -36,13 +38,8 @@ function App(props: Props) {
       <Route exact path="/" component={GraphList} />
       <Route exact path="/tenants" component={Tenants} />
       <Route path="/graphs/:id" component={DataGraphContainer} />
-    </Router>
+    </>
   );
-}
+};
 
-function mapStateToProps(state: ReduxState) {
-  const currentTenantState = state.currentTenantReducer;
-  return { currentTenant: currentTenantState.currentTenant };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

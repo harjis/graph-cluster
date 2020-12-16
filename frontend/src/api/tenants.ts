@@ -20,7 +20,7 @@ export function setTenant(tenantId: number): Promise<Tenant> {
   }).then((response) => response.json());
 }
 
-export function fetchCurrentTenant() {
+export function fetchCurrentTenant(): Promise<Tenant> {
   return fetch(`${url}/tenants/current`, options).then((response) =>
     response.json()
   );
