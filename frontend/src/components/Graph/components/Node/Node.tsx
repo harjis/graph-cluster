@@ -5,7 +5,6 @@ import styles from './Node.module.css';
 type Props = {
   children: React.ReactNode | null | undefined;
   height: number;
-  id: number;
   onMouseDown?: (event: React.MouseEvent) => void;
   onMouseUp?: (event: React.MouseEvent) => void;
   styles?: string;

@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 import { fetchGraphs } from '../api/graphs';
 
 export const graphsState = atom({

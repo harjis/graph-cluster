@@ -12,27 +12,27 @@ import {
   Coordinates,
 } from '../../hooks/useDataEdgeInProgress';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
-import { Edge } from '../../../../api/edges';
 import { Node } from '../../../../api/nodes';
-import { Errors } from '../../../../types';
 
 import styles from './DataGraph.module.css';
+import { useRecoilValue } from 'recoil';
+import { graphQuery } from '../../selectors/graph';
+import { ParentNode } from '../DataNodes';
 
+const onAddInputNode = () => {};
+const onAddOutputNode = () => {};
+const onUndo = () => {};
+const onResetDb = () => {};
+const onAddEdge = (id: number, id2: number) => {};
+const onStartDrag = (id: number, event: React.MouseEvent) => {};
+const onStopDrag = () => {};
+const validationErrors = {};
+const nodes: Node[] = [];
 type Props = {
-  edges: Edge[];
-  nodes: Node[];
-  isSaving: boolean;
-  onAddEdge: (fromNodeId: number, toNodeId: number) => void;
-  onAddInputNode: () => void;
-  onAddOutputNode: () => void;
-  onDeleteEdge: (edge: Edge) => void;
-  onStartDrag: (nodeId: number, event: React.MouseEvent) => void;
-  onStopDrag: (event: React.MouseEvent) => void;
-  onUndo: () => void;
-  onResetDb: () => void;
-  validationErrors: Errors;
+  graphId: number;
 };
-const DataGraph = (props: Props) => {
+const DataGraph: React.FC<Props> = (props) => {
+  const graph = useRecoilValue(graphQuery(props.graphId));
   const {
     ref,
     edgeInProgressState,
@@ -44,12 +44,12 @@ const DataGraph = (props: Props) => {
     <div className={styles.container}>
       <React.Fragment>
         <NodeActionBar
-          isSaving={props.isSaving}
-          onAddInputNode={props.onAddInputNode}
-          onAddOutputNode={props.onAddOutputNode}
-          onUndo={props.onUndo}
-          onResetDb={props.onResetDb}
-          validationErrors={props.validationErrors}
+          isSaving={false}
+          onAddInputNode={onAddInputNode}
+          onAddOutputNode={onAddOutputNode}
+          onUndo={onUndo}
+          onResetDb={onResetDb}
+          validationErrors={validationErrors}
         />
         {/*.container + .innerContainer is a bit of a hack. Try to make it better*/}
         <div
@@ -59,7 +59,7 @@ const DataGraph = (props: Props) => {
         >
           <Canvas
             ref={ref}
-            height={getMaxHeight(props.nodes, dimensions.height)}
+            height={getMaxHeight(nodes, dimensions.height)}
             width={dimensions.width}
           >
             {({ canvasId }) => (
@@ -69,49 +69,26 @@ const DataGraph = (props: Props) => {
                 </defs>
                 <Background
                   patternId={canvasId}
-                  height={getMaxHeight(props.nodes, dimensions.height)}
+                  height={getMaxHeight(nodes, dimensions.height)}
                   width={dimensions.width}
                 />
-                {props.edges.map((edge) => (
-                  <DataEdge
-                    key={edge.id}
-                    onClick={() => props.onDeleteEdge(edge)}
-                    fromNode={getNode(props.nodes, edge.from_node_id)}
-                    toNode={getNode(props.nodes, edge.to_node_id)}
+                {/*{props.edges.map((edge) => (*/}
+                {/*  <DataEdge*/}
+                {/*    key={edge.id}*/}
+                {/*    onClick={() => props.onDeleteEdge(edge)}*/}
+                {/*    fromNode={getNode(props.nodes, edge.from_node_id)}*/}
+                {/*    toNode={getNode(props.nodes, edge.to_node_id)}*/}
+                {/*  />*/}
+                {/*))}*/}
+                {graph.nodeIds.map((nodeId) => (
+                  <ParentNode
+                    id={nodeId}
+                    graphId={props.graphId}
+                    key={nodeId}
                   />
                 ))}
-                {props.nodes.map((node) => {
-                  const NodeComponent = getComponentByType(node.type);
-                  return (
-                    <NodeComponent
-                      canConnect={!!edgeInProgressState.fromNodeId}
-                      hasToEdges={node.to_edge_ids.length > 0}
-                      id={node.id}
-                      key={node.id}
-                      name={node.name}
-                      onClickFromConnector={(event) =>
-                        onStartEdgeInProgress(node.id, event)
-                      }
-                      onClickToConnector={() => {
-                        if (edgeInProgressState.fromNodeId) {
-                          props.onAddEdge(
-                            edgeInProgressState.fromNodeId,
-                            node.id
-                          );
-                        }
-                        onStopEdgeInProgress();
-                      }}
-                      onMouseDown={(event) => props.onStartDrag(node.id, event)}
-                      onMouseUp={props.onStopDrag}
-                      x={node.x}
-                      y={node.y}
-                    >
-                      {null}
-                    </NodeComponent>
-                  );
-                })}
                 {getEdgeInProgress(
-                  props.nodes,
+                  nodes,
                   edgeInProgressState.fromNodeId,
                   edgeInProgressState.toCoordinates
                 )}

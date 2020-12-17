@@ -10,6 +10,11 @@ defmodule PhoenixGraphWeb.GraphController do
     render(conn, "index.json", graphs: graphs)
   end
 
+  def show(conn, %{"id" => id}) do
+    graph = Graphs.get_graph!(id)
+    render(conn, "show.json", graph: graph)
+  end
+
   def data(conn, %{"id" => id}) do
     graph = Graphs.get_graph!(id)
     render(conn, "data.json", graph: graph)

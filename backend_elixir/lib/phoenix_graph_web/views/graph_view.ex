@@ -6,6 +6,10 @@ defmodule PhoenixGraphWeb.GraphView do
     render_many(graphs, GraphView, "graph.json")
   end
 
+  def render("show.json", %{graph: graph}) do
+    render_one(graph, GraphView, "graph.json")
+  end
+
   def render("graph.json", %{graph: graph}) do
     %{
       id: graph.id,

@@ -1,6 +1,6 @@
-import InputNode from '../components/DataNodes/InputNode';
-import NodeRefNode from '../components/DataNodes/NodeRefNode';
-import OutputNode from '../components/DataNodes/OutputNode';
+import InputNode from '../components/DataNodes/InputNode/InputNode';
+import NodeRefNode from '../components/DataNodes/NodeRefNode/NodeRefNode';
+import OutputNode from '../components/DataNodes/OutputNode/OutputNode';
 import { NodeType } from '../../../api/nodes';
 
 type NodeComponent = typeof InputNode | typeof OutputNode | typeof NodeRefNode;

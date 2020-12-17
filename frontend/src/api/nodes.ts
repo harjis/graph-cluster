@@ -13,8 +13,8 @@ export type Node = {
   y: number;
 };
 
-export function createNode(graph_id: number, type: NodeType): Promise<Node> {
-  return fetch(`${url}/graphs/${graph_id}/nodes`, {
+export function createNode(graphId: number, type: NodeType): Promise<Node> {
+  return fetch(`${url}/graphs/${graphId}/nodes`, {
     ...options,
     method: 'POST',
     headers: {
@@ -24,8 +24,8 @@ export function createNode(graph_id: number, type: NodeType): Promise<Node> {
   }).then((response) => response.json());
 }
 
-export function fetchNodes(graph_id: number): Promise<Node[]> {
-  return fetch(`${url}/graphs/${graph_id}/nodes`, options).then((response) =>
+export function fetchNodes(graphId: number): Promise<Node[]> {
+  return fetch(`${url}/graphs/${graphId}/nodes`, options).then((response) =>
     response.json()
   );
 }
