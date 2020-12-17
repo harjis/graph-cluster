@@ -1,19 +1,14 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import DataGraph from './components/DataGraph/DataGraph';
 import useDataGraph from './hooks/useDataGraph';
 
-// TODO fix any
-const DataGraphRouterContainer = (props: any) => {
+type Params = {
+  id: string;
+};
+export const DataGraphContainer = (props: RouteComponentProps<Params>) => {
   const graphId = props.match.params.id;
-  if (!graphId) return <div>Graph ID is missing</div>;
-  return <DataGraphContainer graphId={Number(graphId)} />;
-};
-
-type ConnectGraphContainerProps = {
-  graphId: number;
-};
-function DataGraphContainer(props: ConnectGraphContainerProps) {
   const {
     state,
     onAddInputNode,
@@ -24,7 +19,7 @@ function DataGraphContainer(props: ConnectGraphContainerProps) {
     onAddEdge,
     onDeleteEdge,
     onResetDb,
-  } = useDataGraph(props.graphId);
+  } = useDataGraph(Number(graphId));
 
   if (state.nodes.isLoading || state.edges.isLoading) {
     return <div>Loading...</div>;
@@ -49,6 +44,4 @@ function DataGraphContainer(props: ConnectGraphContainerProps) {
       validationErrors={state.nodes.validationErrors}
     />
   );
-}
-
-export default DataGraphRouterContainer;
+};

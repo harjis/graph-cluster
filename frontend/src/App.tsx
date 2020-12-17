@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
-import DataGraphContainer from './features/DataGraph';
+import { DataGraphContainer } from './features/DataGraph';
 import { currentTenantState } from './atoms/tenants';
 import { GraphList } from './features/Graphs';
 import { Loading } from './components/Loading';
