@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
 import {
   BottomLeftText,
@@ -11,23 +10,18 @@ import {
   connectGraphNodeHeight,
   connectGraphNodeWidth,
 } from '../../../constants/constants';
-import { Props } from '../types';
-import { nodeQuery } from '../../../selectors/nodes';
+import { CommonNodeProps } from '../types';
 
 import styles from '../OutputNode/OutputNode.module.css';
 
-const NodeRefNode = (props: Props) => {
-  const onMouseDown = () => {};
-  const onMouseUp = () => {};
+const NodeRefNode = (props: CommonNodeProps) => {
   const onClickFromConnector = () => {};
-  const node = useRecoilValue(
-    nodeQuery({ graphId: props.graphId, nodeId: props.id })
-  );
+  const { node } = props;
   return (
     <Node
       height={connectGraphNodeHeight}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
+      onMouseDown={props.onStartDrag}
+      onMouseUp={props.onStopDrag}
       styles={styles.outputNode}
       width={connectGraphNodeWidth}
       x={node.x}

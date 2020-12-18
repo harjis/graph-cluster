@@ -1,7 +1,5 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { nodeQuery } from '../../../selectors/nodes';
 import { CenteredText, Node } from '../../../../../components/Graph';
 import ToConnector from '../../EdgeConnectors/ToConnector';
 import {
@@ -10,22 +8,18 @@ import {
 } from '../../../constants/constants';
 
 import styles from './OutputNode.module.css';
-import { Props } from '../types';
+import { CommonNodeProps } from '../types';
 
-const OutputNode = (props: Props) => {
-  const onMouseDown = () => {};
-  const onMouseUp = () => {};
+const OutputNode = (props: CommonNodeProps) => {
   const onClickToConnector = () => {};
   const canConnect = false;
   const hasToEdges = false;
-  const node = useRecoilValue(
-    nodeQuery({ graphId: props.graphId, nodeId: props.id })
-  );
+  const { node } = props;
   return (
     <Node
       height={connectGraphNodeHeight}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
+      onMouseDown={props.onStartDrag}
+      onMouseUp={props.onStopDrag}
       styles={styles.outputNode}
       width={connectGraphNodeWidth}
       x={node.x}

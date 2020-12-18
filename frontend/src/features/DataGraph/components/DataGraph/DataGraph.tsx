@@ -16,8 +16,9 @@ import { Node } from '../../../../api/nodes';
 
 import styles from './DataGraph.module.css';
 import { useRecoilValue } from 'recoil';
-import { graphQuery } from '../../selectors/graph';
-import { ParentNode } from '../DataNodes';
+import { DataNode } from '../DataNodes';
+import { graphState } from '../../atoms/graph';
+import { nodesState } from '../../atoms/nodes';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -32,7 +33,8 @@ type Props = {
   graphId: number;
 };
 const DataGraph: React.FC<Props> = (props) => {
-  const graph = useRecoilValue(graphQuery(props.graphId));
+  const graph = useRecoilValue(graphState(props.graphId));
+  const nodes = useRecoilValue(nodesState(props.graphId));
   const {
     ref,
     edgeInProgressState,
@@ -51,6 +53,7 @@ const DataGraph: React.FC<Props> = (props) => {
           onResetDb={onResetDb}
           validationErrors={validationErrors}
         />
+        {graph.name}
         {/*.container + .innerContainer is a bit of a hack. Try to make it better*/}
         <div
           ref={containerRef}
@@ -80,12 +83,8 @@ const DataGraph: React.FC<Props> = (props) => {
                 {/*    toNode={getNode(props.nodes, edge.to_node_id)}*/}
                 {/*  />*/}
                 {/*))}*/}
-                {graph.nodeIds.map((nodeId) => (
-                  <ParentNode
-                    id={nodeId}
-                    graphId={props.graphId}
-                    key={nodeId}
-                  />
+                {nodes.map((node) => (
+                  <DataNode node={node} key={node.id} />
                 ))}
                 {getEdgeInProgress(
                   nodes,

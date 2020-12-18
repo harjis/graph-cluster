@@ -1,4 +1,9 @@
-export type Props = {
-  id: number;
-  graphId: number;
+import React from 'react';
+
+import { Node } from '../../../../api/nodes';
+
+export type CommonNodeProps = {
+  onStartDrag: (event: React.MouseEvent) => void;
+  onStopDrag: () => void;
+  node: Node;
 };

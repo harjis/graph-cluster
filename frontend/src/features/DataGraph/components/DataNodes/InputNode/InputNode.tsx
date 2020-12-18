@@ -1,29 +1,23 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { nodeQuery } from '../../../selectors/nodes';
 import { CenteredText, Node } from '../../../../../components/Graph';
 import FromConnector from '../../EdgeConnectors/FromConnector';
 import {
   connectGraphNodeHeight,
   connectGraphNodeWidth,
 } from '../../../constants/constants';
-import { Props } from '../types';
+import { CommonNodeProps } from '../types';
 
 import styles from './InputNode.module.css';
 
-const InputNode = (props: Props) => {
-  const onMouseDown = () => {};
-  const onMouseUp = () => {};
+const InputNode = (props: CommonNodeProps) => {
   const onClickFromConnector = () => {};
-  const node = useRecoilValue(
-    nodeQuery({ graphId: props.graphId, nodeId: props.id })
-  );
+  const { node } = props;
   return (
     <Node
       height={connectGraphNodeHeight}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
+      onMouseDown={props.onStartDrag}
+      onMouseUp={props.onStopDrag}
       styles={styles.inputNode}
       width={connectGraphNodeWidth}
       x={node.x}
