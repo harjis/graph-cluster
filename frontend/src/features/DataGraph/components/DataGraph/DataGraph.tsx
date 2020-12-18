@@ -5,7 +5,6 @@ import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
-import { getComponentByType } from '../../utils/nodeComponentUtil';
 import { getNode } from '../../utils/nodeUtils';
 import {
   useDataEdgeInProgress,
@@ -18,7 +17,7 @@ import styles from './DataGraph.module.css';
 import { useRecoilValue } from 'recoil';
 import { DataNode } from '../DataNodes';
 import { graphState } from '../../atoms/graph';
-import { nodesState } from '../../atoms/nodes';
+import { nodeIdsQuery } from '../../selectors/nodes';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -34,7 +33,7 @@ type Props = {
 };
 const DataGraph: React.FC<Props> = (props) => {
   const graph = useRecoilValue(graphState(props.graphId));
-  const nodes = useRecoilValue(nodesState(props.graphId));
+  const nodeIds = useRecoilValue(nodeIdsQuery(props.graphId));
   const {
     ref,
     edgeInProgressState,
@@ -83,8 +82,8 @@ const DataGraph: React.FC<Props> = (props) => {
                 {/*    toNode={getNode(props.nodes, edge.to_node_id)}*/}
                 {/*  />*/}
                 {/*))}*/}
-                {nodes.map((node) => (
-                  <DataNode node={node} key={node.id} />
+                {nodeIds.map((nodeId) => (
+                  <DataNode nodeId={nodeId} graphId={props.graphId} key={nodeId} />
                 ))}
                 {getEdgeInProgress(
                   nodes,

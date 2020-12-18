@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { getComponentByType } from '../../utils/nodeComponentUtil';
-import { nodesState } from '../../atoms/nodes';
-import { Node } from '../../../../api/nodes';
+import { nodesState, nodeState } from '../../atoms/nodes';
 import { useWindowEventListener } from '../../../../hooks/useWindowEventListener';
 
 type Coordinates = { x: number; y: number };
 type Props = {
-  node: Node;
+  graphId: number;
+  nodeId: number;
 };
 export const DataNode: React.FC<Props> = (props) => {
   const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
-  const [nodes, setNodes] = useRecoilState(nodesState(props.node.graph_id));
-  const NodeComponent = getComponentByType(props.node.type);
+  const [node, setNode] = useRecoilState(
+    nodeState({ graphId: props.graphId, nodeId: props.nodeId })
+  );
+  const NodeComponent = getComponentByType(node.type);
 
   const startDrag = (event: React.MouseEvent) => {
     const { pageX, pageY } = event;
@@ -31,28 +33,12 @@ export const DataNode: React.FC<Props> = (props) => {
     const xDiff = nodeOffset.x - event.pageX;
     const yDiff = nodeOffset.y - event.pageY;
     setNodeOffset({ x: event.pageX, y: event.pageY });
-    setNodes((nodes) =>
-      nodes.map((node) => {
-        if (props.node.id === node.id) {
-          return {
-            ...node,
-            x: node.x - xDiff,
-            y: node.y - yDiff,
-          };
-        } else {
-          return node;
-        }
-      })
-    );
+    setNode((node) => ({ ...node, x: node.x - xDiff, y: node.y - yDiff }));
   };
 
   useWindowEventListener('mousemove', drag);
 
   return (
-    <NodeComponent
-      node={props.node}
-      onStartDrag={startDrag}
-      onStopDrag={stopDrag}
-    />
+    <NodeComponent node={node} onStartDrag={startDrag} onStopDrag={stopDrag} />
   );
 };
