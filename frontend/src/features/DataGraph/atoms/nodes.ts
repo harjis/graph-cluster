@@ -7,6 +7,12 @@ export const nodesState = atomFamily<Node[], number>({
   default: (graphId) => fetchNodes(graphId),
 });
 
+export const nodeIdsQuery = selectorFamily<number[], number>({
+  key: 'nodeIdsQuery',
+  get: (graphId) => ({ get }) =>
+    get(nodesState(graphId)).map((node) => node.id),
+});
+
 type NodeStateParams = {
   graphId: number;
   nodeId: number;

@@ -2,8 +2,7 @@ import { atomFamily } from 'recoil';
 
 import { fetchGraph, Graph } from '../../../api/graphs';
 
-type Params = number;
-export const graphState = atomFamily<Graph, Params>({
+export const graphState = atomFamily<Graph, number>({
   key: 'graphState',
   default: (graphId) => fetchGraph(graphId),
 });

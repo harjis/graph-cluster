@@ -1,23 +1,20 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 
 import DataEdge from '../DataEdge/DataEdge';
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
+import useResizeObserver from '../../../../hooks/useResizeObserver';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
+import { DataNode } from '../DataNodes';
 import { getNode } from '../../utils/nodeUtils';
-import {
-  useDataEdgeInProgress,
-  Coordinates,
-} from '../../hooks/useDataEdgeInProgress';
-import useResizeObserver from '../../../../hooks/useResizeObserver';
+import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
+import { nodeIdsQuery } from '../../atoms/nodes';
+import { useDataEdgeInProgress, Coordinates, } from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataGraph.module.css';
-import { useRecoilValue } from 'recoil';
-import { DataNode } from '../DataNodes';
-import { graphState } from '../../atoms/graph';
-import { nodeIdsQuery } from '../../selectors/nodes';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -83,7 +80,11 @@ const DataGraph: React.FC<Props> = (props) => {
                 {/*  />*/}
                 {/*))}*/}
                 {nodeIds.map((nodeId) => (
-                  <DataNode nodeId={nodeId} graphId={props.graphId} key={nodeId} />
+                  <DataNode
+                    nodeId={nodeId}
+                    graphId={props.graphId}
+                    key={nodeId}
+                  />
                 ))}
                 {getEdgeInProgress(
                   nodes,
