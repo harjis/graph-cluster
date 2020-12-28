@@ -7,10 +7,15 @@ export const nodesState = atomFamily<Node[], number>({
   default: (graphId) => fetchNodes(graphId),
 });
 
+export const nodesQuery = selectorFamily<Node[], number>({
+  key: 'nodesQuery',
+  get: (graphId) => ({ get }) => get(nodesState(graphId)),
+});
+
 export const nodeIdsQuery = selectorFamily<number[], number>({
   key: 'nodeIdsQuery',
   get: (graphId) => ({ get }) =>
-    get(nodesState(graphId)).map((node) => node.id),
+    get(nodesQuery(graphId)).map((node) => node.id),
 });
 
 type NodeStateParams = {
@@ -23,7 +28,7 @@ export const nodeState = atomFamily<Node, NodeStateParams>({
     key: 'nodeState/default',
     get: ({ nodeId, graphId }) => ({ get }) => {
       const node = get(nodesState(graphId)).find((node) => node.id === nodeId);
-      if (node == undefined) {
+      if (node === undefined) {
         throw new Error(`Node with id ${nodeId} was not found`);
       }
       return node;

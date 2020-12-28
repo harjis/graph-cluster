@@ -10,8 +10,10 @@ import { CommonNodeProps } from '../types';
 
 import styles from './InputNode.module.css';
 
-const InputNode = (props: CommonNodeProps) => {
-  const onClickFromConnector = () => {};
+type Props = CommonNodeProps & {
+  onClickFromConnector: (event: React.MouseEvent) => void;
+};
+const InputNode = (props: Props) => {
   const { node } = props;
   return (
     <Node
@@ -29,7 +31,7 @@ const InputNode = (props: CommonNodeProps) => {
       >
         {node.name}
       </CenteredText>
-      <FromConnector onClick={onClickFromConnector} />
+      <FromConnector onClick={props.onClickFromConnector} />
     </Node>
   );
 };

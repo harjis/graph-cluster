@@ -12,7 +12,10 @@ import { getNode } from '../../utils/nodeUtils';
 import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
-import { useDataEdgeInProgress, Coordinates, } from '../../hooks/useDataEdgeInProgress';
+import {
+  useDataEdgeInProgress,
+  Coordinates,
+} from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataGraph.module.css';
 
@@ -36,7 +39,7 @@ const DataGraph: React.FC<Props> = (props) => {
     edgeInProgressState,
     onStartEdgeInProgress,
     onStopEdgeInProgress,
-  } = useDataEdgeInProgress();
+  } = useDataEdgeInProgress(props);
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   return (
     <div className={styles.container}>
@@ -81,14 +84,14 @@ const DataGraph: React.FC<Props> = (props) => {
                 {/*))}*/}
                 {nodeIds.map((nodeId) => (
                   <DataNode
-                    nodeId={nodeId}
                     graphId={props.graphId}
                     key={nodeId}
+                    nodeId={nodeId}
+                    onStartEdgeInProgress={onStartEdgeInProgress}
                   />
                 ))}
                 {getEdgeInProgress(
-                  nodes,
-                  edgeInProgressState.fromNodeId,
+                  edgeInProgressState.fromCoordinates,
                   edgeInProgressState.toCoordinates
                 )}
               </React.Fragment>
@@ -101,14 +104,13 @@ const DataGraph: React.FC<Props> = (props) => {
 };
 
 function getEdgeInProgress(
-  nodes: Node[],
-  fromNodeId: number | null,
+  fromCoordinates: Coordinates | null,
   toCoordinates: Coordinates | null
 ) {
-  if (fromNodeId === null || toCoordinates === null) return null;
+  if (fromCoordinates === null || toCoordinates === null) return null;
   return (
     <DataEdgeInProgress
-      fromNode={getNode(nodes, fromNodeId)}
+      fromCoordinates={fromCoordinates}
       toCoordinates={toCoordinates}
     />
   );

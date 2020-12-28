@@ -1,44 +1,43 @@
-import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React from 'react';
 
-import { getComponentByType } from '../../utils/nodeComponentUtil';
-import { nodesState, nodeState } from '../../atoms/nodes';
-import { useWindowEventListener } from '../../../../hooks/useWindowEventListener';
+import InputNode from './InputNode/InputNode';
+import NodeRefNode from './NodeRefNode/NodeRefNode';
+import OutputNode from './OutputNode/OutputNode';
+import { useNodeState } from '../../hooks/useNodeState';
 
-type Coordinates = { x: number; y: number };
 type Props = {
   graphId: number;
   nodeId: number;
+  onStartEdgeInProgress: (nodeId: number, event: React.MouseEvent) => void;
 };
 export const DataNode: React.FC<Props> = (props) => {
-  const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
-  const [node, setNode] = useRecoilState(
-    nodeState({ graphId: props.graphId, nodeId: props.nodeId })
-  );
-  const NodeComponent = getComponentByType(node.type);
+  const { node, startDrag, stopDrag } = useNodeState(props);
 
-  const startDrag = (event: React.MouseEvent) => {
-    const { pageX, pageY } = event;
-    setNodeOffset({ x: pageX, y: pageY });
-  };
-
-  const stopDrag = () => {
-    setNodeOffset(null);
-  };
-
-  const drag = (event: MouseEvent) => {
-    if (nodeOffset === null) {
-      return;
-    }
-    const xDiff = nodeOffset.x - event.pageX;
-    const yDiff = nodeOffset.y - event.pageY;
-    setNodeOffset({ x: event.pageX, y: event.pageY });
-    setNode((node) => ({ ...node, x: node.x - xDiff, y: node.y - yDiff }));
-  };
-
-  useWindowEventListener('mousemove', drag);
-
-  return (
-    <NodeComponent node={node} onStartDrag={startDrag} onStopDrag={stopDrag} />
-  );
+  switch (node.type) {
+    case 'InputNode':
+      return (
+        <InputNode
+          onStartDrag={startDrag}
+          onStopDrag={stopDrag}
+          node={node}
+          onClickFromConnector={(event: React.MouseEvent) =>
+            props.onStartEdgeInProgress(node.id, event)
+          }
+        />
+      );
+    case 'OutputNode':
+      return (
+        <OutputNode onStartDrag={startDrag} onStopDrag={stopDrag} node={node} />
+      );
+    case 'NodeRefNode':
+      return (
+        <NodeRefNode
+          onStartDrag={startDrag}
+          onStopDrag={stopDrag}
+          node={node}
+        />
+      );
+    default:
+      throw new Error(`Unknown node type: ${node.type}`);
+  }
 };

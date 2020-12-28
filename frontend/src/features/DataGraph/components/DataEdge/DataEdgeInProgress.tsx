@@ -1,24 +1,19 @@
 import React from 'react';
 
 import { Edge } from '../../../../components/Graph';
-import { getNodeBottomMiddlePosition } from '../../utils/nodeUtils';
 
 import styles from './DataEdgeInProgress.module.css';
-import { Node } from '../../../../api/nodes';
 
+type Coordinates = { x: number; y: number };
 type Props = {
-  fromNode: Node;
-  toCoordinates: { x: number; y: number };
+  fromCoordinates: Coordinates;
+  toCoordinates: Coordinates;
 };
 const DataEdgeInProgress = (props: Props) => {
   const to = props.toCoordinates;
   return (
     <g className={styles.container}>
-      <Edge
-        from={getNodeBottomMiddlePosition(props.fromNode)}
-        styles={styles.line}
-        to={to}
-      />
+      <Edge from={props.fromCoordinates} styles={styles.line} to={to} />
       <polygon
         className={styles.triangle}
         transform={`translate(${to.x},${to.y})`}
