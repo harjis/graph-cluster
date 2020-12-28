@@ -10,11 +10,13 @@ type Props = {
   nodeId: number;
 };
 export const DataNode: React.FC<Props> = React.memo((props) => {
-  const { node, startDrag, stopDrag, startEdgeInProgress } = useNodeState(
-    props
-  );
-
-  const onClickToConnector = React.useCallback(() => {}, []);
+  const {
+    node,
+    startDrag,
+    stopDrag,
+    startEdgeInProgress,
+    stopEdgeInProgress,
+  } = useNodeState(props);
   switch (node.type) {
     case 'InputNode': {
       return (
@@ -33,7 +35,7 @@ export const DataNode: React.FC<Props> = React.memo((props) => {
           canConnect={false}
           hasToEdges={false}
           node={node}
-          onClickToConnector={onClickToConnector}
+          onClickToConnector={stopEdgeInProgress}
           onStartDrag={startDrag}
           onStopDrag={stopDrag}
         />

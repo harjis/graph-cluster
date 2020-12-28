@@ -1,32 +1,26 @@
 import React from 'react';
 
 import { Edge } from '../../../../components/Graph';
-import {
-  getNodeBottomMiddlePosition,
-  getNodeTopMiddlePosition,
-} from '../../utils/nodeUtils';
-import { Node } from '../../../../api/nodes';
+import { useEdgeState } from '../../hooks/useEdgeState';
 
 import styles from './DataEdge.module.css';
 
 type Props = {
-  fromNode: Node;
-  onClick?: () => void;
-  toNode: Node;
+  edgeId: number;
 };
 const DataEdge = (props: Props) => {
-  const to = getNodeTopMiddlePosition(props.toNode);
+  const { fromCoordinates, toCoordinates } = useEdgeState(props);
   return (
     <g>
       <Edge
-        from={getNodeBottomMiddlePosition(props.fromNode)}
-        onClick={props.onClick}
+        from={fromCoordinates}
+        onClick={() => {}}
         styles={styles.line}
-        to={to}
+        to={toCoordinates}
       />
       <polygon
         className={styles.triangle}
-        transform={`translate(${to.x},${to.y})`}
+        transform={`translate(${toCoordinates.x},${toCoordinates.y})`}
         points="-6,0 6,0 0,9"
       />
     </g>

@@ -13,6 +13,7 @@ import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
 
 import styles from './DataGraph.module.css';
+import { edgeIdsQuery } from '../../atoms/edges';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -27,6 +28,7 @@ type Props = {};
 export const DataGraph: React.FC<Props> = (props) => {
   const graph = useRecoilValue(graphState);
   const nodeIds = useRecoilValue(nodeIdsQuery);
+  const edgeIds = useRecoilValue(edgeIdsQuery);
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   const canvasRef = React.useRef<SVGSVGElement>(null);
   return (
@@ -62,15 +64,9 @@ export const DataGraph: React.FC<Props> = (props) => {
                   height={getMaxHeight(nodes, dimensions.height)}
                   width={dimensions.width}
                 />
-                {/*{props.edges.map((edge) => (*/}
-                {/*  <DataEdge*/}
-                {/*    key={edge.id}*/}
-                {/*    onClick={() => props.onDeleteEdge(edge)}*/}
-                {/*    fromNode={getNode(props.nodes, edge.from_node_id)}*/}
-                {/*    toNode={getNode(props.nodes, edge.to_node_id)}*/}
-                {/*  />*/}
-                {/*))}*/}
-
+                {edgeIds.map((edgeId) => (
+                  <DataEdge key={edgeId} edgeId={edgeId} />
+                ))}
                 {nodeIds.map((nodeId) => (
                   <DataNode
                     canvasRef={canvasRef}

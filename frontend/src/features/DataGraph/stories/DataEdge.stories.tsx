@@ -14,31 +14,31 @@ export default {
   component: DataEdge,
 } as Meta;
 
-const Template: Story = () => (
-  <Canvas height={500} width={500}>
-    {() => <DataEdge onClick={() => {}} fromNode={fromNode} toNode={toNode} />}
-  </Canvas>
-);
+// const Template: Story = () => (
+//   <Canvas height={500} width={500}>
+//     {() => <DataEdge fromNode={fromNode} toNode={toNode} />}
+//   </Canvas>
+// );
 
-const WithNodesTemplate: Story = () => (
-  <Canvas height={500} width={500}>
-    {() => (
-      <React.Fragment>
-        <InputNode node={fromNode} {...inputHandlers}></InputNode>
-        <OutputNode
-          canConnect={false}
-          hasToEdges={true}
-          node={toNode}
-          {...outputHandlers}
-        ></OutputNode>
-        <DataEdge onClick={() => {}} fromNode={fromNode} toNode={toNode} />
-      </React.Fragment>
-    )}
-  </Canvas>
-);
-
-export const Default = Template.bind({});
-Default.args = {};
-
-export const WithNodes = WithNodesTemplate.bind({});
-WithNodes.args = {};
+// const WithNodesTemplate: Story = () => (
+//   <Canvas height={500} width={500}>
+//     {() => (
+//       <React.Fragment>
+//         <InputNode node={fromNode} {...inputHandlers}></InputNode>
+//         <OutputNode
+//           canConnect={false}
+//           hasToEdges={true}
+//           node={toNode}
+//           {...outputHandlers}
+//         ></OutputNode>
+//         <DataEdge onClick={() => {}} fromNode={fromNode} toNode={toNode} />
+//       </React.Fragment>
+//     )}
+//   </Canvas>
+// );
+//
+// export const Default = Template.bind({});
+// Default.args = {};
+//
+// export const WithNodes = WithNodesTemplate.bind({});
+// WithNodes.args = {};

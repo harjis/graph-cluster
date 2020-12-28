@@ -17,6 +17,7 @@ type Return = {
   startDrag: (event: React.MouseEvent) => void;
   stopDrag: () => void;
   startEdgeInProgress: (event: React.MouseEvent) => void;
+  stopEdgeInProgress: () => void;
 };
 export const useNodeState = (props: Props): Return => {
   const { canvasRef } = props;
@@ -26,22 +27,22 @@ export const useNodeState = (props: Props): Return => {
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
   const setFromNodeId = useSetRecoilState(fromNodeIdState);
 
-  const onStartEdgeInProgress = React.useCallback(
-    (fromNodeId: number, event: React.MouseEvent): void => {
+  const startEdgeInProgress = React.useCallback(
+    (event: React.MouseEvent) => {
       setToCoordinates((state) => {
         const toCoordinates = getRelativeCoordinates(canvasRef.current, event);
         if (!toCoordinates) return state;
         return toCoordinates;
       });
-      setFromNodeId(fromNodeId);
+      setFromNodeId(node.id);
     },
-    [canvasRef, setFromNodeId, setToCoordinates]
+    [canvasRef, node.id, setFromNodeId, setToCoordinates]
   );
 
-  const startEdgeInProgress = React.useCallback(
-    (event: React.MouseEvent) => onStartEdgeInProgress(node.id, event),
-    [node.id, onStartEdgeInProgress]
-  );
+  const stopEdgeInProgress = React.useCallback(() => {
+    setToCoordinates({ x: 0, y: 0 });
+    setFromNodeId(null);
+  }, [setFromNodeId, setToCoordinates]);
 
   const startDrag = React.useCallback((event: React.MouseEvent) => {
     const { pageX, pageY } = event;
@@ -64,5 +65,5 @@ export const useNodeState = (props: Props): Return => {
 
   useWindowEventListener('mousemove', drag);
 
-  return { node, startDrag, stopDrag, startEdgeInProgress };
+  return { node, startDrag, stopDrag, startEdgeInProgress, stopEdgeInProgress };
 };
