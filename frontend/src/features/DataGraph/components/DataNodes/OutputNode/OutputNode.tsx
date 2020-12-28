@@ -6,9 +6,9 @@ import {
   connectGraphNodeHeight,
   connectGraphNodeWidth,
 } from '../../../constants/constants';
+import { CommonNodeProps } from '../types';
 
 import styles from './OutputNode.module.css';
-import { CommonNodeProps } from '../types';
 
 type Props = CommonNodeProps & {
   canConnect: boolean;
@@ -16,8 +16,6 @@ type Props = CommonNodeProps & {
   onClickToConnector: () => void;
 };
 const OutputNode = (props: Props) => {
-  const canConnect = false;
-  const hasToEdges = false;
   const { node } = props;
   return (
     <Node
@@ -36,8 +34,8 @@ const OutputNode = (props: Props) => {
         {node.name}
       </CenteredText>
       <ToConnector
-        canConnect={canConnect}
-        hasToEdges={hasToEdges}
+        canConnect={props.canConnect}
+        hasToEdges={props.hasToEdges}
         onClick={props.onClickToConnector}
       />
     </Node>

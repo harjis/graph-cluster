@@ -45,3 +45,9 @@ export const nodeQuery = selectorFamily<Node, number>({
   key: 'nodeQuery',
   get: (nodeId) => ({ get }) => get(nodeState({ nodeId })),
 });
+
+export const nodeHasToEdgesQuery = selectorFamily<boolean, number>({
+  key: 'nodeHasToEdgesQuery',
+  get: (nodeId) => ({ get }) =>
+    get(nodeState({ nodeId })).to_edge_ids.length > 0,
+});

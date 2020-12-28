@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { nodeState } from '../atoms/nodes';
-import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
-import { Node } from '../../../api/nodes';
 import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
+import { Node } from '../../../api/nodes';
+import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
+import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
 
 type Coordinates = { x: number; y: number };
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
   canvasRef: React.RefObject<SVGSVGElement>;
 };
 type Return = {
+  hasToEdges: boolean;
   node: Node;
   startDrag: (event: React.MouseEvent) => void;
   stopDrag: () => void;
@@ -24,6 +25,7 @@ export const useNodeState = (props: Props): Return => {
 
   const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
   const [node, setNode] = useRecoilState(nodeState({ nodeId: props.nodeId }));
+  const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.nodeId));
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
   const setFromNodeId = useSetRecoilState(fromNodeIdState);
 
@@ -65,5 +67,12 @@ export const useNodeState = (props: Props): Return => {
 
   useWindowEventListener('mousemove', drag);
 
-  return { node, startDrag, stopDrag, startEdgeInProgress, stopEdgeInProgress };
+  return {
+    hasToEdges,
+    node,
+    startDrag,
+    stopDrag,
+    startEdgeInProgress,
+    stopEdgeInProgress,
+  };
 };
