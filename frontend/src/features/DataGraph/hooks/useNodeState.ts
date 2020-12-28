@@ -7,7 +7,6 @@ import { Node } from '../../../api/nodes';
 
 type Coordinates = { x: number; y: number };
 type Props = {
-  graphId: number;
   nodeId: number;
 };
 type Return = {
@@ -17,9 +16,7 @@ type Return = {
 };
 export const useNodeState = (props: Props): Return => {
   const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
-  const [node, setNode] = useRecoilState(
-    nodeState({ graphId: props.graphId, nodeId: props.nodeId })
-  );
+  const [node, setNode] = useRecoilState(nodeState({ nodeId: props.nodeId }));
 
   const startDrag = React.useCallback((event: React.MouseEvent) => {
     const { pageX, pageY } = event;

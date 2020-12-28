@@ -28,18 +28,16 @@ const onStartDrag = (id: number, event: React.MouseEvent) => {};
 const onStopDrag = () => {};
 const validationErrors = {};
 const nodes: Node[] = [];
-type Props = {
-  graphId: number;
-};
-const DataGraph: React.FC<Props> = (props) => {
-  const graph = useRecoilValue(graphState(props.graphId));
-  const nodeIds = useRecoilValue(nodeIdsQuery(props.graphId));
+type Props = {};
+export const DataGraph: React.FC<Props> = (props) => {
+  const graph = useRecoilValue(graphState);
+  const nodeIds = useRecoilValue(nodeIdsQuery);
   const {
     ref,
     edgeInProgressState,
     onStartEdgeInProgress,
     onStopEdgeInProgress,
-  } = useDataEdgeInProgress(props);
+  } = useDataEdgeInProgress();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   return (
     <div className={styles.container}>
@@ -84,7 +82,6 @@ const DataGraph: React.FC<Props> = (props) => {
                 {/*))}*/}
                 {nodeIds.map((nodeId) => (
                   <DataNode
-                    graphId={props.graphId}
                     key={nodeId}
                     nodeId={nodeId}
                     onStartEdgeInProgress={onStartEdgeInProgress}
@@ -126,5 +123,3 @@ function getNodeMaxBottom(nodes: Node[]): number {
 function getMaxHeight(nodes: Node[], domHeight: number): number {
   return Math.max(domHeight, getNodeMaxBottom(nodes));
 }
-
-export default DataGraph;

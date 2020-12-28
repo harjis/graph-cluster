@@ -17,9 +17,6 @@ const initialState = {
   toCoordinates: null,
 };
 
-type Props = {
-  graphId: number;
-};
 type ReturnType = {
   ref: React.RefObject<SVGSVGElement>;
   edgeInProgressState: State;
@@ -27,10 +24,10 @@ type ReturnType = {
   onStopEdgeInProgress: () => void;
 };
 
-export function useDataEdgeInProgress(props: Props): ReturnType {
+export function useDataEdgeInProgress(): ReturnType {
   const [edgeInProgressState, setState] = React.useState<State>(initialState);
   const ref = React.useRef<SVGSVGElement>(null);
-  const nodes = useRecoilValue(nodesQuery(props.graphId));
+  const nodes = useRecoilValue(nodesQuery);
 
   const onStopEdgeInProgress = React.useCallback((): void => {
     setState(() => initialState);

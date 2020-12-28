@@ -6,7 +6,6 @@ import OutputNode from './OutputNode/OutputNode';
 import { useNodeState } from '../../hooks/useNodeState';
 
 type Props = {
-  graphId: number;
   nodeId: number;
   onStartEdgeInProgress: (nodeId: number, event: React.MouseEvent) => void;
   onStopEdgeInProgress: () => void;
