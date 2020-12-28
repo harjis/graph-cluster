@@ -11,10 +11,6 @@ import { DataNode } from '../DataNodes';
 import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
-import {
-  useDataEdgeInProgress,
-  Coordinates,
-} from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataGraph.module.css';
 
