@@ -48,7 +48,6 @@ const Graph: Story<Props> = (props) => {
             {initialNodes.map((node) => (
               <Node
                 height={DEFAULT_NODE_HEIGHT}
-                id={node.id}
                 key={node.id}
                 styles={props.customNodeStyles}
                 width={DEFAULT_NODE_WIDTH}
@@ -79,7 +78,6 @@ const GraphWithBottomText: Story = () => {
             {initialNodes.map((node) => (
               <Node
                 height={DEFAULT_NODE_HEIGHT}
-                id={node.id}
                 key={node.id}
                 width={DEFAULT_NODE_WIDTH}
                 x={node.x}

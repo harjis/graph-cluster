@@ -10,7 +10,11 @@ import {
 import styles from './OutputNode.module.css';
 import { CommonNodeProps } from '../types';
 
-const OutputNode = (props: CommonNodeProps) => {
+type Props = CommonNodeProps & {
+  canConnect: boolean;
+  hasToEdges: boolean;
+};
+const OutputNode = (props: Props) => {
   const onClickToConnector = () => {};
   const canConnect = false;
   const hasToEdges = false;

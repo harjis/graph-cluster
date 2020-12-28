@@ -27,7 +27,13 @@ export const DataNode: React.FC<Props> = (props) => {
       );
     case 'OutputNode':
       return (
-        <OutputNode onStartDrag={startDrag} onStopDrag={stopDrag} node={node} />
+        <OutputNode
+          canConnect={false}
+          hasToEdges={false}
+          onStartDrag={startDrag}
+          onStopDrag={stopDrag}
+          node={node}
+        />
       );
     case 'NodeRefNode':
       return (

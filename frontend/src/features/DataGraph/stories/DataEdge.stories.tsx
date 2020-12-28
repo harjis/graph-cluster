@@ -2,10 +2,10 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import DataEdge from '../components/DataEdge/DataEdge';
-import InputNode from '../components/DataNodes/InputNode';
-import OutputNode from '../components/DataNodes/OutputNode';
 import { Canvas } from '../../../components/Graph';
 import { createNode, inputHandlers, outputHandlers } from './story_utils';
+import InputNode from '../components/DataNodes/InputNode/InputNode';
+import OutputNode from '../components/DataNodes/OutputNode/OutputNode';
 
 const fromNode = createNode(0, 10, 10);
 const toNode = createNode(0, 200, 200);
@@ -24,26 +24,13 @@ const WithNodesTemplate: Story = () => (
   <Canvas height={500} width={500}>
     {() => (
       <React.Fragment>
-        <InputNode
-          name={fromNode.name}
-          id={fromNode.id}
-          x={fromNode.x}
-          y={fromNode.y}
-          {...inputHandlers}
-        >
-          {null}
-        </InputNode>
+        <InputNode node={fromNode} {...inputHandlers}></InputNode>
         <OutputNode
           canConnect={false}
           hasToEdges={true}
-          name={toNode.name}
-          id={toNode.id}
-          x={toNode.x}
-          y={toNode.y}
+          node={toNode}
           {...outputHandlers}
-        >
-          {null}
-        </OutputNode>
+        ></OutputNode>
         <DataEdge onClick={() => {}} fromNode={fromNode} toNode={toNode} />
       </React.Fragment>
     )}

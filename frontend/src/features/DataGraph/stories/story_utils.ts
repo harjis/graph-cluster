@@ -5,8 +5,18 @@ const handlers = {
   onMouseDown: () => {},
   onMouseUp: () => {},
 };
-export const inputHandlers = { ...handlers, onClickFromConnector: () => {} };
-export const outputHandlers = { ...handlers, onClickToConnector: () => {} };
+export const inputHandlers = {
+  ...handlers,
+  onClickFromConnector: () => {},
+  onStartDrag: () => {},
+  onStopDrag: () => {},
+};
+export const outputHandlers = {
+  ...handlers,
+  onClickToConnector: () => {},
+  onStartDrag: () => {},
+  onStopDrag: () => {},
+};
 
 export const createNode = (
   graph_id: number = 0,
