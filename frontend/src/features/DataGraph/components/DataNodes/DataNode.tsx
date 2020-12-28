@@ -4,14 +4,32 @@ import InputNode from './InputNode/InputNode';
 import NodeRefNode from './NodeRefNode/NodeRefNode';
 import OutputNode from './OutputNode/OutputNode';
 import { useNodeState } from '../../hooks/useNodeState';
+import { getRelativeCoordinates } from '../../../../utils/svg_utils';
+import { useSetRecoilState } from 'recoil';
+import {
+  fromNodeIdState,
+  toCoordinatesState,
+} from '../../hooks/useDataEdgeInProgress';
 
 type Props = {
+  canvasRef: React.RefObject<SVGSVGElement>;
   nodeId: number;
-  onStartEdgeInProgress: (nodeId: number, event: React.MouseEvent) => void;
-  onStopEdgeInProgress: () => void;
 };
 export const DataNode: React.FC<Props> = React.memo((props) => {
-  const { onStartEdgeInProgress } = props;
+  const { canvasRef } = props;
+  const setToCoordinates = useSetRecoilState(toCoordinatesState);
+  const setFromNodeId = useSetRecoilState(fromNodeIdState);
+  const onStartEdgeInProgress = React.useCallback(
+    (fromNodeId: number, event: React.MouseEvent): void => {
+      setToCoordinates((state) => {
+        const toCoordinates = getRelativeCoordinates(canvasRef.current, event);
+        if (!toCoordinates) return state;
+        return toCoordinates;
+      });
+      setFromNodeId(fromNodeId);
+    },
+    [canvasRef, setFromNodeId, setToCoordinates]
+  );
   const { node, startDrag, stopDrag } = useNodeState(props);
   const onClickFromConnector = React.useCallback(
     (event: React.MouseEvent) => onStartEdgeInProgress(node.id, event),

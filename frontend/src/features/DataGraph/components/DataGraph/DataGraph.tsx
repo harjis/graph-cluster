@@ -8,7 +8,6 @@ import useResizeObserver from '../../../../hooks/useResizeObserver';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
 import { DataNode } from '../DataNodes';
-import { getNode } from '../../utils/nodeUtils';
 import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
@@ -32,13 +31,8 @@ type Props = {};
 export const DataGraph: React.FC<Props> = (props) => {
   const graph = useRecoilValue(graphState);
   const nodeIds = useRecoilValue(nodeIdsQuery);
-  const {
-    ref,
-    edgeInProgressState,
-    onStartEdgeInProgress,
-    onStopEdgeInProgress,
-  } = useDataEdgeInProgress();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
+  const canvasRef = React.useRef<SVGSVGElement>(null);
   return (
     <div className={styles.container}>
       <React.Fragment>
@@ -58,7 +52,7 @@ export const DataGraph: React.FC<Props> = (props) => {
           className={styles.innerContainer}
         >
           <Canvas
-            ref={ref}
+            ref={canvasRef}
             height={getMaxHeight(nodes, dimensions.height)}
             width={dimensions.width}
           >
@@ -80,18 +74,15 @@ export const DataGraph: React.FC<Props> = (props) => {
                 {/*    toNode={getNode(props.nodes, edge.to_node_id)}*/}
                 {/*  />*/}
                 {/*))}*/}
+
                 {nodeIds.map((nodeId) => (
                   <DataNode
+                    canvasRef={canvasRef}
                     key={nodeId}
                     nodeId={nodeId}
-                    onStartEdgeInProgress={onStartEdgeInProgress}
-                    onStopEdgeInProgress={onStopEdgeInProgress}
                   />
                 ))}
-                {getEdgeInProgress(
-                  edgeInProgressState.fromCoordinates,
-                  edgeInProgressState.toCoordinates
-                )}
+                <DataEdgeInProgress canvasRef={canvasRef} />
               </React.Fragment>
             )}
           </Canvas>
@@ -100,19 +91,6 @@ export const DataGraph: React.FC<Props> = (props) => {
     </div>
   );
 };
-
-function getEdgeInProgress(
-  fromCoordinates: Coordinates | null,
-  toCoordinates: Coordinates | null
-) {
-  if (fromCoordinates === null || toCoordinates === null) return null;
-  return (
-    <DataEdgeInProgress
-      fromCoordinates={fromCoordinates}
-      toCoordinates={toCoordinates}
-    />
-  );
-}
 
 function getNodeMaxBottom(nodes: Node[]): number {
   if (nodes.length === 0) return 0;

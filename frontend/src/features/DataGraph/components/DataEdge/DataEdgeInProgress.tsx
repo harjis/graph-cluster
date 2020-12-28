@@ -1,22 +1,27 @@
 import React from 'react';
 
 import { Edge } from '../../../../components/Graph';
+import { useDataEdgeInProgress } from '../../hooks/useDataEdgeInProgress';
 
 import styles from './DataEdgeInProgress.module.css';
 
-type Coordinates = { x: number; y: number };
 type Props = {
-  fromCoordinates: Coordinates;
-  toCoordinates: Coordinates;
+  canvasRef: React.RefObject<SVGSVGElement>;
 };
 const DataEdgeInProgress = (props: Props) => {
-  const to = props.toCoordinates;
+  const { fromCoordinates, toCoordinates } = useDataEdgeInProgress(
+    props.canvasRef
+  );
+
+  if (fromCoordinates === null) {
+    return null;
+  }
   return (
     <g className={styles.container}>
-      <Edge from={props.fromCoordinates} styles={styles.line} to={to} />
+      <Edge from={fromCoordinates} styles={styles.line} to={toCoordinates} />
       <polygon
         className={styles.triangle}
-        transform={`translate(${to.x},${to.y})`}
+        transform={`translate(${toCoordinates.x},${toCoordinates.y})`}
         points="-6,0 6,0 0,9"
       />
     </g>

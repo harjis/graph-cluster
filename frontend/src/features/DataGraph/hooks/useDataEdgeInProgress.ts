@@ -1,61 +1,51 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 import { Coordinates, getRelativeCoordinates } from '../../../utils/svg_utils';
 import { CONNECTOR_TYPE } from '../constants/constants';
-import { nodesQuery } from '../atoms/nodes';
 import { getNodeBottomMiddlePosition } from '../utils/nodeUtils';
+import { nodeQuery } from '../atoms/nodes';
 
 export type { Coordinates };
 
-type State = {
-  fromCoordinates: Coordinates | null;
-  toCoordinates: Coordinates | null;
-};
-const initialState = {
-  fromCoordinates: null,
-  toCoordinates: null,
-};
+export const fromNodeIdState = atom<number | null>({
+  key: 'fromNodeIdState',
+  default: null,
+});
+
+export const fromNodeCoordinatesQuery = selector({
+  key: 'fromNodeCoordinatesQuery',
+  get: ({ get }) => {
+    const fromNodeId = get(fromNodeIdState);
+    if (fromNodeId === null) return null;
+    const node = get(nodeQuery(fromNodeId));
+    return getNodeBottomMiddlePosition(node);
+  },
+});
+
+export const toCoordinatesState = atom({
+  key: 'toCoordinatesState',
+  default: { x: 0, y: 0 },
+});
 
 type ReturnType = {
-  ref: React.RefObject<SVGSVGElement>;
-  edgeInProgressState: State;
-  onStartEdgeInProgress: (fromNodeId: number, event: React.MouseEvent) => void;
-  onStopEdgeInProgress: () => void;
+  fromCoordinates: Coordinates | null;
+  toCoordinates: Coordinates;
 };
-
-export function useDataEdgeInProgress(): ReturnType {
-  const [edgeInProgressState, setState] = React.useState<State>(initialState);
-  const ref = React.useRef<SVGSVGElement>(null);
-  const nodes = useRecoilValue(nodesQuery);
+export function useDataEdgeInProgress(
+  canvasRef: React.RefObject<SVGSVGElement>
+): ReturnType {
+  const [fromNodeId, setFromNodeId] = useRecoilState(fromNodeIdState);
+  const fromCoordinates = useRecoilValue(fromNodeCoordinatesQuery);
+  const [toCoordinates, setToCoordinates] = useRecoilState(toCoordinatesState);
 
   const onStopEdgeInProgress = React.useCallback((): void => {
-    setState(() => initialState);
-  }, []);
-
-  const onStartEdgeInProgress = React.useCallback(
-    (fromNodeId: number, event: React.MouseEvent): void => {
-      setState(
-        (state): State => {
-          const toCoordinates = getRelativeCoordinates(ref.current, event);
-          if (!toCoordinates) return state;
-          const fromNode = nodes.find((node) => node.id === fromNodeId);
-          if (!fromNode) return state;
-          const fromCoordinates = getNodeBottomMiddlePosition(fromNode);
-          return {
-            ...state,
-            fromCoordinates,
-            toCoordinates,
-          };
-        }
-      );
-    },
-    [nodes]
-  );
+    setToCoordinates({ x: 0, y: 0 });
+    setFromNodeId(null);
+  }, [setFromNodeId, setToCoordinates]);
 
   React.useEffect(() => {
-    const isEdgeInProgressStarted = (): boolean =>
-      edgeInProgressState.fromCoordinates !== null;
+    const isEdgeInProgressStarted = (): boolean => fromNodeId !== null;
     const mouseUpHandler = (event: MouseEvent): void => {
       if (
         isEdgeInProgressStarted() &&
@@ -67,13 +57,10 @@ export function useDataEdgeInProgress(): ReturnType {
     };
     const onMove = (event: MouseEvent): void => {
       if (!isEdgeInProgressStarted()) return;
-      setState((state) => {
-        const toCoordinates = getRelativeCoordinates(ref.current, event);
+      setToCoordinates((state) => {
+        const toCoordinates = getRelativeCoordinates(canvasRef.current, event);
         if (!toCoordinates) return state;
-        return {
-          ...state,
-          toCoordinates,
-        };
+        return toCoordinates;
       });
     };
 
@@ -84,12 +71,10 @@ export function useDataEdgeInProgress(): ReturnType {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseup', mouseUpHandler);
     };
-  }, [edgeInProgressState.fromCoordinates, onStopEdgeInProgress]);
+  }, [canvasRef, fromNodeId, onStopEdgeInProgress, setToCoordinates]);
 
   return {
-    ref,
-    edgeInProgressState,
-    onStartEdgeInProgress,
-    onStopEdgeInProgress,
+    fromCoordinates,
+    toCoordinates,
   };
 }

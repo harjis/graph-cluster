@@ -40,3 +40,8 @@ export const nodeState = atomFamily<Node, NodeStateParams>({
     },
   }),
 });
+
+export const nodeQuery = selectorFamily<Node, number>({
+  key: 'nodeQuery',
+  get: (nodeId) => ({ get }) => get(nodeState({ nodeId })),
+});
