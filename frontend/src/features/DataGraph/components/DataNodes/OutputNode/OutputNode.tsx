@@ -13,9 +13,9 @@ import { CommonNodeProps } from '../types';
 type Props = CommonNodeProps & {
   canConnect: boolean;
   hasToEdges: boolean;
+  onClickToConnector: () => void;
 };
 const OutputNode = (props: Props) => {
-  const onClickToConnector = () => {};
   const canConnect = false;
   const hasToEdges = false;
   const { node } = props;
@@ -38,7 +38,7 @@ const OutputNode = (props: Props) => {
       <ToConnector
         canConnect={canConnect}
         hasToEdges={hasToEdges}
-        onClick={onClickToConnector}
+        onClick={props.onClickToConnector}
       />
     </Node>
   );

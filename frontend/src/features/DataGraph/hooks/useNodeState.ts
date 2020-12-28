@@ -21,14 +21,14 @@ export const useNodeState = (props: Props): Return => {
     nodeState({ graphId: props.graphId, nodeId: props.nodeId })
   );
 
-  const startDrag = (event: React.MouseEvent) => {
+  const startDrag = React.useCallback((event: React.MouseEvent) => {
     const { pageX, pageY } = event;
     setNodeOffset({ x: pageX, y: pageY });
-  };
+  }, []);
 
-  const stopDrag = () => {
+  const stopDrag = React.useCallback(() => {
     setNodeOffset(null);
-  };
+  }, []);
 
   const drag = (event: MouseEvent) => {
     if (nodeOffset === null) {

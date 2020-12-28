@@ -32,29 +32,29 @@ export function useDataEdgeInProgress(props: Props): ReturnType {
   const ref = React.useRef<SVGSVGElement>(null);
   const nodes = useRecoilValue(nodesQuery(props.graphId));
 
-  const onStopEdgeInProgress = (): void => {
+  const onStopEdgeInProgress = React.useCallback((): void => {
     setState(() => initialState);
-  };
+  }, []);
 
-  const onStartEdgeInProgress = (
-    fromNodeId: number,
-    event: React.MouseEvent
-  ): void => {
-    setState(
-      (state): State => {
-        const toCoordinates = getRelativeCoordinates(ref.current, event);
-        if (!toCoordinates) return state;
-        const fromNode = nodes.find((node) => node.id === fromNodeId);
-        if (!fromNode) return state;
-        const fromCoordinates = getNodeBottomMiddlePosition(fromNode);
-        return {
-          ...state,
-          fromCoordinates,
-          toCoordinates,
-        };
-      }
-    );
-  };
+  const onStartEdgeInProgress = React.useCallback(
+    (fromNodeId: number, event: React.MouseEvent): void => {
+      setState(
+        (state): State => {
+          const toCoordinates = getRelativeCoordinates(ref.current, event);
+          if (!toCoordinates) return state;
+          const fromNode = nodes.find((node) => node.id === fromNodeId);
+          if (!fromNode) return state;
+          const fromCoordinates = getNodeBottomMiddlePosition(fromNode);
+          return {
+            ...state,
+            fromCoordinates,
+            toCoordinates,
+          };
+        }
+      );
+    },
+    [nodes]
+  );
 
   React.useEffect(() => {
     const isEdgeInProgressStarted = (): boolean =>
@@ -87,7 +87,7 @@ export function useDataEdgeInProgress(props: Props): ReturnType {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseup', mouseUpHandler);
     };
-  }, [edgeInProgressState.fromCoordinates]);
+  }, [edgeInProgressState.fromCoordinates, onStopEdgeInProgress]);
 
   return {
     ref,

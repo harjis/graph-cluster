@@ -88,6 +88,7 @@ const DataGraph: React.FC<Props> = (props) => {
                     key={nodeId}
                     nodeId={nodeId}
                     onStartEdgeInProgress={onStartEdgeInProgress}
+                    onStopEdgeInProgress={onStopEdgeInProgress}
                   />
                 ))}
                 {getEdgeInProgress(
