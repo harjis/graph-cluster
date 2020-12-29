@@ -3,8 +3,8 @@ import React from 'react';
 import {
   fromConnectorRadius,
   fromConnectorHoverRadius,
-  connectGraphNodeHeight,
-  connectGraphNodeWidth,
+  dataGraphNodeHeight,
+  dataGraphNodeWidth,
   CONNECTOR_TYPE,
 } from '../../constants/constants';
 
@@ -25,8 +25,8 @@ const FromConnector = (props: Props) => {
     <g
       {...fromConnectorDataProps}
       transform={`translate(${
-        connectGraphNodeWidth / 2
-      }, ${connectGraphNodeHeight})`}
+        dataGraphNodeWidth / 2
+      }, ${dataGraphNodeHeight})`}
       onClick={props.onClick}
       onMouseEnter={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}

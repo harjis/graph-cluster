@@ -6,7 +6,7 @@ import {
 export const fromConnectorRadius = 6;
 export const fromConnectorHoverRadius = 9;
 
-export const connectGraphNodeHeight = DEFAULT_NODE_HEIGHT;
-export const connectGraphNodeWidth = DEFAULT_NODE_WIDTH;
+export const dataGraphNodeHeight = DEFAULT_NODE_HEIGHT;
+export const dataGraphNodeWidth = DEFAULT_NODE_WIDTH;
 
 export const CONNECTOR_TYPE = 'data-connector-type';

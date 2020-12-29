@@ -3,8 +3,8 @@ import React from 'react';
 import { CenteredText, Node } from '../../../../../components/Graph';
 import ToConnector from '../../EdgeConnectors/ToConnector';
 import {
-  connectGraphNodeHeight,
-  connectGraphNodeWidth,
+  dataGraphNodeHeight,
+  dataGraphNodeWidth,
 } from '../../../constants/constants';
 import { CommonNodeProps } from '../types';
 
@@ -19,17 +19,17 @@ const OutputNode = (props: Props) => {
   const { node } = props;
   return (
     <Node
-      height={connectGraphNodeHeight}
+      height={dataGraphNodeHeight}
       onMouseDown={props.onStartDrag}
       onMouseUp={props.onStopDrag}
       styles={styles.outputNode}
-      width={connectGraphNodeWidth}
+      width={dataGraphNodeWidth}
       x={node.x}
       y={node.y}
     >
       <CenteredText
-        nodeHeight={connectGraphNodeHeight}
-        nodeWidth={connectGraphNodeWidth}
+        nodeHeight={dataGraphNodeHeight}
+        nodeWidth={dataGraphNodeWidth}
       >
         {node.name}
       </CenteredText>

@@ -27,3 +27,6 @@ export function getNode(nodes: Node[], nodeId: number): Node {
   if (!node) throw Error(`No node found with primary key: ${nodeId}`);
   return node;
 }
+
+export const getMaxHeight = (nodeMaxBottom: number, domHeight: number) =>
+  Math.max(domHeight, nodeMaxBottom);

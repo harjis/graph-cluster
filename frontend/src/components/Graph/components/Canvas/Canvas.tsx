@@ -6,8 +6,8 @@ import styles from './Canvas.module.css';
 type ChildrenProps = {
   canvasId: string;
 };
-type Props = {
-  children: (props: ChildrenProps) => React.ReactNode | null | undefined;
+export type Props = {
+  children: (props: ChildrenProps) => React.ReactNode;
   height: number;
   width: number;
 };

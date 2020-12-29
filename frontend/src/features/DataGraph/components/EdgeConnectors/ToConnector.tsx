@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  connectGraphNodeWidth,
+  dataGraphNodeWidth,
   CONNECTOR_TYPE,
 } from '../../constants/constants';
 
@@ -29,7 +29,7 @@ const ToConnector = (props: Props) => (
   <g
     {...toConnectorDataProps}
     className={props.canConnect ? styles.canConnect : undefined}
-    transform={`translate(${connectGraphNodeWidth / 2}, 0)`}
+    transform={`translate(${dataGraphNodeWidth / 2}, 0)`}
     onClick={props.onClick}
   >
     <polygon

@@ -5,8 +5,7 @@ import DataEdge from '../DataEdge/DataEdge';
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
-import { Background, Canvas, DotPattern } from '../../../../components/Graph';
-import { connectGraphNodeHeight } from '../../constants/constants';
+import { DataCanvas } from '../DataCanvas/DataCanvas';
 import { DataNode } from '../DataNodes';
 import { edgeIdsQuery } from '../../atoms/edges';
 import { graphState } from '../../atoms/graph';
@@ -14,6 +13,7 @@ import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
 
 import styles from './DataGraph.module.css';
+import { DataBackground } from '../DataBackground/DataBackground';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -49,19 +49,17 @@ export const DataGraph: React.FC<Props> = (props) => {
           data-canvas-container
           className={styles.innerContainer}
         >
-
-          <Canvas
+          <DataCanvas
             ref={canvasRef}
-            height={getMaxHeight(nodes, dimensions.height)}
-            width={dimensions.width}
+            containerHeight={dimensions.height}
+            containerWidth={dimensions.width}
           >
             {({ canvasId }) => (
               <React.Fragment>
-                <Background
+                <DataBackground
+                  containerHeight={dimensions.height}
+                  containerWidth={dimensions.width}
                   patternId={canvasId}
-                  patternComponent={DotPattern}
-                  height={getMaxHeight(nodes, dimensions.height)}
-                  width={dimensions.width}
                 />
                 {edgeIds.map((edgeId) => (
                   <DataEdge key={edgeId} edgeId={edgeId} />
@@ -76,19 +74,9 @@ export const DataGraph: React.FC<Props> = (props) => {
                 <DataEdgeInProgress canvasRef={canvasRef} />
               </React.Fragment>
             )}
-          </Canvas>
+          </DataCanvas>
         </div>
       </React.Fragment>
     </div>
   );
 };
-
-function getNodeMaxBottom(nodes: Node[]): number {
-  if (nodes.length === 0) return 0;
-  const maxY = Math.max(...nodes.map((node) => node.y));
-  return maxY + connectGraphNodeHeight + 16; // TODO gutter
-}
-
-function getMaxHeight(nodes: Node[], domHeight: number): number {
-  return Math.max(domHeight, getNodeMaxBottom(nodes));
-}

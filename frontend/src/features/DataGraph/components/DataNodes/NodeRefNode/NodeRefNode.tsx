@@ -7,8 +7,8 @@ import {
 } from '../../../../../components/Graph';
 import FromConnector from '../../EdgeConnectors/FromConnector';
 import {
-  connectGraphNodeHeight,
-  connectGraphNodeWidth,
+  dataGraphNodeHeight,
+  dataGraphNodeWidth,
 } from '../../../constants/constants';
 import { CommonNodeProps } from '../types';
 
@@ -19,24 +19,24 @@ const NodeRefNode = (props: CommonNodeProps) => {
   const { node } = props;
   return (
     <Node
-      height={connectGraphNodeHeight}
+      height={dataGraphNodeHeight}
       onMouseDown={props.onStartDrag}
       onMouseUp={props.onStopDrag}
       styles={styles.outputNode}
-      width={connectGraphNodeWidth}
+      width={dataGraphNodeWidth}
       x={node.x}
       y={node.y}
     >
       <CenteredText
-        nodeHeight={connectGraphNodeHeight}
-        nodeWidth={connectGraphNodeWidth}
+        nodeHeight={dataGraphNodeHeight}
+        nodeWidth={dataGraphNodeWidth}
       >
         {node.name}
       </CenteredText>
       <BottomLeftText
         styles={styles.nodeRefNodeBottomText}
-        nodeHeight={connectGraphNodeHeight}
-        nodeWidth={connectGraphNodeWidth}
+        nodeHeight={dataGraphNodeHeight}
+        nodeWidth={dataGraphNodeWidth}
       >
         Node reference
       </BottomLeftText>

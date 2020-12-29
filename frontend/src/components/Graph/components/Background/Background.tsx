@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { BackgroundRect } from './BackgroundRect';
 
-type Props = {
+export type Props = {
   height: number;
   patternComponent: React.FC<{ patternId: string }>;
   patternId: string;
