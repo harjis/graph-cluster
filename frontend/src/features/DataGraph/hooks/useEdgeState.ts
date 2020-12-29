@@ -1,6 +1,7 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { edgeQuery, edgesState } from '../atoms/edges';
-import { nodeQuery } from '../atoms/nodes';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { edgeIdsState, edgeState } from '../atoms/edges';
+import { nodeState } from '../atoms/nodes';
 import {
   getNodeBottomMiddlePosition,
   getNodeTopMiddlePosition,
@@ -16,13 +17,15 @@ type Return = {
   toCoordinates: Coordinates;
 };
 export const useEdgeState = (props: Props): Return => {
-  const [edges, setEdges] = useRecoilState(edgesState);
-  const edge = useRecoilValue(edgeQuery(props.edgeId));
-  const toNode = useRecoilValue(nodeQuery(edge.to_node_id));
-  const fromNode = useRecoilValue(nodeQuery(edge.from_node_id));
+  const setEdgeIdsState = useSetRecoilState(edgeIdsState);
+  const edge = useRecoilValue(edgeState(props.edgeId));
+  const toNode = useRecoilValue(nodeState(edge.to_node_id));
+  const fromNode = useRecoilValue(nodeState(edge.from_node_id));
 
   const deleteEdge = () => {
-    setEdges(edges.filter((e) => e.id !== edge.id));
+    setEdgeIdsState((edgeIds) =>
+      edgeIds.filter((edgeId) => edgeId !== edge.id)
+    );
   };
 
   return {

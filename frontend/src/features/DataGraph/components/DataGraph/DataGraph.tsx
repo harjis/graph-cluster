@@ -1,19 +1,16 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
 import DataEdge from '../DataEdge/DataEdge';
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import NodeActionBar from '../NodeActionBar/NodeActionBar';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
+import { DataBackground } from '../DataBackground/DataBackground';
 import { DataCanvas } from '../DataCanvas/DataCanvas';
 import { DataNode } from '../DataNodes';
-import { edgeIdsQuery } from '../../atoms/edges';
-import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
-import { nodeIdsQuery } from '../../atoms/nodes';
+import { useGraph } from '../../hooks/useGraph';
 
 import styles from './DataGraph.module.css';
-import { DataBackground } from '../DataBackground/DataBackground';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
@@ -26,9 +23,7 @@ const validationErrors = {};
 const nodes: Node[] = [];
 type Props = {};
 export const DataGraph: React.FC<Props> = (props) => {
-  const graph = useRecoilValue(graphState);
-  const nodeIds = useRecoilValue(nodeIdsQuery);
-  const edgeIds = useRecoilValue(edgeIdsQuery);
+  const { graph, nodeIds, edgeIds } = useGraph();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   const canvasRef = React.useRef<SVGSVGElement>(null);
   return (

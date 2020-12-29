@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
 import { Node } from '../../../api/nodes';
-import { nodeHasToEdgesQuery, nodeQuery, nodesState } from '../atoms/nodes';
+import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
 import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
 
 type Coordinates = { x: number; y: number };
@@ -24,8 +24,7 @@ export const useNodeState = (props: Props): Return => {
   const { canvasRef } = props;
 
   const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
-  const setNodes = useSetRecoilState(nodesState);
-  const node = useRecoilValue(nodeQuery(props.nodeId));
+  const [node, setNode] = useRecoilState(nodeState(props.nodeId));
   const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.nodeId));
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
   const setFromNodeId = useSetRecoilState(fromNodeIdState);
@@ -63,12 +62,7 @@ export const useNodeState = (props: Props): Return => {
     const xDiff = nodeOffset.x - event.pageX;
     const yDiff = nodeOffset.y - event.pageY;
     setNodeOffset({ x: event.pageX, y: event.pageY });
-    setNodes((nodes) =>
-      nodes.map((node) => {
-        if (node.id !== props.nodeId) return node;
-        return { ...node, x: node.x - xDiff, y: node.y - yDiff };
-      })
-    );
+    setNode((node) => ({ ...node, x: node.x - xDiff, y: node.y - yDiff }));
   };
 
   useWindowEventListener('mousemove', drag);
