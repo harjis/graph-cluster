@@ -49,6 +49,7 @@ export const DataGraph: React.FC<Props> = (props) => {
           data-canvas-container
           className={styles.innerContainer}
         >
+
           <Canvas
             ref={canvasRef}
             height={getMaxHeight(nodes, dimensions.height)}
@@ -56,11 +57,9 @@ export const DataGraph: React.FC<Props> = (props) => {
           >
             {({ canvasId }) => (
               <React.Fragment>
-                <defs>
-                  <DotPattern patternId={canvasId} />
-                </defs>
                 <Background
                   patternId={canvasId}
+                  patternComponent={DotPattern}
                   height={getMaxHeight(nodes, dimensions.height)}
                   width={dimensions.width}
                 />

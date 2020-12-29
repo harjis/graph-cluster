@@ -37,10 +37,8 @@ const Graph: Story<Props> = (props) => {
       <Canvas height={size.height} width={size.width}>
         {({ canvasId }) => (
           <React.Fragment>
-            <defs>
-              <DotPattern patternId={canvasId} />
-            </defs>
             <Background
+              patternComponent={DotPattern}
               patternId={canvasId}
               height={size.height}
               width={size.width}
