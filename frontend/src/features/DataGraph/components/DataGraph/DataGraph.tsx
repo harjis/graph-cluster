@@ -8,12 +8,12 @@ import useResizeObserver from '../../../../hooks/useResizeObserver';
 import { Background, Canvas, DotPattern } from '../../../../components/Graph';
 import { connectGraphNodeHeight } from '../../constants/constants';
 import { DataNode } from '../DataNodes';
+import { edgeIdsQuery } from '../../atoms/edges';
 import { graphState } from '../../atoms/graph';
 import { Node } from '../../../../api/nodes';
 import { nodeIdsQuery } from '../../atoms/nodes';
 
 import styles from './DataGraph.module.css';
-import { edgeIdsQuery } from '../../atoms/edges';
 
 const onAddInputNode = () => {};
 const onAddOutputNode = () => {};

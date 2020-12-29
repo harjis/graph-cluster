@@ -9,12 +9,12 @@ type Props = {
   edgeId: number;
 };
 const DataEdge = (props: Props) => {
-  const { fromCoordinates, toCoordinates } = useEdgeState(props);
+  const { fromCoordinates, toCoordinates, deleteEdge } = useEdgeState(props);
   return (
     <g>
       <Edge
         from={fromCoordinates}
-        onClick={() => {}}
+        onClick={deleteEdge}
         styles={styles.line}
         to={toCoordinates}
       />
