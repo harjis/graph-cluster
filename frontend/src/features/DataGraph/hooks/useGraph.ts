@@ -4,11 +4,12 @@ import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { currentGraphIdQuery, graphState } from '../atoms/graph';
 import { edgeIdsState, edgeState } from '../atoms/edges';
 import { fetchEdges } from '../../../api/edges';
-import { fetchNodes } from '../../../api/nodes';
+import { createNode, fetchNodes, Node } from '../../../api/nodes';
 import { Graph } from '../../../api/graphs';
 import { nodeIdsState, nodeState } from '../atoms/nodes';
 
 type Return = {
+  addNode: (nodeType: Node['type']) => void;
   graph: Graph;
   nodeIds: number[];
   edgeIds: number[];
@@ -50,7 +51,18 @@ export const useGraph = (): Return => {
     loadNodes().then(() => loadEdges());
   }, [loadNodes, loadEdges]);
 
+  const addNode = useRecoilCallback(
+    ({ set, snapshot }) => async (nodeType: Node['type']) => {
+      const newInputNode = await createNode(currentGraphId, nodeType);
+      const prevNodeIds = await snapshot.getPromise(nodeIdsState);
+      set(nodeIdsState, prevNodeIds.concat(newInputNode.id));
+      set(nodeState(newInputNode.id), newInputNode);
+    },
+    []
+  );
+
   return {
+    addNode,
     graph,
     nodeIds,
     edgeIds,

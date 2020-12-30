@@ -8,8 +8,8 @@ import {
 
 import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
-import { Node } from '../../../api/nodes';
-import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
+import { createNode, Node } from '../../../api/nodes';
+import { nodeHasToEdgesQuery, nodeIdsState, nodeState } from '../atoms/nodes';
 import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
 import { edgeIdsState, edgeState } from '../atoms/edges';
 import { currentGraphIdQuery } from '../atoms/graph';
@@ -39,6 +39,7 @@ export const useNodeState = (props: Props): Return => {
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
   const [fromNodeId, setFromNodeId] = useRecoilState(fromNodeIdState);
 
+  // TODO is this a good place for this
   const addEdge = useRecoilCallback(
     ({ set, snapshot }) => async (toNodeId: number) => {
       if (fromNodeId === null) {

@@ -1,32 +1,39 @@
 import React from 'react';
 
 import { Errors } from '../../../../types';
+import { useGraph } from '../../hooks/useGraph';
 
 import styles from './NodeActionBar.module.css';
 
+const onUndo = () => {};
+const onResetDb = () => {};
 type Props = {
   isSaving: boolean;
-  onAddInputNode: () => void;
-  onAddOutputNode: () => void;
-  onUndo: () => void;
-  onResetDb: () => void;
   validationErrors: Errors;
 };
-const NodeActionBar = (props: Props) => (
-  <div className={styles.container}>
-    <div className={styles.leftContainer}>
-      <button onClick={props.onAddInputNode}>Add Input Node</button>
-      <button onClick={props.onAddOutputNode}>Add Output Node</button>
-      <button onClick={props.onUndo}>Undo</button>
-      <div style={{ color: 'red' }}>
-        {Object.values(props.validationErrors).join(' ')}
-      </div>
-      {props.isSaving && 'Saving...'}
-    </div>
-    <div>
-      <button onClick={props.onResetDb}>Reset DB</button>
-    </div>
-  </div>
-);
+export const NodeActionBar = (props: Props) => {
+  const { addNode } = useGraph();
+  const addInputNode = React.useCallback(() => {
+    addNode('InputNode');
+  }, [addNode]);
+  const addOutputNode = React.useCallback(() => {
+    addNode('OutputNode');
+  }, [addNode]);
 
-export default React.memo<Props>(NodeActionBar);
+  return (
+    <div className={styles.container}>
+      <div className={styles.leftContainer}>
+        <button onClick={addInputNode}>Add Input Node</button>
+        <button onClick={addOutputNode}>Add Output Node</button>
+        <button onClick={onUndo}>Undo</button>
+        <div style={{ color: 'red' }}>
+          {Object.values(props.validationErrors).join(' ')}
+        </div>
+        {props.isSaving && 'Saving...'}
+      </div>
+      <div>
+        <button onClick={onResetDb}>Reset DB</button>
+      </div>
+    </div>
+  );
+};

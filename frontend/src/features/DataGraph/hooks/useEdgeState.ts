@@ -26,6 +26,7 @@ export const useEdgeState = (props: Props): Return => {
   const toNode = useRecoilValue(nodeState(edge.to_node_id));
   const fromNode = useRecoilValue(nodeState(edge.from_node_id));
 
+  // TODO should useAsyncEffect be used here?
   const deleteEdge = useAsyncEffect(async (isMounted) => {
     const wasDeleteSuccess = await destroyEdge(currentGraphId, props.edgeId);
     if (isMounted() && wasDeleteSuccess) {
