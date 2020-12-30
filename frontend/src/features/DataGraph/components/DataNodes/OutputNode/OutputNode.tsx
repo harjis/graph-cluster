@@ -13,10 +13,13 @@ import styles from './OutputNode.module.css';
 type Props = CommonNodeProps & {
   canConnect: boolean;
   hasToEdges: boolean;
-  onClickToConnector: () => void;
+  onClickToConnector: (nodeId: number) => void;
 };
 const OutputNode = (props: Props) => {
-  const { node } = props;
+  const { node, onClickToConnector } = props;
+  const onClick = React.useCallback(() => {
+    onClickToConnector(node.id);
+  }, [node.id, onClickToConnector]);
   return (
     <Node
       height={dataGraphNodeHeight}
@@ -36,7 +39,7 @@ const OutputNode = (props: Props) => {
       <ToConnector
         canConnect={props.canConnect}
         hasToEdges={props.hasToEdges}
-        onClick={props.onClickToConnector}
+        onClick={onClick}
       />
     </Node>
   );

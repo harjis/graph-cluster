@@ -49,8 +49,8 @@ export function useDataEdgeInProgress(
     const mouseUpHandler = (event: MouseEvent): void => {
       if (
         isEdgeInProgressStarted() &&
-        event.target instanceof Element &&
-        !event.target.getAttribute(CONNECTOR_TYPE)
+        event.currentTarget instanceof Element &&
+        !event.currentTarget.getAttribute(CONNECTOR_TYPE)
       ) {
         onStopEdgeInProgress();
       }
