@@ -47,10 +47,11 @@ export function useDataEdgeInProgress(
   React.useEffect(() => {
     const isEdgeInProgressStarted = (): boolean => fromNodeId !== null;
     const mouseUpHandler = (event: MouseEvent): void => {
+      // event.currentTarget should not be used here because it points to window
       if (
         isEdgeInProgressStarted() &&
-        event.currentTarget instanceof Element &&
-        !event.currentTarget.getAttribute(CONNECTOR_TYPE)
+        event.target instanceof Element &&
+        !event.target.getAttribute(CONNECTOR_TYPE)
       ) {
         onStopEdgeInProgress();
       }
