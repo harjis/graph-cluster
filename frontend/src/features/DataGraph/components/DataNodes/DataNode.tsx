@@ -14,8 +14,8 @@ export const DataNode: React.FC<Props> = React.memo((props) => {
     hasToEdges,
     isEdgeInProgress,
     node,
-    startDrag,
-    stopDrag,
+    onDrag,
+    onStopDrag,
     startEdgeInProgress,
     stopEdgeInProgress,
   } = useNodeState(props);
@@ -23,8 +23,8 @@ export const DataNode: React.FC<Props> = React.memo((props) => {
     case 'InputNode': {
       return (
         <InputNode
-          onStartDrag={startDrag}
-          onStopDrag={stopDrag}
+          onDrag={onDrag}
+          onStopDrag={onStopDrag}
           node={node}
           onClickFromConnector={startEdgeInProgress}
         />
@@ -38,17 +38,13 @@ export const DataNode: React.FC<Props> = React.memo((props) => {
           hasToEdges={hasToEdges}
           node={node}
           onClickToConnector={stopEdgeInProgress}
-          onStartDrag={startDrag}
-          onStopDrag={stopDrag}
+          onDrag={onDrag}
+          onStopDrag={onStopDrag}
         />
       );
     case 'NodeRefNode':
       return (
-        <NodeRefNode
-          onStartDrag={startDrag}
-          onStopDrag={stopDrag}
-          node={node}
-        />
+        <NodeRefNode onDrag={onDrag} onStopDrag={onStopDrag} node={node} />
       );
     default:
       throw new Error(`Unknown node type: ${node.type}`);

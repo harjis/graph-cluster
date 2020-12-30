@@ -19,8 +19,8 @@ const InputNode = (props: Props) => {
   return (
     <Node
       height={dataGraphNodeHeight}
-      onMouseDown={props.onStartDrag}
-      onMouseUp={props.onStopDrag}
+      onDrag={props.onDrag}
+      onStopDrag={props.onStopDrag}
       styles={styles.inputNode}
       width={dataGraphNodeWidth}
       x={node.x}

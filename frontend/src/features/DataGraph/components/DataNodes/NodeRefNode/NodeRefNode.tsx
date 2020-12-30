@@ -20,8 +20,8 @@ const NodeRefNode = (props: CommonNodeProps) => {
   return (
     <Node
       height={dataGraphNodeHeight}
-      onMouseDown={props.onStartDrag}
-      onMouseUp={props.onStopDrag}
+      onDrag={props.onDrag}
+      onStopDrag={props.onStopDrag}
       styles={styles.outputNode}
       width={dataGraphNodeWidth}
       x={node.x}

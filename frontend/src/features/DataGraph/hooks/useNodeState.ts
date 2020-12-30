@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import {
   useRecoilCallback,
@@ -11,7 +11,6 @@ import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
 import { Node, updateNode } from '../../../api/nodes';
 import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
-import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
 import { edgeIdsState, edgeState } from '../atoms/edges';
 import { currentGraphIdQuery } from '../atoms/graph';
 import { createEdge } from '../../../api/edges';
@@ -28,16 +27,15 @@ type Return = {
   hasToEdges: boolean;
   isEdgeInProgress: boolean;
   node: Node;
-  startDrag: (event: React.MouseEvent) => void;
   startEdgeInProgress: (event: React.MouseEvent) => void;
-  stopDrag: () => void;
+  onDrag: (coordinates: Coordinates) => void;
+  onStopDrag: () => void;
   stopEdgeInProgress: (toNodeId: number) => void;
 };
 export const useNodeState = (props: Props): Return => {
   const { canvasRef } = props;
 
   const currentGraphId = useRecoilValue(currentGraphIdQuery);
-  const [nodeOffset, setNodeOffset] = useState<Coordinates | null>(null);
   const [node, setNode] = useRecoilState(nodeState(props.nodeId));
   const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.nodeId));
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
@@ -79,35 +77,24 @@ export const useNodeState = (props: Props): Return => {
     [addEdge, setFromNodeId, setToCoordinates]
   );
 
-  const startDrag = React.useCallback((event: React.MouseEvent) => {
-    const { pageX, pageY } = event;
-    setNodeOffset({ x: pageX, y: pageY });
-  }, []);
+  const onDrag = React.useCallback(
+    ({ x, y }: Coordinates) => {
+      setNode((node) => ({ ...node, x, y }));
+    },
+    [setNode]
+  );
 
-  const stopDrag = useAsyncEffect(async () => {
+  const onStopDrag = useAsyncEffect(async () => {
     await debouncedUpdateNode(node);
-    setNodeOffset(null);
   });
-
-  const drag = (event: MouseEvent) => {
-    if (nodeOffset === null) {
-      return;
-    }
-    const xDiff = nodeOffset.x - event.pageX;
-    const yDiff = nodeOffset.y - event.pageY;
-    setNodeOffset({ x: event.pageX, y: event.pageY });
-    setNode((node) => ({ ...node, x: node.x - xDiff, y: node.y - yDiff }));
-  };
-
-  useWindowEventListener('mousemove', drag);
 
   return {
     hasToEdges,
     isEdgeInProgress: !!fromNodeId,
     node,
-    startDrag,
     startEdgeInProgress,
-    stopDrag,
+    onDrag,
+    onStopDrag,
     stopEdgeInProgress,
   };
 };

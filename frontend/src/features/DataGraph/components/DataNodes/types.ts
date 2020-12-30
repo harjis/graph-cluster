@@ -1,9 +1,11 @@
-import React from 'react';
-
 import { Node } from '../../../../api/nodes';
 
+type Coordinates = {
+  x: number;
+  y: number;
+};
 export type CommonNodeProps = {
-  onStartDrag: (event: React.MouseEvent) => void;
-  onStopDrag: () => void;
+  onDrag: (coordinates: Coordinates) => void;
+  onStopDrag: (coordinates: Coordinates) => void;
   node: Node;
 };

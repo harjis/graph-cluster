@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { useDraggable, Coordinates } from '../../../../hooks/useDraggable';
+
 import styles from './Node.module.css';
 
 type Props = {
   children: React.ReactNode | null | undefined;
   height: number;
-  onMouseDown?: (event: React.MouseEvent) => void;
-  onMouseUp?: (event: React.MouseEvent) => void;
+  onDrag: (coordinates: Coordinates) => void;
+  onStopDrag: (coordinates: Coordinates) => void;
   styles?: string;
   width: number;
   x: number;
@@ -15,15 +17,22 @@ type Props = {
 
 // Notice: Event handlers should not be attached to g. If you have components with handlers inside Node
 // it would make these handlers fire as well.
-export const Node = (props: Props) => (
-  <g transform={`translate(${props.x}, ${props.y})`}>
-    <rect
-      onMouseDown={props.onMouseDown}
-      onMouseUp={props.onMouseUp}
-      className={props.styles || styles.container}
-      height={props.height}
-      width={props.width}
-    />
-    {props.children}
-  </g>
-);
+export const Node = (props: Props) => {
+  const { coordinates, startDrag, stopDrag } = useDraggable({
+    coordinates: { x: props.x, y: props.y },
+    onStopDrag: props.onStopDrag,
+    onDrag: props.onDrag,
+  });
+  return (
+    <g transform={`translate(${coordinates.x}, ${coordinates.y})`}>
+      <rect
+        onMouseDown={startDrag}
+        onMouseUp={stopDrag}
+        className={props.styles || styles.container}
+        height={props.height}
+        width={props.width}
+      />
+      {props.children}
+    </g>
+  );
+};

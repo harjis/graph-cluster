@@ -8,13 +8,13 @@ const handlers = {
 export const inputHandlers = {
   ...handlers,
   onClickFromConnector: () => {},
-  onStartDrag: () => {},
+  onDrag: () => {},
   onStopDrag: () => {},
 };
 export const outputHandlers = {
   ...handlers,
   onClickToConnector: () => {},
-  onStartDrag: () => {},
+  onDrag: () => {},
   onStopDrag: () => {},
 };
 
