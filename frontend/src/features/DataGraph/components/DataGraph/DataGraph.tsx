@@ -7,7 +7,6 @@ import useResizeObserver from '../../../../hooks/useResizeObserver';
 import { DataBackground } from '../DataBackground/DataBackground';
 import { DataCanvas } from '../DataCanvas/DataCanvas';
 import { DataNode } from '../DataNodes';
-import { Node } from '../../../../api/nodes';
 import { useGraph } from '../../hooks/useGraph';
 
 import styles from './DataGraph.module.css';
@@ -16,13 +15,9 @@ const onAddInputNode = () => {};
 const onAddOutputNode = () => {};
 const onUndo = () => {};
 const onResetDb = () => {};
-const onAddEdge = (id: number, id2: number) => {};
-const onStartDrag = (id: number, event: React.MouseEvent) => {};
-const onStopDrag = () => {};
 const validationErrors = {};
-const nodes: Node[] = [];
-type Props = {};
-export const DataGraph: React.FC<Props> = (props) => {
+
+export const DataGraph: React.FC = () => {
   const { graph, nodeIds, edgeIds } = useGraph();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   const canvasRef = React.useRef<SVGSVGElement>(null);

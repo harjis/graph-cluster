@@ -34,17 +34,17 @@ end)
 end)
 |> Multi.run(:edge, fn _, %{graph: graph, from_node: from_node, to_node: to_node} ->
 
-  Enum.each(1..30, fn y ->
-    Enum.each(1..30, fn x ->
-      PhoenixGraph.Graphs.create_node(%{
-        graph_id: graph.id,
-        name: "Input node #{y} #{x}",
-        type: PhoenixGraph.EctoEnums.node_type_input_node(),
-        x: x * 50,
-        y: y * 50
-      })
-    end)
-  end)
+#  Enum.each(1..30, fn y ->
+#    Enum.each(1..30, fn x ->
+#      PhoenixGraph.Graphs.create_node(%{
+#        graph_id: graph.id,
+#        name: "Input node #{y} #{x}",
+#        type: PhoenixGraph.EctoEnums.node_type_input_node(),
+#        x: x * 50,
+#        y: y * 50
+#      })
+#    end)
+#  end)
 
   PhoenixGraph.Graphs.create_edge(%{
     "from_node_id" => from_node.id,

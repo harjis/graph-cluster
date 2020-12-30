@@ -14,6 +14,7 @@ type Props = {
 };
 type Return = {
   hasToEdges: boolean;
+  isEdgeInProgress: boolean;
   node: Node;
   startDrag: (event: React.MouseEvent) => void;
   stopDrag: () => void;
@@ -27,7 +28,7 @@ export const useNodeState = (props: Props): Return => {
   const [node, setNode] = useRecoilState(nodeState(props.nodeId));
   const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.nodeId));
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
-  const setFromNodeId = useSetRecoilState(fromNodeIdState);
+  const [fromNodeId, setFromNodeId] = useRecoilState(fromNodeIdState);
 
   const startEdgeInProgress = React.useCallback(
     (event: React.MouseEvent) => {
@@ -69,6 +70,7 @@ export const useNodeState = (props: Props): Return => {
 
   return {
     hasToEdges,
+    isEdgeInProgress: !!fromNodeId,
     node,
     startDrag,
     stopDrag,

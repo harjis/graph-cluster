@@ -45,6 +45,8 @@ export const useGraph = (): Return => {
   );
 
   useEffect(() => {
+    // TODO nodes need to be rendered first because edges depend on node position
+    // it would be better if requests were parallel and rendering was sequential
     loadNodes().then(() => loadEdges());
   }, [loadNodes, loadEdges]);
 

@@ -12,6 +12,7 @@ type Props = {
 export const DataNode: React.FC<Props> = React.memo((props) => {
   const {
     hasToEdges,
+    isEdgeInProgress,
     node,
     startDrag,
     stopDrag,
@@ -33,7 +34,7 @@ export const DataNode: React.FC<Props> = React.memo((props) => {
     case 'OutputNode':
       return (
         <OutputNode
-          canConnect={false}
+          canConnect={isEdgeInProgress}
           hasToEdges={hasToEdges}
           node={node}
           onClickToConnector={stopEdgeInProgress}
