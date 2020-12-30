@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import {
   useRecoilCallback,
   useRecoilState,
@@ -8,12 +9,15 @@ import {
 
 import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
-import { createNode, Node } from '../../../api/nodes';
-import { nodeHasToEdgesQuery, nodeIdsState, nodeState } from '../atoms/nodes';
+import { Node, updateNode } from '../../../api/nodes';
+import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
 import { useWindowEventListener } from '../../../hooks/useWindowEventListener';
 import { edgeIdsState, edgeState } from '../atoms/edges';
 import { currentGraphIdQuery } from '../atoms/graph';
 import { createEdge } from '../../../api/edges';
+import { useAsyncEffect } from '../../../hooks/useAsyncEffect';
+
+const debouncedUpdateNode = AwesomeDebouncePromise(updateNode, 200);
 
 type Coordinates = { x: number; y: number };
 type Props = {
@@ -80,9 +84,10 @@ export const useNodeState = (props: Props): Return => {
     setNodeOffset({ x: pageX, y: pageY });
   }, []);
 
-  const stopDrag = React.useCallback(() => {
+  const stopDrag = useAsyncEffect(async () => {
+    await debouncedUpdateNode(node);
     setNodeOffset(null);
-  }, []);
+  });
 
   const drag = (event: MouseEvent) => {
     if (nodeOffset === null) {

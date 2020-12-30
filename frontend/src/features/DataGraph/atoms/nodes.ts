@@ -1,7 +1,6 @@
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 
-import { fetchNodes, Node } from '../../../api/nodes';
-import { currentGraphIdQuery } from './graph';
+import { Node } from '../../../api/nodes';
 import { dataGraphNodeHeight } from '../constants/constants';
 
 export const nodeIdsState = atom<number[]>({
