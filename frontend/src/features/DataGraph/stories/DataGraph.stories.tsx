@@ -20,6 +20,15 @@ fetchMock.get(`${url}/graphs/${graph.id}`, graph);
 fetchMock.get(`${url}/graphs/${graph.id}/nodes`, nodes);
 fetchMock.get(`${url}/graphs/${graph.id}/edges`, edges);
 
+fetchMock.post(`${url}/graphs/${graph.id}/nodes`, {
+  ...createNode(graph.id),
+  x: 0,
+  y: 0,
+});
+
+fetchMock.put(`${url}/graphs/${graph.id}/nodes/${nodes[0].id}`, nodes[0]);
+fetchMock.put(`${url}/graphs/${graph.id}/nodes/${nodes[1].id}`, nodes[1]);
+
 export default {
   title: 'DataGraph/Graph',
   component: DataGraph,
