@@ -20,7 +20,7 @@ export const DataGraph: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <React.Fragment>
+      <>
         <NodeActionBar
           addNode={addNode}
           isSaving={false}
@@ -39,7 +39,7 @@ export const DataGraph: React.FC = () => {
             containerWidth={dimensions.width}
           >
             {({ canvasId }) => (
-              <React.Fragment>
+              <>
                 <DataBackground
                   containerHeight={dimensions.height}
                   containerWidth={dimensions.width}
@@ -56,11 +56,11 @@ export const DataGraph: React.FC = () => {
                   />
                 ))}
                 <DataEdgeInProgress canvasRef={canvasRef} />
-              </React.Fragment>
+              </>
             )}
           </DataCanvas>
         </div>
-      </React.Fragment>
+      </>
     </div>
   );
 };

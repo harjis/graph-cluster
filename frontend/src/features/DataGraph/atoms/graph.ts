@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 
-import { fetchGraph, Graph } from '../../../api/graphs';
+import { fetchGraph } from '../../../api/graphs';
 
 export const currentGraphIdState = atom<number | null>({
   key: 'currentGraphIdState',
@@ -19,13 +19,10 @@ export const currentGraphIdQuery = selector({
   },
 });
 
-export const graphState = atom<Graph>({
+export const graphState = selector({
   key: 'graphState',
-  default: selector({
-    key: 'graphState/default',
-    get: ({ get }) => {
-      const currentGraphId = get(currentGraphIdQuery);
-      return fetchGraph(currentGraphId);
-    },
-  }),
+  get: ({ get }) => {
+    const currentGraphId = get(currentGraphIdQuery);
+    return fetchGraph(currentGraphId);
+  },
 });
