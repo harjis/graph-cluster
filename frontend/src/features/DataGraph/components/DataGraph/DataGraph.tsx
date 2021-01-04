@@ -19,48 +19,38 @@ export const DataGraph: React.FC = () => {
   const canvasRef = React.useRef<SVGSVGElement>(null);
 
   return (
-    <div className={styles.container}>
-      <>
-        <NodeActionBar
-          addNode={addNode}
-          isSaving={false}
-          validationErrors={validationErrors}
-        />
-        {graph.name}
-        {/*.container + .innerContainer is a bit of a hack. Try to make it better*/}
-        <div
-          ref={containerRef}
-          data-canvas-container
-          className={styles.innerContainer}
+    <div data-canvas-container className={styles.container}>
+      <NodeActionBar
+        addNode={addNode}
+        isSaving={false}
+        validationErrors={validationErrors}
+      />
+      {graph.name}
+
+      <div className={styles.canvasContainer} ref={containerRef}>
+        <DataCanvas
+          ref={canvasRef}
+          containerHeight={dimensions.height}
+          containerWidth={dimensions.width}
         >
-          <DataCanvas
-            ref={canvasRef}
-            containerHeight={dimensions.height}
-            containerWidth={dimensions.width}
-          >
-            {({ canvasId }) => (
-              <>
-                <DataBackground
-                  containerHeight={dimensions.height}
-                  containerWidth={dimensions.width}
-                  patternId={canvasId}
-                />
-                {edgeIds.map((edgeId) => (
-                  <DataEdge key={edgeId} edgeId={edgeId} />
-                ))}
-                {nodeIds.map((nodeId) => (
-                  <DataNode
-                    canvasRef={canvasRef}
-                    key={nodeId}
-                    nodeId={nodeId}
-                  />
-                ))}
-                <DataEdgeInProgress canvasRef={canvasRef} />
-              </>
-            )}
-          </DataCanvas>
-        </div>
-      </>
+          {({ canvasId }) => (
+            <>
+              <DataBackground
+                containerHeight={dimensions.height}
+                containerWidth={dimensions.width}
+                patternId={canvasId}
+              />
+              {edgeIds.map((edgeId) => (
+                <DataEdge key={edgeId} edgeId={edgeId} />
+              ))}
+              {nodeIds.map((nodeId) => (
+                <DataNode canvasRef={canvasRef} key={nodeId} nodeId={nodeId} />
+              ))}
+              <DataEdgeInProgress canvasRef={canvasRef} />
+            </>
+          )}
+        </DataCanvas>
+      </div>
     </div>
   );
 };

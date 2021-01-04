@@ -20,9 +20,3 @@ export function undoGraph(graphId: number) {
     response.json()
   );
 }
-
-export function resetDb(graphId: number) {
-  return fetch(`${url}/graphs/${graphId}/reset`, options).then((response) =>
-    response.json()
-  );
-}

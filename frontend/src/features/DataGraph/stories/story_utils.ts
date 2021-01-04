@@ -1,22 +1,9 @@
-import { getRandomInt } from '../../../utils/math_util';
+import { getId } from '../../../utils/math_util';
 import { Node } from '../../../api/nodes';
+import { Graph } from '../../../api/graphs';
+import { Edge } from '../../../api/edges';
 
-const handlers = {
-  onMouseDown: () => {},
-  onMouseUp: () => {},
-};
-export const inputHandlers = {
-  ...handlers,
-  onClickFromConnector: () => {},
-  onDrag: () => {},
-  onStopDrag: () => {},
-};
-export const outputHandlers = {
-  ...handlers,
-  onClickToConnector: () => {},
-  onDrag: () => {},
-  onStopDrag: () => {},
-};
+export const createGraph = (): Graph => ({ id: 1, name: 'Mocked Graph' });
 
 export const createNode = (
   graph_id: number = 0,
@@ -25,10 +12,16 @@ export const createNode = (
 ): Node => ({
   errors: {},
   graph_id,
-  id: getRandomInt(),
+  id: getId(),
   name: 'New node',
   to_edge_ids: [],
   type: 'InputNode',
   x,
   y,
+});
+
+export const createEdge = (fromNodeId: number, toNodeId: number): Edge => ({
+  id: getId(),
+  from_node_id: fromNodeId,
+  to_node_id: toNodeId,
 });
