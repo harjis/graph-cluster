@@ -6,7 +6,6 @@ import { Node } from '../../../../api/nodes';
 import styles from './NodeActionBar.module.css';
 
 const onUndo = () => {};
-const onResetDb = () => {};
 type Props = {
   addNode: (nodeType: Node['type']) => void;
   isSaving: boolean;
@@ -31,9 +30,6 @@ export const NodeActionBar = (props: Props) => {
           {Object.values(props.validationErrors).join(' ')}
         </div>
         {props.isSaving && 'Saving...'}
-      </div>
-      <div>
-        <button onClick={onResetDb}>Reset DB</button>
       </div>
     </div>
   );
