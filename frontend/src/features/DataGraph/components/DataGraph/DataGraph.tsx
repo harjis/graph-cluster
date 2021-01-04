@@ -14,14 +14,18 @@ import styles from './DataGraph.module.css';
 const validationErrors = {};
 
 export const DataGraph: React.FC = () => {
-  const { graph, nodeIds, edgeIds } = useGraph();
+  const { graph, nodeIds, edgeIds, addNode } = useGraph();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
   const canvasRef = React.useRef<SVGSVGElement>(null);
 
   return (
     <div className={styles.container}>
       <React.Fragment>
-        <NodeActionBar isSaving={false} validationErrors={validationErrors} />
+        <NodeActionBar
+          addNode={addNode}
+          isSaving={false}
+          validationErrors={validationErrors}
+        />
         {graph.name}
         {/*.container + .innerContainer is a bit of a hack. Try to make it better*/}
         <div
