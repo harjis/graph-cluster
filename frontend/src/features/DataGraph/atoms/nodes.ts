@@ -8,23 +8,9 @@ export const nodeIdsState = atom<number[]>({
   default: [],
 });
 
-const tempNode = atomFamily<Node | null, number>({
-  key: 'tempNode',
-  default: null,
-});
 export const nodeState = atomFamily<Node, number>({
   key: 'nodeState',
-  default: selectorFamily<Node, number>({
-    key: 'nodeState/default',
-    get: (nodeId) => ({ get }) => {
-      const node = get(tempNode(nodeId));
-      if (node === null) {
-        throw new Error(`Fatal error: Node with id ${nodeId} was not found`);
-      }
-      return node;
-    },
-    set: (nodeId) => ({ set }, node) => set(tempNode(nodeId), node),
-  }),
+  default: {} as Node,
 });
 
 export const nodeHasToEdgesQuery = selectorFamily<boolean, number>({
