@@ -34,7 +34,7 @@ const AppWithCurrentTenant = () => {
           </li>
         </ul>
       </div>
-      <hr />
+      <hr style={{ width: '100%' }} />
       <Route exact path="/" component={GraphList} />
       <Route exact path="/tenants" component={Tenants} />
       <Route path="/graphs/:id" component={DataGraphContainer} />

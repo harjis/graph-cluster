@@ -30,3 +30,6 @@ export function getNode(nodes: Node[], nodeId: number): Node {
 
 export const getMaxHeight = (nodeMaxBottom: number, domHeight: number) =>
   Math.max(domHeight, nodeMaxBottom);
+
+export const getMaxWidth = (nodeMaxRight: number, domWidth: number) =>
+  Math.max(domWidth, nodeMaxRight);
