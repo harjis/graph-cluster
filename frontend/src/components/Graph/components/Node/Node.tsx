@@ -18,7 +18,7 @@ type Props = {
 // Notice: Event handlers should not be attached to g. If you have components with handlers inside Node
 // it would make these handlers fire as well.
 export const Node = (props: Props) => {
-  const { coordinates, startDrag, stopDrag } = useDraggable({
+  const { coordinates, startDrag } = useDraggable({
     coordinates: { x: props.x, y: props.y },
     onStopDrag: props.onStopDrag,
     onDrag: props.onDrag,
@@ -27,7 +27,6 @@ export const Node = (props: Props) => {
     <g transform={`translate(${coordinates.x}, ${coordinates.y})`}>
       <rect
         onMouseDown={startDrag}
-        onMouseUp={stopDrag}
         className={props.styles || styles.container}
         height={props.height}
         width={props.width}

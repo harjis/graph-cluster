@@ -14,7 +14,6 @@ type Props = {
 type Return = {
   coordinates: Coordinates;
   startDrag: (event: React.MouseEvent) => void;
-  stopDrag: () => void;
 };
 export const useDraggable = (props: Props): Return => {
   const [coordinates, setCoordinates] = useState<Coordinates>(
@@ -53,10 +52,10 @@ export const useDraggable = (props: Props): Return => {
   );
 
   useWindowEventListener('mousemove', drag);
+  useWindowEventListener('mouseup', stopDrag);
 
   return {
     coordinates,
     startDrag,
-    stopDrag,
   };
 };
