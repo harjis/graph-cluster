@@ -27,9 +27,11 @@ export const useDraggable = (props: Props): Return => {
   }, []);
 
   const stopDrag = useCallback(() => {
-    props.onStopDrag && props.onStopDrag(coordinates);
+    // A bit hackish to have nodeOffset in the check. Otherwise clicking on canvas
+    // without moving anything would also send an update
+    nodeOffset && props.onStopDrag && props.onStopDrag(coordinates);
     setNodeOffset(null);
-  }, [coordinates, props]);
+  }, [nodeOffset, coordinates, props]);
 
   const drag = useCallback(
     (event: MouseEvent) => {
