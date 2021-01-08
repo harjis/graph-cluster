@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { Edge as EdgeApiType } from '../../../../api/edges';
 import { Edge } from '../../../../components/Graph';
 import { useEdgeState } from '../../hooks/useEdgeState';
 
 import styles from './DataEdge.module.css';
 
 type Props = {
-  edgeId: number;
+  edge: EdgeApiType;
 };
 const DataEdge = (props: Props) => {
   const { fromCoordinates, toCoordinates, deleteEdge } = useEdgeState(props);

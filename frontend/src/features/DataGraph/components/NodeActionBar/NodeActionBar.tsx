@@ -1,18 +1,28 @@
 import React from 'react';
 
+import { createNode, Node } from '../../../../api/nodes';
+import { currentGraphIdQuery } from '../../atoms/graph';
 import { Errors } from '../../../../types';
-import { Node } from '../../../../api/nodes';
+import { nodesState } from '../../atoms/nodes';
+import { useRecoilCallback } from 'recoil';
 
 import styles from './NodeActionBar.module.css';
 
 const onUndo = () => {};
 type Props = {
-  addNode: (nodeType: Node['type']) => void;
   isSaving: boolean;
   validationErrors: Errors;
 };
 export const NodeActionBar = (props: Props) => {
-  const { addNode } = props;
+  const addNode = useRecoilCallback(
+    ({ set, snapshot }) => async (nodeType: Node['type']) => {
+      const currentGraphId = await snapshot.getPromise(currentGraphIdQuery);
+      const newInputNode = await createNode(currentGraphId, nodeType);
+      const prevNodes = await snapshot.getPromise(nodesState);
+      set(nodesState, prevNodes.concat(newInputNode));
+    },
+    []
+  );
   const addInputNode = React.useCallback(() => {
     addNode('InputNode');
   }, [addNode]);

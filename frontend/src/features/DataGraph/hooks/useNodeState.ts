@@ -10,17 +10,17 @@ import {
 import { fromNodeIdState, toCoordinatesState } from './useDataEdgeInProgress';
 import { getRelativeCoordinates } from '../../../utils/svg_utils';
 import { Node, updateNode } from '../../../api/nodes';
-import { nodeHasToEdgesQuery, nodeState } from '../atoms/nodes';
-import { edgeIdsState, edgeState } from '../atoms/edges';
+import { nodeHasToEdgesQuery, nodeQuery, nodesState } from '../atoms/nodes';
 import { currentGraphIdQuery } from '../atoms/graph';
 import { createEdge } from '../../../api/edges';
 import { useAsyncEffect } from '../../../hooks/useAsyncEffect';
+import { edgesState } from '../atoms/edges';
 
 const debouncedUpdateNode = AwesomeDebouncePromise(updateNode, 200);
 
 type Coordinates = { x: number; y: number };
 type Props = {
-  nodeId: number;
+  node: Node;
   canvasRef: React.RefObject<SVGSVGElement>;
 };
 type Return = {
@@ -36,8 +36,9 @@ export const useNodeState = (props: Props): Return => {
   const { canvasRef } = props;
 
   const currentGraphId = useRecoilValue(currentGraphIdQuery);
-  const [node, setNode] = useRecoilState(nodeState(props.nodeId));
-  const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.nodeId));
+  const setNodes = useSetRecoilState(nodesState);
+  const node = useRecoilValue(nodeQuery(props.node.id));
+  const hasToEdges = useRecoilValue(nodeHasToEdgesQuery(props.node.id));
   const setToCoordinates = useSetRecoilState(toCoordinatesState);
   const [fromNodeId, setFromNodeId] = useRecoilState(fromNodeIdState);
 
@@ -48,9 +49,8 @@ export const useNodeState = (props: Props): Return => {
         return;
       }
       const newEdge = await createEdge(currentGraphId, fromNodeId, toNodeId);
-      const prevEdgeIds = await snapshot.getPromise(edgeIdsState);
-      set(edgeIdsState, prevEdgeIds.concat(newEdge.id));
-      set(edgeState(newEdge.id), newEdge);
+      const prevEdges = await snapshot.getPromise(edgesState);
+      set(edgesState, prevEdges.concat(newEdge));
     },
     [fromNodeId]
   );
@@ -62,9 +62,9 @@ export const useNodeState = (props: Props): Return => {
         if (!toCoordinates) return state;
         return toCoordinates;
       });
-      setFromNodeId(props.nodeId);
+      setFromNodeId(props.node.id);
     },
-    [canvasRef, props.nodeId, setFromNodeId, setToCoordinates]
+    [canvasRef, props.node.id, setFromNodeId, setToCoordinates]
   );
 
   const stopEdgeInProgress = React.useCallback(
@@ -79,9 +79,17 @@ export const useNodeState = (props: Props): Return => {
 
   const onDrag = React.useCallback(
     ({ x, y }: Coordinates) => {
-      setNode((node) => ({ ...node, x, y }));
+      setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id !== props.node.id) {
+            return node;
+          } else {
+            return { ...node, x, y };
+          }
+        })
+      );
     },
-    [setNode]
+    [props.node.id, setNodes]
   );
 
   const onStopDrag = useAsyncEffect(async () => {

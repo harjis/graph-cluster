@@ -1,18 +1,17 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { currentGraphIdQuery } from '../atoms/graph';
-import { destroyEdge } from '../../../api/edges';
-import { edgeIdsState, edgeState } from '../atoms/edges';
+import { destroyEdge, Edge } from '../../../api/edges';
 import {
-  getNodeBottomMiddlePosition,
-  getNodeTopMiddlePosition,
-} from '../utils/nodeUtils';
-import { nodeState } from '../atoms/nodes';
+  edgeFromCoordinates,
+  edgesState,
+  edgeToCoordinates,
+} from '../atoms/edges';
 import { useAsyncEffect } from '../../../hooks/useAsyncEffect';
 
 type Coordinates = { x: number; y: number };
 type Props = {
-  edgeId: number;
+  edge: Edge;
 };
 type Return = {
   deleteEdge: () => void;
@@ -20,25 +19,22 @@ type Return = {
   toCoordinates: Coordinates;
 };
 export const useEdgeState = (props: Props): Return => {
+  const setEdges = useSetRecoilState(edgesState);
   const currentGraphId = useRecoilValue(currentGraphIdQuery);
-  const setEdgeIdsState = useSetRecoilState(edgeIdsState);
-  const edge = useRecoilValue(edgeState(props.edgeId));
-  const toNode = useRecoilValue(nodeState(edge.to_node_id));
-  const fromNode = useRecoilValue(nodeState(edge.from_node_id));
+  const fromCoordinates = useRecoilValue(edgeFromCoordinates(props.edge.id));
+  const toCoordinates = useRecoilValue(edgeToCoordinates(props.edge.id));
 
   // TODO should useAsyncEffect be used here?
   const deleteEdge = useAsyncEffect(async (isMounted) => {
-    const wasDeleteSuccess = await destroyEdge(currentGraphId, props.edgeId);
+    const wasDeleteSuccess = await destroyEdge(currentGraphId, props.edge.id);
     if (isMounted() && wasDeleteSuccess) {
-      setEdgeIdsState((edgeIds) =>
-        edgeIds.filter((edgeId) => edgeId !== edge.id)
-      );
+      setEdges((edges) => edges.filter((edge) => edge.id !== props.edge.id));
     }
   });
 
   return {
     deleteEdge,
-    fromCoordinates: getNodeBottomMiddlePosition(fromNode),
-    toCoordinates: getNodeTopMiddlePosition(toNode),
+    fromCoordinates,
+    toCoordinates,
   };
 };

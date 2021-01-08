@@ -4,7 +4,7 @@ import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { Coordinates, getRelativeCoordinates } from '../../../utils/svg_utils';
 import { CONNECTOR_TYPE } from '../constants/constants';
 import { getNodeBottomMiddlePosition } from '../utils/nodeUtils';
-import { nodeState } from '../atoms/nodes';
+import { nodeQuery } from '../atoms/nodes';
 
 export type { Coordinates };
 
@@ -18,7 +18,7 @@ export const fromNodeCoordinatesQuery = selector({
   get: ({ get }) => {
     const fromNodeId = get(fromNodeIdState);
     if (fromNodeId === null) return null;
-    const node = get(nodeState(fromNodeId));
+    const node = get(nodeQuery(fromNodeId));
     return getNodeBottomMiddlePosition(node);
   },
 });

@@ -3,11 +3,12 @@ import React from 'react';
 import InputNode from './InputNode/InputNode';
 import NodeRefNode from './NodeRefNode/NodeRefNode';
 import OutputNode from './OutputNode/OutputNode';
+import { Node } from '../../../../api/nodes';
 import { useNodeState } from '../../hooks/useNodeState';
 
 type Props = {
   canvasRef: React.RefObject<SVGSVGElement>;
-  nodeId: number;
+  node: Node;
 };
 export const DataNode: React.FC<Props> = React.memo((props) => {
   const {
