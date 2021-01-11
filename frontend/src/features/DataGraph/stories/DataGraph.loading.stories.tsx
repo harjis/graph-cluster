@@ -12,7 +12,7 @@ import { url } from '../../../api/common';
 import { Graph } from '../../../api/graphs';
 
 export default {
-  title: 'DataGraph/Graph',
+  title: 'DataGraph/Graph-Loading',
   component: DataGraph,
   decorators: [
     (Story) => (
@@ -25,16 +25,13 @@ export default {
   ],
 } as Meta;
 
-type TemplateProps = {
-  isLoading: boolean;
-};
 const Template: Story = () => {
   const graph = createGraph();
-  mockSuccesfulRequests(graph);
+  mockLongLastingRequests(graph);
   const [graphId, setCurrentGraphId] = useRecoilState(currentGraphIdState);
   React.useEffect(() => {
     setCurrentGraphId(graph.id);
-  }, [setCurrentGraphId]);
+  }, [graph, setCurrentGraphId]);
 
   if (graphId === null) {
     return <div>Not loaded</div>;
@@ -46,10 +43,8 @@ const Template: Story = () => {
 export const Default = Template.bind({});
 Default.args = { isLoading: false };
 
-export const LoadingStory = Template.bind({});
-LoadingStory.args = { isLoading: true };
-
-function mockSuccesfulRequests(graph: Graph) {
+function mockLongLastingRequests(graph: Graph) {
+  const tenMinutes = 600000;
   fetchMock.reset();
   const nodes = [
     createNode(graph.id),
@@ -57,8 +52,12 @@ function mockSuccesfulRequests(graph: Graph) {
   ];
   const edges = [createEdge(nodes[0].id, nodes[1].id)];
   fetchMock.get(`${url}/graphs/${graph.id}`, graph);
-  fetchMock.get(`${url}/graphs/${graph.id}/nodes`, nodes);
-  fetchMock.get(`${url}/graphs/${graph.id}/edges`, edges);
+  fetchMock.get(`${url}/graphs/${graph.id}/nodes`, nodes, {
+    delay: tenMinutes,
+  });
+  fetchMock.get(`${url}/graphs/${graph.id}/edges`, edges, {
+    delay: tenMinutes,
+  });
 
   fetchMock.post(`${url}/graphs/${graph.id}/nodes`, {
     ...createNode(graph.id),

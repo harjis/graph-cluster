@@ -1,3 +1,7 @@
 import React from 'react';
 
-export const Loading: React.FC = () => <div>Loading...</div>;
+import styles from './Loading.module.css';
+
+export const Loading: React.FC = () => (
+  <div className={styles.container}>Loading...</div>
+);

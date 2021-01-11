@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
@@ -10,6 +10,7 @@ import { NodeActionBar } from '../NodeActionBar/NodeActionBar';
 import { useGraph } from '../../hooks/useGraph';
 
 import styles from './DataGraph.module.css';
+import { Loading } from '../../../../components/Loading';
 
 const validationErrors = {};
 
@@ -24,24 +25,28 @@ export const DataGraph: React.FC = () => {
       {graph.name}
 
       <div className={styles.canvasContainer} ref={containerRef}>
-        <DataCanvas
-          ref={canvasRef}
-          containerHeight={dimensions.height}
-          containerWidth={dimensions.width}
-        >
-          {({ canvasId }) => (
-            <>
-              <DataBackground
-                containerHeight={dimensions.height}
-                containerWidth={dimensions.width}
-                patternId={canvasId}
-              />
-              <DataEdges />
-              <DataNodes canvasRef={canvasRef} />
-              <DataEdgeInProgress canvasRef={canvasRef} />
-            </>
-          )}
-        </DataCanvas>
+        <Suspense fallback={<Loading />}>
+          <DataCanvas
+            ref={canvasRef}
+            containerHeight={dimensions.height}
+            containerWidth={dimensions.width}
+          >
+            {({ canvasId }) => (
+              <>
+                <DataBackground
+                  containerHeight={dimensions.height}
+                  containerWidth={dimensions.width}
+                  patternId={canvasId}
+                />
+
+                <DataEdges />
+                <DataNodes canvasRef={canvasRef} />
+
+                <DataEdgeInProgress canvasRef={canvasRef} />
+              </>
+            )}
+          </DataCanvas>
+        </Suspense>
       </div>
     </div>
   );
