@@ -8,7 +8,7 @@ import styles from './DataEdgeInProgress.module.css';
 type Props = {
   canvasRef: React.RefObject<SVGSVGElement>;
 };
-const DataEdgeInProgress = (props: Props) => {
+export const DataEdgeInProgress = (props: Props) => {
   const { fromCoordinates, toCoordinates } = useDataEdgeInProgress(
     props.canvasRef
   );
@@ -27,5 +27,3 @@ const DataEdgeInProgress = (props: Props) => {
     </g>
   );
 };
-
-export default DataEdgeInProgress;

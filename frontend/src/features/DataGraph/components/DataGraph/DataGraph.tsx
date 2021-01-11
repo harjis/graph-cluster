@@ -1,19 +1,18 @@
 import React, { Suspense } from 'react';
 
-import DataEdgeInProgress from '../DataEdge/DataEdgeInProgress';
 import useResizeObserver from '../../../../hooks/useResizeObserver';
 import { DataBackground } from '../DataBackground/DataBackground';
 import { DataCanvas } from '../DataCanvas/DataCanvas';
+import { DataEdgeInProgress } from '../DataEdge/DataEdgeInProgress';
 import { DataEdges } from '../DataEdge/DataEdges';
 import { DataNodes } from '../DataNodes/DataNodes';
+import { Loading } from '../../../../components/Loading';
 import { NodeActionBar } from '../NodeActionBar/NodeActionBar';
 import { useGraph } from '../../hooks/useGraph';
 
 import styles from './DataGraph.module.css';
-import { Loading } from '../../../../components/Loading';
 
 const validationErrors = {};
-
 export const DataGraph: React.FC = () => {
   const { graph } = useGraph();
   const [containerRef, dimensions] = useResizeObserver<HTMLDivElement>();
