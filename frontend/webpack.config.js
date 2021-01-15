@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const { ModuleFederationPlugin } = webpack.container;
+const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 
 module.exports = {
@@ -32,16 +31,6 @@ module.exports = {
           singleton: true, // only a single version of the shared module is allowed
         },
       },
-    }),
-    new webpack.DefinePlugin({
-      // TODO These are actually not needed
-      'process.env.FOLDER_SERVICE_FRONTEND_URL': JSON.stringify(
-        process.env.FOLDER_SERVICE_FRONTEND_URL | 'folder-service-url-not-found'
-      ),
-      'process.env.FOLDER_SERVICE_FRONTEND_PORT': JSON.stringify(
-        process.env.FOLDER_SERVICE_FRONTEND_PORT |
-          'folder-service-port-not-found'
-      ),
     }),
     new HtmlWebpackPlugin({ template: './public/index.html' }),
   ],
