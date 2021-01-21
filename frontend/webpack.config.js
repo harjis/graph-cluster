@@ -19,7 +19,11 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'frontend',
+      name: 'main_frontend',
+      filename: "remoteEntry.js",
+      exposes: {
+        "./MainApp": "./src/MainApp",
+      },
       shared: {
         react: {
           import: 'react', // the "react" package will be used a provided and fallback module

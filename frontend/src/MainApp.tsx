@@ -7,11 +7,21 @@ import { currentTenantState } from './atoms/tenants';
 import { GraphList } from './features/Graphs';
 import { Loading } from './components/Loading';
 import { Tenants } from './features/Tenants';
+import * as AuthStore from './stores/AuthStore';
 
-const App = () => {
+type PropsFromAuthenticator = {
+  accessToken: string;
+  logout: () => Promise<void>;
+};
+const MainApp: React.FC<PropsFromAuthenticator> = (props) => {
+  console.log("settoken", props.accessToken);
+  AuthStore.setAccessToken(props.accessToken);
   return (
     <RecoilRoot>
       <Router>
+        <div>
+          <button onClick={props.logout}>Logout</button>
+        </div>
         <Suspense fallback={<Loading />}>
           <AppWithCurrentTenant />
         </Suspense>
@@ -42,4 +52,4 @@ const AppWithCurrentTenant = () => {
   );
 };
 
-export default App;
+export default MainApp;
