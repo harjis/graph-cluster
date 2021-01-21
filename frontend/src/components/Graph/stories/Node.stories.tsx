@@ -12,6 +12,7 @@ import {
   DEFAULT_NODE_WIDTH,
 } from '../constants/GraphConstants';
 
+// @ts-ignore
 import styles from './CustomStyles.module.css';
 
 export default {

@@ -9,7 +9,7 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <MainApp />
+    <MainApp accessToken="test" logout={() => Promise.resolve()} />
   </React.StrictMode>,
   document.getElementById('root')
 );

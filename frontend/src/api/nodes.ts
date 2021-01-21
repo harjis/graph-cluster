@@ -14,30 +14,25 @@ export type Node = {
 };
 
 export function createNode(graphId: number, type: NodeType): Promise<Node> {
-  return fetch(`${url}/graphs/${graphId}/nodes`, {
-    ...options,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name: 'New Node!', type }),
-  }).then((response) => response.json());
+  return fetch(
+    `${url}/graphs/${graphId}/nodes`,
+    options({
+      method: 'POST',
+      body: JSON.stringify({ name: 'New Node!', type }),
+    })
+  ).then((response) => response.json());
 }
 
 export function fetchNodes(graphId: number): Promise<Node[]> {
-  return fetch(`${url}/graphs/${graphId}/nodes`, options).then((response) =>
+  return fetch(`${url}/graphs/${graphId}/nodes`, options()).then((response) =>
     response.json()
   );
 }
 
 export function updateNode(node: Partial<Node>): Promise<boolean> {
   const { id, graph_id, ...rest } = node;
-  return fetch(`${url}/graphs/${graph_id}/nodes/${id}`, {
-    ...options,
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(rest),
-  }).then((response) => response.json());
+  return fetch(
+    `${url}/graphs/${graph_id}/nodes/${id}`,
+    options({ method: 'PUT', body: JSON.stringify(rest) })
+  ).then((response) => response.json());
 }

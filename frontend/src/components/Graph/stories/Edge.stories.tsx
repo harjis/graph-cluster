@@ -4,6 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import { Canvas } from '../components/Canvas/Canvas';
 import { Edge } from '../components/Edge/Edge';
 
+// @ts-ignore
 import styles from './CustomStyles.module.css';
 
 export default {

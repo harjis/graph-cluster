@@ -1,8 +1,13 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 import { fetchGraphs } from '../api/graphs';
 
 export const graphsState = atom({
   key: 'graphsState',
-  default: fetchGraphs(),
+  default: selector({
+    key: 'graphsState/default',
+    get: () => {
+      return fetchGraphs();
+    },
+  }),
 });
