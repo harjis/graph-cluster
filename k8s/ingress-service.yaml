@@ -15,7 +15,12 @@ spec:
               serviceName: authentication-service-frontend-cluster-ip-service
               servicePort: 3001
           -
-            path: /api/
+            path: /api/folders
+            backend:
+              serviceName: folder-service-backend-cluster-ip-service
+              servicePort: 3000
+          -
+            path: /api/*
             backend:
               serviceName: authentication-service-backend-proxy-cluster-ip-service
               servicePort: 3000
@@ -23,7 +28,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-service-main-frontend-mf
+  name: ingress-service-module-federation
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -36,4 +41,9 @@ spec:
             path: /main_app_mf(/|$)(.*)
             backend:
               serviceName: frontend-cluster-ip-service
+              servicePort: 3001
+          -
+            path: /folder_service_mf(/|$)(.*)
+            backend:
+              serviceName: folder-service-frontend-cluster-ip-service
               servicePort: 3001

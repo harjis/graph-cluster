@@ -34,7 +34,7 @@ export const DataGraphContainer = (props: RouteComponentProps<Params>) => {
   return (
     <div style={{ display: 'flex', height: '100%', width: '100%' }}>
       <div
-        style={{ borderRight: '1px solid black', height: '100%', width: '250px' }}
+        style={{ borderRight: '1px solid black', height: '100%', width: '400px' }}
       >
         <RemoteFolders foldersChildrenByFolderId={foldersChildrenByFolderId} />
       </div>

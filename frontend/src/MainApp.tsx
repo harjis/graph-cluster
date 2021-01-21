@@ -14,7 +14,6 @@ type PropsFromAuthenticator = {
   logout: () => Promise<void>;
 };
 const MainApp: React.FC<PropsFromAuthenticator> = (props) => {
-  console.log("settoken", props.accessToken);
   AuthStore.setAccessToken(props.accessToken);
   return (
     <RecoilRoot>
