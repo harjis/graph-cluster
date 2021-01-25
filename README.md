@@ -15,13 +15,23 @@ minikube addons enable ingress
 ./db-helpers/pvc-apply.sh
 ```
 
-3. Start dev
+3. Install folder-service & authentication-service
+```shell script
+helm install fs harjis-charts/folder-service
+helm install as harjis-charts/authentication-service -f k8s-authenticator-service/values.yml
+```
+
+4. Start dev
 ```shell script
 skaffold dev
 ```
 
-4. Create db's and migrate
+5. Create db's and migrate
 ```shell script
+./folders-db-helpers/create-db.sh
+./folders-db-helpers/migrate.sh
+./folders-db-helpers/seed.sh
+
 ./db-helpers/create-db.sh
 ./db-helpers/migrate.sh
 ```
