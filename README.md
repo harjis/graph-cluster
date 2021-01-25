@@ -1,3 +1,7 @@
+# High level architecture
+
+![alt text](./High-level-architecture.png "Architecture diagram")
+
 # Local setup
 
 1. Create postgress secret and enable ingress
