@@ -1,0 +1,31 @@
+upstream folder-service-backend {
+    server ${FOLDER_SERVICE_BACKEND_CLUSTER_IP_SERVICE}:${FOLDER_SERVICE_BACKEND_CLUSTER_IP_SERVICE_PORT};
+}
+
+upstream graph-service-backend {
+    server ${BACKEND_CLUSTER_IP_SERVICE}:${BACKEND_CLUSTER_IP_SERVICE_PORT};
+}
+
+server {
+    listen 80;
+
+    location /api/folders {
+        proxy_pass http://folder-service-backend;
+    }
+
+    location /api/graphs {
+        proxy_pass http://graph-service-backend;
+    }
+
+    location /api/nodes {
+        proxy_pass http://graph-service-backend;
+    }
+
+    location /api/edges {
+        proxy_pass http://graph-service-backend;
+    }
+
+    location /api/tenants {
+        proxy_pass http://graph-service-backend;
+    }
+}

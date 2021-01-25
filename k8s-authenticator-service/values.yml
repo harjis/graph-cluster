@@ -1,2 +1,2 @@
-backendHost: backend-cluster-ip-service
-backendPort: 3000
+backendHost: backend-router-cluster-ip-service
+backendPort: 80

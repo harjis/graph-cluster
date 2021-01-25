@@ -16,3 +16,7 @@ build:
       sync:
         infer:
           - "**/*"
+    - image: d0rka/graph-cluster-backend-router
+      context: backend-router
+      docker:
+        dockerfile: Dockerfile

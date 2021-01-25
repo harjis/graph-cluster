@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 
 import { useDynamicScript } from '../moduleFederation/useDynamicScript';
 import { loadComponent } from '../moduleFederation/utils';
+import * as AuthStore from '../stores/AuthStore';
 
 export const url = `${window.location.origin}/folder_service_mf`;
 const remote = {
@@ -30,7 +31,10 @@ export const RemoteFolders: React.FC<Props> = (props) => {
 
   return (
     <Suspense fallback={<div>loading remote box</div>}>
-      <Component foldersChildrenByFolderId={props.foldersChildrenByFolderId} />
+      <Component
+        foldersChildrenByFolderId={props.foldersChildrenByFolderId}
+        accessToken={AuthStore.getAccessToken()}
+      />
     </Suspense>
   );
 };
