@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export type Handler<E extends keyof WindowEventMap> = (
   e: WindowEventMap[E]
