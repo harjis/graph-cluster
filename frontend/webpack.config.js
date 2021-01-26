@@ -6,12 +6,12 @@ module.exports = {
   entry: './src/index',
   mode: 'development',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, 'build'),
     port: 3001,
     host: '0.0.0.0', // So that dev server can be accessed externally
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'app.bundle.js',
   },
   resolve: {
@@ -20,9 +20,9 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'main_frontend',
-      filename: "remoteEntry.js",
+      filename: 'remoteEntry.js',
       exposes: {
-        "./MainApp": "./src/MainApp",
+        './MainApp': './src/MainApp',
       },
       shared: {
         react: {
