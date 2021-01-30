@@ -55,11 +55,11 @@ Connect to it
 
 ## Encrypt service account file
 
-`docker run -it -v $(pwd):/app ruby:2.3 bash`
+`docker run -it -v $(pwd):/app ruby bash`
 
 ### Inside the shell:
 
-`gem install travis --version '1.8.10'`
+`gem install travis --version '1.10.0'`
 
 `travis login --org` or `travis login --com` for private projects
 
@@ -106,3 +106,24 @@ cert-manager \
 --namespace cert-manager \
 --version v0.11.0 \
 jetstack/cert-manager`
+
+Commit the issuer & certificate files.
+Wait.
+You can check that the cert-manager is working properly:
+```shell script
+kubectl get certificates
+NAME                   READY   SECRET             AGE
+harjukallio-club-tls   True    harjukallio-club   2m18s
+
+kubectl describe certificates
+---
+Events:
+  Type    Reason        Age    From          Message
+  ----    ------        ----   ----          -------
+  Normal  GeneratedKey  2m52s  cert-manager  Generated a new private key
+  Normal  Requested     2m52s  cert-manager  Created new CertificateRequest resource "harjukallio-club-tls-381730520"
+  Normal  Issued        57s    cert-manager  Certificate issued successfully
+
+kubectl get secrets
+harjukallio-club                       kubernetes.io/tls                     3      4m11s
+```
